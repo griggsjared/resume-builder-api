@@ -3,11 +3,11 @@ scalar Date @scalar(class: "Nuwave\\Lighthouse\\Schema\\Types\\Scalars\\Date")
 
 type Query {
     subjects: [Subject!]! @all
-    subject(id: Int! @eq): Subject @find
+    subject(uuid: String! @eq): Subject @find
 }
 
 type Subject {
-    id: ID!
+    uuid: ID!
     first_name: String!
     last_name: String!
     full_name: String!
@@ -23,7 +23,7 @@ type Subject {
 }
 
 type SubjectHighlight {
-    id: ID!
+    uuid: ID!
     content: String!
     created_at: DateTime!
     updated_at: DateTime!
@@ -31,7 +31,7 @@ type SubjectHighlight {
 }
 
 type SubjectImage {
-    id: ID!
+    uuid: ID!
     url: String!
     created_at: DateTime!
     updated_at: DateTime!
@@ -39,7 +39,7 @@ type SubjectImage {
 }
 
 type Employer {
-    id: ID!
+    uuid: ID!
     name: String!
     city: String!
     state: String!
@@ -53,7 +53,7 @@ type Employer {
 }
 
 type EmployerHighlight {
-    id: ID!
+    uuid: ID!
     content: String!
     created_at: DateTime!
     updated_at: DateTime!
@@ -61,8 +61,8 @@ type EmployerHighlight {
 }
 
 type Skill {
-    id: ID!
+    uuid: ID!
     name: String!
-    category: String!
+    category: String
     subject: Subject! @belongsTo
 }

@@ -15,11 +15,11 @@ return new class extends Migration
     {
         Schema::create('employers', function (Blueprint $table) {
             $table->id();
+            $table->uuid('uuid')->index();
             $table->integer('subject_id')->unsigned()->index();
             $table->string('name');
             $table->string('city')->nullable();
             $table->string('state')->nullable();
-            $table->boolean('is_current')->default(0);
             $table->timestamps();
             $table->date('started_at')->nullable();
             $table->date('ended_at')->nullable();

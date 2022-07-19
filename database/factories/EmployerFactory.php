@@ -41,8 +41,7 @@ class EmployerFactory extends Factory
     {
         return $this->state(function (array $attributes) {
             return [
-                'ended_at' => null,
-                'is_current' => true,
+                'ended_at' => null
             ];
         });
     }

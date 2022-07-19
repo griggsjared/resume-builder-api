@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\Traits\GeneratesUuidKey;
 use App\Models\Traits\Imageable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -9,7 +10,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class SubjectImage extends Model
 {
-    use HasFactory, Imageable;
+    use HasFactory, Imageable, GeneratesUuidKey;
 
     /**
      * The attributes that are mass assignable.

@@ -2,6 +2,8 @@
 
 namespace App\Models;
 
+use App\Models\Traits\GeneratesUuidKey;
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -9,7 +11,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Employer extends Model
 {
-    use HasFactory;
+    use HasFactory, GeneratesUuidKey;
 
     /**
      * The attributes that are mass assignable.
@@ -46,5 +48,15 @@ class Employer extends Model
     public function highlights() : HasMany
     {
         return $this->hasMany(EmployerHighlight::class);
+    }
+
+    /**
+     * @return Attribute
+     */
+    protected function isCurrent() : Attribute
+    {
+        return Attribute::make(
+            get: fn ($value, $attributes) => is_null($attributes['ended_at'])
+        );
     }
 }

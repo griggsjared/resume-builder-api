@@ -15,6 +15,7 @@ return new class extends Migration
     {
         Schema::create('employer_highlights', function (Blueprint $table) {
             $table->id();
+            $table->uuid('uuid')->index();
             $table->integer('employer_id')->unsigned()->index();
             $table->text('content');
             $table->timestamps();
