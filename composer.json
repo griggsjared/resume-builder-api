@@ -8,6 +8,7 @@
         "php": "^8.0.2",
         "dougsisk/laravel-country-state": "^4.1",
         "guzzlehttp/guzzle": "^7.2",
+        "inertiajs/inertia-laravel": "^0.6.3",
         "laravel/framework": "^9.19",
         "laravel/tinker": "^2.7",
         "nuwave/lighthouse": "^5.57"

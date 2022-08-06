@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\LoginPageController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -13,11 +14,4 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-
-
-
-    dd(\App\Models\Employer::first()->highlights);
-    //return view('homepage');
-
-});
+Route::get('/', LoginPageController::class)->name('login');
