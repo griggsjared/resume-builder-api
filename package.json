@@ -2,7 +2,6 @@
   "private": true,
   "scripts": {
     "dev": "vite",
-    "dev:ssr": "node public/build/ssr.js",
     "build": "vite build",
     "build:ssr": "vite build --ssr"
   },
@@ -13,6 +12,7 @@
     "@inertiajs/server": "^0.1.0",
     "@tailwindcss/forms": "^0.5.2",
     "@types/lodash": "^4.14.182",
+    "@vitejs/plugin-basic-ssl": "^0.1.1",
     "@vitejs/plugin-vue": "^3.0.1",
     "@vue/compiler-sfc": "^3.2.37",
     "@vue/server-renderer": "^3.2.37",
