@@ -11,19 +11,16 @@ class Skill extends Model
 {
     use HasFactory, GeneratesUuidKey;
 
-     /**
+    /**
      * The attributes that are mass assignable.
      *
      * @var array<int, string>
      */
     protected $fillable = [
-        'name'
+        'name',
     ];
 
-    /**
-     * @return BelongsTo
-     */
-    public function subject() : BelongsTo
+    public function subject(): BelongsTo
     {
         return $this->belongsTo(Subject::class);
     }

@@ -11,19 +11,16 @@ class EmployerHighlight extends Model
 {
     use HasFactory, GeneratesUuidKey;
 
-     /**
+    /**
      * The attributes that are mass assignable.
      *
      * @var array<int, string>
      */
     protected $fillable = [
-        'content'
+        'content',
     ];
 
-    /**
-     * @return BelongsTo
-     */
-    public function employer() : BelongsTo
+    public function employer(): BelongsTo
     {
         return $this->belongsTo(Employer::class);
     }

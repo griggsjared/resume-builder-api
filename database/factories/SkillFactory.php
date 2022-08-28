@@ -12,7 +12,7 @@ class SkillFactory extends Factory
     private array $categories = [
         'Cumque',
         'Occaecati',
-        'Minus'
+        'Minus',
     ];
 
     /**
@@ -24,18 +24,18 @@ class SkillFactory extends Factory
     {
         return [
             'name' => ucwords($this->faker->words(1, true)),
-            'category' => $this->faker->randomElement($this->categories)
+            'category' => $this->faker->randomElement($this->categories),
         ];
     }
 
     /**
      * @return array<string, mixed>
      */
-    public function uncategorized() : self
+    public function uncategorized(): self
     {
         return $this->state(function (array $attributes) {
             return [
-                'category' => null
+                'category' => null,
             ];
         });
     }

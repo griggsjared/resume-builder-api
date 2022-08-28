@@ -9,12 +9,14 @@
         "dougsisk/laravel-country-state": "^4.1",
         "guzzlehttp/guzzle": "^7.2",
         "inertiajs/inertia-laravel": "^0.6.3",
+        "intervention/image": "^2.7",
         "laravel/framework": "^9.19",
         "laravel/tinker": "^2.7",
         "nuwave/lighthouse": "^5.57"
     },
     "require-dev": {
         "fakerphp/faker": "^1.9.1",
+        "laravel/pint": "^1.1",
         "mll-lab/laravel-graphql-playground": "^2.6",
         "mockery/mockery": "^1.4.4",
         "nunomaduro/collision": "^6.1",

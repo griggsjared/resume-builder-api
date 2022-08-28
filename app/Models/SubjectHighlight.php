@@ -11,19 +11,14 @@ class SubjectHighlight extends Model
 {
     use HasFactory, GeneratesUuidKey;
 
-     /**
-     * The attributes that are mass assignable.
-     *
+    /**
      * @var array<int, string>
      */
     protected $fillable = [
-        'content'
+        'content',
     ];
 
-    /**
-     * @return BelongsTo
-     */
-    public function subject() : BelongsTo
+    public function subject(): BelongsTo
     {
         return $this->belongsTo(Subject::class);
     }

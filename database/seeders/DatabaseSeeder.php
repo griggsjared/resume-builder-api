@@ -7,7 +7,6 @@ use App\Models\EmployerHighlight;
 use App\Models\Skill;
 use App\Models\Subject;
 use App\Models\SubjectHighlight;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -24,10 +23,10 @@ class DatabaseSeeder extends Seeder
             ->has(Skill::factory(5)->uncategorized())
             ->has(Skill::factory(20))
             ->has(
-                Employer::factory(1)->current()->has(EmployerHighlight::factory(3) , 'highlights')
+                Employer::factory(1)->current()->has(EmployerHighlight::factory(3), 'highlights')
             )
             ->has(
-                Employer::factory(1)->has(EmployerHighlight::factory(3) , 'highlights')
+                Employer::factory(1)->has(EmployerHighlight::factory(3), 'highlights')
             )
             ->create();
     }

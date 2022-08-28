@@ -30,18 +30,18 @@ class EmployerFactory extends Factory
                 )
             ),
             'started_at' => $startedAt,
-            'ended_at' => $endedAt
+            'ended_at' => $endedAt,
         ];
     }
 
     /**
      * @return array<string, mixed>
      */
-    public function current() : self
+    public function current(): self
     {
         return $this->state(function (array $attributes) {
             return [
-                'ended_at' => null
+                'ended_at' => null,
             ];
         });
     }

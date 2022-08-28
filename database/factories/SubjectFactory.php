@@ -2,8 +2,8 @@
 
 namespace Database\Factories;
 
-use Illuminate\Database\Eloquent\Factories\Factory;
 use CountryState;
+use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
  * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Subject>
@@ -15,7 +15,7 @@ class SubjectFactory extends Factory
      *
      * @return array<string, mixed>
      */
-    public function definition() : array
+    public function definition(): array
     {
         return [
             'first_name' => $this->faker->firstName(),
@@ -29,31 +29,30 @@ class SubjectFactory extends Factory
                     CountryState::getStates('US')
                 )
             ),
-            'overview' => $this->faker->sentences(8, true)
+            'overview' => $this->faker->sentences(8, true),
         ];
     }
 
     /**
      * @return array<string, mixed>
      */
-    public function male() : self
+    public function male(): self
     {
         return $this->state(function (array $attributes) {
             return [
-                'first_name' => $this->faker->firstName('male')
+                'first_name' => $this->faker->firstName('male'),
             ];
         });
-
     }
 
     /**
      * @return array<string, mixed>
      */
-    public function female() : self
+    public function female(): self
     {
         return $this->state(function (array $attributes) {
             return [
-                'first_name' => $this->faker->firstName('female')
+                'first_name' => $this->faker->firstName('female'),
             ];
         });
     }

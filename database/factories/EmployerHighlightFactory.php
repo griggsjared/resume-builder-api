@@ -17,7 +17,7 @@ class EmployerHighlightFactory extends Factory
     public function definition()
     {
         return [
-            'content' => $this->faker->sentences(4, true)
+            'content' => $this->faker->sentences(4, true),
         ];
     }
 }
