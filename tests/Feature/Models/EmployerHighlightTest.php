@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Schema;
 use Ramsey\Uuid\Uuid;
 use Tests\TestCase;
 
-class EmployerHightlightTest extends TestCase
+class EmployerHighlightTest extends TestCase
 {
     use RefreshDatabase;
 
