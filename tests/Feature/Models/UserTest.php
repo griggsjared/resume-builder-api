@@ -5,6 +5,7 @@ namespace Tests\Feature\Models;
 use Tests\TestCase;
 use App\Models\User;
 use Ramsey\Uuid\Uuid;
+use App\Models\Subject;
 use App\Models\Enums\UserRole;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -61,5 +62,15 @@ class UserTest extends TestCase
 
         $this->assertEquals($superAdmin->role_label, UserRole::SuperAdmin->label());
         $this->assertEquals($basic->role_label, UserRole::Basic->label());
+    }
+
+    /** @test */
+    public function has_relationships()
+    {
+        $user = User::factory()
+            ->has(Subject::factory(5), 'subjects')
+            ->create();
+
+        $this->assertCount(5, $user->subjects);
     }
 }

@@ -2,15 +2,16 @@
 
 namespace Tests\Feature\Models;
 
-use App\Models\Employer;
-use App\Models\Skill;
-use App\Models\Subject;
-use App\Models\SubjectHighlight;
-use App\Models\SubjectImage;
-use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Support\Facades\Schema;
-use Ramsey\Uuid\Uuid;
 use Tests\TestCase;
+use App\Models\User;
+use App\Models\Skill;
+use Ramsey\Uuid\Uuid;
+use App\Models\Subject;
+use App\Models\Employer;
+use App\Models\SubjectImage;
+use App\Models\SubjectHighlight;
+use Illuminate\Support\Facades\Schema;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 
 class SubjectTest extends TestCase
 {
@@ -23,6 +24,7 @@ class SubjectTest extends TestCase
             Schema::hasColumns('subjects', [
                 'id',
                 'uuid',
+                'author_id',
                 'first_name',
                 'last_name',
                 'email',
@@ -32,8 +34,7 @@ class SubjectTest extends TestCase
                 'overview',
                 'created_at',
                 'updated_at',
-            ]),
-            1
+            ])
         );
     }
 
@@ -51,6 +52,7 @@ class SubjectTest extends TestCase
     public function has_relationships()
     {
         $subject = Subject::factory()
+            ->for(User::factory(), 'author')
             ->has(SubjectImage::factory(1), 'image')
             ->has(SubjectHighlight::factory(6), 'highlights')
             ->has(Employer::factory(3), 'employers')
@@ -61,6 +63,7 @@ class SubjectTest extends TestCase
         $this->assertCount(6, $subject->highlights);
         $this->assertCount(3, $subject->employers);
         $this->assertCount(3, $subject->skills);
+        $this->assertInstanceOf(User::class, $subject->author);
     }
 
     /** @test */
