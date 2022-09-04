@@ -12,26 +12,34 @@ class UserPolicy
 
     public function viewAny(User $user): bool
     {
-        return $this->role === UserRole::SuperAdmin;
+        return $user->role === UserRole::SuperAdmin;
     }
 
     public function view(User $user, User $model): bool
     {
-        return $this->role === UserRole::SuperAdmin;
+        return $user->role === UserRole::SuperAdmin;
     }
 
     public function create(User $user): bool
     {
-        return $this->role === UserRole::SuperAdmin;
+        return $user->role === UserRole::SuperAdmin;
     }
 
     public function update(User $user, User $model): bool
     {
-        return $this->role === UserRole::SuperAdmin;
+        if ($user->id === $model->id) {
+            return false;
+        }
+
+        return $user->role === UserRole::SuperAdmin;
     }
 
     public function delete(User $user, User $model): bool
     {
-        return $this->role === UserRole::SuperAdmin;
+        if ($user->id === $model->id) {
+            return false;
+        }
+
+        return $user->role === UserRole::SuperAdmin;
     }
 }
