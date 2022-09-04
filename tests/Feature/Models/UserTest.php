@@ -2,11 +2,12 @@
 
 namespace Tests\Feature\Models;
 
-use App\Models\User;
-use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Support\Facades\Schema;
-use Ramsey\Uuid\Uuid;
 use Tests\TestCase;
+use App\Models\User;
+use Ramsey\Uuid\Uuid;
+use App\Models\Enums\UserRole;
+use Illuminate\Support\Facades\Schema;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 
 class UserTest extends TestCase
 {
@@ -23,6 +24,7 @@ class UserTest extends TestCase
                 'last_name',
                 'email',
                 'password',
+                'role',
                 'remember_token',
                 'created_at',
                 'updated_at',
@@ -49,5 +51,15 @@ class UserTest extends TestCase
         ]);
 
         $this->assertEquals($user->full_name, $user->first_name.' '.$user->last_name);
+    }
+
+    /** @test */
+    public function can_generate_role_labels()
+    {
+        $superAdmin = User::factory()->superAdmin()->create();
+        $basic = User::factory()->basic()->create();
+
+        $this->assertEquals($superAdmin->role_label, UserRole::SuperAdmin->label());
+        $this->assertEquals($basic->role_label, UserRole::Basic->label());
     }
 }
