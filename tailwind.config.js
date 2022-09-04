@@ -13,7 +13,22 @@ module.exports = {
       current: 'currentColor',
       black: colors.black,
       white: colors.white,
-      gray: colors.neutral
+      gray: {
+        DEFAULT: colors.neutral[500],
+        ...colors.neutral
+      },
+      red: {
+        DEFAULT: colors.red[500],
+        ...colors.red
+      },
+      yellow: {
+        DEFAULT: colors.amber[500],
+        ...colors.amber
+      },
+      green: {
+        DEFAULT: colors.emerald[500],
+        ...colors.emerald
+      },
     },
     fontFamily: {
       sans: ['Oxygen', 'sans-serif']

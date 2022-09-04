@@ -15,7 +15,7 @@ return new class extends Migration
     {
         Schema::create('subjects', function (Blueprint $table) {
             $table->id();
-            $table->uuid('uuid')->index();
+            $table->efficientUuid('uuid')->unique();
             $table->string('first_name');
             $table->string('last_name');
             $table->string('title')->nullable();

@@ -1,6 +1,6 @@
 <?php
 
-use App\Http\Controllers\LoginPageController;
+use App\Http\Controllers\DashboardController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -14,4 +14,4 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', LoginPageController::class)->name('login');
+Route::get('/', [DashboardController::class, 'show'])->name('dashboard');

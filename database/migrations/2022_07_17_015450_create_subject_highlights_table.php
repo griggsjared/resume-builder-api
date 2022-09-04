@@ -15,8 +15,8 @@ return new class extends Migration
     {
         Schema::create('subject_highlights', function (Blueprint $table) {
             $table->id();
-            $table->uuid('uuid')->index();
-            $table->integer('subject_id')->unsigned()->index();
+            $table->efficientUuid('uuid')->unique();
+            $table->integer('subject_id')->unsigned()->index()->nullable();
             $table->text('content');
             $table->timestamps();
         });

@@ -15,8 +15,8 @@ return new class extends Migration
     {
         Schema::create('employers', function (Blueprint $table) {
             $table->id();
-            $table->uuid('uuid')->index();
-            $table->integer('subject_id')->unsigned()->index();
+            $table->efficientUuid('uuid')->unique();
+            $table->integer('subject_id')->unsigned()->index()->nullable();
             $table->string('name');
             $table->string('city')->nullable();
             $table->string('state')->nullable();

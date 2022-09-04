@@ -17,7 +17,7 @@ class SubjectImageFactory extends Factory
     public function definition()
     {
         return [
-            //
+            'filename' => $this->faker->image(),
         ];
     }
 }

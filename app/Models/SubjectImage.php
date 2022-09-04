@@ -2,7 +2,7 @@
 
 namespace App\Models;
 
-use App\Models\Traits\GeneratesUuidKey;
+use App\Models\Traits\HasUuid;
 use App\Models\Traits\Imageable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -10,7 +10,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class SubjectImage extends Model
 {
-    use HasFactory, Imageable, GeneratesUuidKey;
+    use HasFactory, Imageable, HasUuid;
 
     /**
      * @var array<int, string>
@@ -24,17 +24,11 @@ class SubjectImage extends Model
      */
     protected $hidden = [];
 
-    /**
-     * @return string
-     */
     public function imageStorageDisk(): string
     {
         return 'public';
     }
 
-    /**
-     * @return string
-     */
     public function imageBaseDirectory(): string
     {
         return 'content-images';
@@ -59,6 +53,9 @@ class SubjectImage extends Model
         ];
     }
 
+    /**
+     * @return array<int, string>
+     */
     public function imageEncodings(): array
     {
         return ['webp', 'jpg'];

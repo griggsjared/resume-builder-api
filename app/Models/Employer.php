@@ -2,7 +2,7 @@
 
 namespace App\Models;
 
-use App\Models\Traits\GeneratesUuidKey;
+use App\Models\Traits\HasUuid;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -11,7 +11,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Employer extends Model
 {
-    use HasFactory, GeneratesUuidKey;
+    use HasFactory, HasUuid;
 
     /**
      * @var array<int, string>
