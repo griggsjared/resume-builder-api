@@ -20,6 +20,12 @@ class Subject extends Model
     protected $fillable = [
         'first_name',
         'last_name',
+        'title',
+        'city',
+        'state',
+        'phone_number',
+        'email',
+        'overview',
     ];
 
     public function author(): BelongsTo

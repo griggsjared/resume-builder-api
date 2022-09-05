@@ -99,5 +99,4 @@ class SubjectPolicyTest extends TestCase
         $this->assertFalse($basic2->can('delete', $subject));
         $this->assertTrue($basic2->can('delete', $subject2));
     }
-
 }

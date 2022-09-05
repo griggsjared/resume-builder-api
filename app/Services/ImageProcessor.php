@@ -7,9 +7,6 @@ use Image;
 
 class ImageProcessor
 {
-    /**
-     * @var array
-     */
     private array $dims = [];
 
     public function __construct(
@@ -30,28 +27,16 @@ class ImageProcessor
         $this->encodings = $encodings;
     }
 
-    /**
-     * @param  array  $dims
-     * @return void
-     */
     public function setDims(array $dims): void
     {
         $this->dims = $dims;
     }
 
-    /**
-     * @param  string  $filename
-     * @return void
-     */
     public function setFilename(string $filename): void
     {
         $this->filename = $filename;
     }
 
-    /**
-     * @param  string  $directory
-     * @return void
-     */
     public function setDirectory(string $directory): void
     {
         $this->directory = $directory;

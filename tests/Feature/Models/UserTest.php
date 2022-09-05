@@ -2,13 +2,13 @@
 
 namespace Tests\Feature\Models;
 
-use Tests\TestCase;
-use App\Models\User;
-use Ramsey\Uuid\Uuid;
-use App\Models\Subject;
 use App\Models\Enums\UserRole;
-use Illuminate\Support\Facades\Schema;
+use App\Models\Subject;
+use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Support\Facades\Schema;
+use Ramsey\Uuid\Uuid;
+use Tests\TestCase;
 
 class UserTest extends TestCase
 {

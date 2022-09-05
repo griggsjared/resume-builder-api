@@ -2,16 +2,16 @@
 
 namespace Tests\Feature\Models;
 
-use Tests\TestCase;
-use App\Models\User;
-use App\Models\Skill;
-use Ramsey\Uuid\Uuid;
-use App\Models\Subject;
 use App\Models\Employer;
-use App\Models\SubjectImage;
+use App\Models\Skill;
+use App\Models\Subject;
 use App\Models\SubjectHighlight;
-use Illuminate\Support\Facades\Schema;
+use App\Models\SubjectImage;
+use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Support\Facades\Schema;
+use Ramsey\Uuid\Uuid;
+use Tests\TestCase;
 
 class SubjectTest extends TestCase
 {
