@@ -2,13 +2,15 @@
 
 namespace Tests\Feature\Actions\Subjects;
 
-use App\Actions\Subjects\UpdateOrCreate;
-use App\DTO\SubjectData;
-use App\Models\Subject;
-use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
+use App\Models\User;
+use App\DTO\UserData;
+use App\Models\Subject;
+use App\DTO\SubjectData;
+use App\Actions\Subjects\Upsert;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 
-class UpdateOrCreateTest extends TestCase
+class UpcertTest extends TestCase
 {
     use RefreshDatabase;
 
@@ -24,11 +26,15 @@ class UpdateOrCreateTest extends TestCase
             'state' => 'NY',
             'phone_number' => '555-555-5555',
             'overview' => 'I am a developer',
+            'author' => UserData::from(
+                User::factory()->create()
+            )
         ]);
 
-        $subject = (new UpdateOrCreate)->execute($data);
+        $subject = (new Upsert)->execute($data);
 
         $this->assertInstanceOf(Subject::class, $subject);
+        $this->assertInstanceOf(User::class, $subject->author);
         $this->assertEquals($data->first_name, $subject->first_name);
         $this->assertEquals($data->last_name, $subject->last_name);
         $this->assertEquals($data->title, $subject->title);
@@ -42,7 +48,11 @@ class UpdateOrCreateTest extends TestCase
     /** @test */
     public function subject_is_updated()
     {
-        $subject = Subject::factory()->create();
+        $subject = Subject::factory()
+            ->has(User::factory(), 'author')
+            ->create();
+
+        $newAuthor = User::factory()->create();
 
         $data = SubjectData::from([
             ...$subject->toArray(),
@@ -54,11 +64,13 @@ class UpdateOrCreateTest extends TestCase
             'state' => 'NY',
             'phone_number' => '555-555-5555',
             'overview' => 'I am a developer',
+            'author' => UserData::from($newAuthor)
         ]);
 
-        $updatedSubject = (new UpdateOrCreate)->execute($data);
+        $updatedSubject = (new Upsert)->execute($data);
 
         $this->assertInstanceOf(Subject::class, $updatedSubject);
+        $this->assertInstanceOf(User::class, $updatedSubject->author);
         $this->assertEquals($subject->id, $updatedSubject->id);
         $this->assertEquals($data->first_name, $updatedSubject->first_name);
         $this->assertEquals($data->last_name, $updatedSubject->last_name);
@@ -68,5 +80,23 @@ class UpdateOrCreateTest extends TestCase
         $this->assertEquals($data->phone_number, $updatedSubject->phone_number);
         $this->assertEquals($data->email, $updatedSubject->email);
         $this->assertEquals($data->overview, $updatedSubject->overview);
+        $this->assertEquals($newAuthor->id, $updatedSubject->author->id);
+    }
+
+    /** @test */
+    public function subject_is_updated_with_no_author()
+    {
+        $subject = Subject::factory()
+            ->has(User::factory(), 'author')
+            ->create();
+
+        $data = SubjectData::from($subject)->additional([
+            'author' => null
+        ]);
+
+        $updatedSubject = (new Upsert)->execute($data);
+
+        $this->assertNull($updatedSubject->author);
     }
 }
+

@@ -2,6 +2,8 @@
 
 namespace App\DTO;
 
+use App\DTO\UserData;
+use App\Models\Subject;
 use Spatie\LaravelData\Data;
 
 class SubjectData extends Data
@@ -16,6 +18,15 @@ class SubjectData extends Data
         public ?string $phone_number,
         public ?string $email,
         public ?string $overview,
+        public ?UserData $author = null
     ) {
+    }
+
+    public static function fromModel(Subject $subject): self
+    {
+        return self::from([
+            ...$subject->toArray(),
+            'author' => $subject->author ? UserData::fromModel($subject->author) : null,
+        ]);
     }
 }

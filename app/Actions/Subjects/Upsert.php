@@ -5,11 +5,11 @@ namespace App\Actions\Subjects;
 use App\DTO\SubjectData;
 use App\Models\Subject;
 
-class UpdateOrCreate
+class Upsert
 {
     public function execute(SubjectData $data): Subject
     {
-        return Subject::updateOrCreate(
+        $subject = Subject::updateOrCreate(
             ['id' => $data->id],
             [
                 'first_name' => $data->first_name,
@@ -22,5 +22,13 @@ class UpdateOrCreate
                 'overview' => $data->overview,
             ]
         );
+
+        if($data->author) {
+            $subject->author()->associate($data->author->id);
+        } else {
+            $subject->author()->dissociate();
+        }
+
+        return $subject;
     }
 }

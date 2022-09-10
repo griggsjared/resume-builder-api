@@ -2,7 +2,7 @@
 
 namespace Tests\Feature\Actions\Users;
 
-use App\Actions\Users\UpdateOrCreate;
+use App\Actions\Users\Upsert;
 use App\DTO\UserData;
 use App\Models\Enums\UserRole;
 use App\Models\User;
@@ -10,7 +10,7 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Hash;
 use Tests\TestCase;
 
-class UpdateOrCreateTest extends TestCase
+class UpsertTest extends TestCase
 {
     use RefreshDatabase;
 
@@ -25,7 +25,7 @@ class UpdateOrCreateTest extends TestCase
             'role' => UserRole::Basic,
         ]);
 
-        $user = (new UpdateOrCreate)->execute($data);
+        $user = (new Upsert)->execute($data);
 
         $this->assertInstanceOf(User::class, $user);
         $this->assertEquals($data->first_name, $user->first_name);
@@ -49,7 +49,7 @@ class UpdateOrCreateTest extends TestCase
             'role' => UserRole::Basic,
         ]);
 
-        $updatedUser = (new UpdateOrCreate)->execute($data);
+        $updatedUser = (new Upsert)->execute($data);
 
         $this->assertInstanceOf(User::class, $updatedUser);
         $this->assertEquals($user->id, $updatedUser->id);
@@ -70,7 +70,7 @@ class UpdateOrCreateTest extends TestCase
             'password' => 'Secret!',
         ]);
 
-        $updatedUser = (new UpdateOrCreate)->execute($data);
+        $updatedUser = (new Upsert)->execute($data);
 
         $this->assertTrue(Hash::check('Secret!', $updatedUser->password));
         $this->assertEquals($user->first_name, $updatedUser->first_name);

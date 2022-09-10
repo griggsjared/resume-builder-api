@@ -6,7 +6,7 @@ use App\DTO\UserData;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
 
-class UpdateOrCreate
+class Upsert
 {
     public function execute(UserData $data): User
     {
