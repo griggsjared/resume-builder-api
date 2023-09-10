@@ -4,7 +4,7 @@ namespace App\Domains\Users\Models;
 
 use App\Domains\Resumes\Models\Subject;
 use App\Domains\Users\Enums\UserRole;
-use Dyrynda\Database\Casts\EfficientUuid;
+use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -13,7 +13,7 @@ use Illuminate\Notifications\Notifiable;
 
 class User extends Authenticatable
 {
-    use HasFactory, Notifiable, HasUuid;
+    use HasFactory, Notifiable, HasUuids;
 
     /**
      * @var array<int, string>
@@ -45,7 +45,6 @@ class User extends Authenticatable
      * @var array<string, class-string | string>
      */
     protected $casts = [
-        'uuid' => EfficientUuid::class,
         'role' => UserRole::class,
     ];
 

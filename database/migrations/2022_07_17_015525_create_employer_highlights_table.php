@@ -14,9 +14,8 @@ return new class extends Migration
     public function up()
     {
         Schema::create('employer_highlights', function (Blueprint $table) {
-            $table->id();
-            $table->efficientUuid('uuid')->unique();
-            $table->integer('employer_id')->unsigned()->index()->nullable();
+            $table->uuid('id')->primary();
+            $table->uuid('employer_id')->index()->nullable();
             $table->text('content');
             $table->timestamps();
         });

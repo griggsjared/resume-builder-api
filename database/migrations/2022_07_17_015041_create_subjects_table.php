@@ -14,9 +14,8 @@ return new class extends Migration
     public function up()
     {
         Schema::create('subjects', function (Blueprint $table) {
-            $table->id();
-            $table->efficientUuid('uuid')->unique();
-            $table->integer('author_id')->unsigned()->index()->nullable();
+            $table->uuid('id')->primary();
+            $table->uuid('author_id')->index()->nullable();
             $table->string('first_name');
             $table->string('last_name');
             $table->string('title')->nullable();

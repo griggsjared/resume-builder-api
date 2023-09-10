@@ -14,9 +14,8 @@ return new class extends Migration
     public function up()
     {
         Schema::create('skills', function (Blueprint $table) {
-            $table->id();
-            $table->efficientUuid('uuid')->unique();
-            $table->integer('subject_id')->unsigned()->index()->nullable();
+            $table->uuid('id')->primary();
+            $table->uuid('subject_id')->index()->nullable();
             $table->string('name');
             $table->string('category')->nullable();
             $table->integer('sort')->default(9999);

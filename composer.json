@@ -7,7 +7,6 @@
     "require": {
         "php": "^8.2",
         "dougsisk/laravel-country-state": "^4.2",
-        "dyrynda/laravel-efficient-uuid": "^5.0",
         "guzzlehttp/guzzle": "^7.2",
         "intervention/image": "^2.7",
         "laravel/framework": "^10.10",
