@@ -1,18 +1,21 @@
 <?php
 
-namespace Database\Factories;
+namespace Database\Factories\Domains\Resumes\Models;
 
-use CountryState;
+use App\Domains\Resumes\Models\Subject;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Subject>
+ * @extends Factory<Subject>
  */
 class SubjectFactory extends Factory
 {
     /**
-     * Define the model's default state.
-     *
+     * @var class-string
+     */
+    protected $model = Subject::class;
+
+    /**
      * @return array<string, mixed>
      */
     public function definition(): array
@@ -24,18 +27,11 @@ class SubjectFactory extends Factory
             'email' => $this->faker->safeEmail(),
             'phone_number' => $this->faker->phoneNumber(),
             'city' => $this->faker->city(),
-            'state' => $this->faker->randomElement(
-                array_keys(
-                    CountryState::getStates('US')
-                )
-            ),
+            'state' => $this->faker->stateAbbr(),
             'overview' => $this->faker->sentences(8, true),
         ];
     }
 
-    /**
-     * @return array<string, mixed>
-     */
     public function male(): self
     {
         return $this->state(function (array $attributes) {
@@ -45,9 +41,6 @@ class SubjectFactory extends Factory
         });
     }
 
-    /**
-     * @return array<string, mixed>
-     */
     public function female(): self
     {
         return $this->state(function (array $attributes) {

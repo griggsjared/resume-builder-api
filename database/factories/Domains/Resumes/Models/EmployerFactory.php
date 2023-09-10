@@ -1,19 +1,22 @@
 <?php
 
-namespace Database\Factories;
+namespace Database\Factories\Domains\Resumes\Models;
 
-use Carbon\Carbon;
-use CountryState;
+use App\Domains\Resumes\Models\Employer;
 use Illuminate\Database\Eloquent\Factories\Factory;
+use Illuminate\Support\Carbon;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Employer>
+ * @extends Factory<Employer>
  */
 class EmployerFactory extends Factory
 {
     /**
-     * Define the model's default state.
-     *
+     * @var class-string
+     */
+    protected $model = Employer::class;
+
+    /**
      * @return array<string, mixed>
      */
     public function definition()
@@ -24,19 +27,12 @@ class EmployerFactory extends Factory
         return [
             'name' => $this->faker->company(),
             'city' => $this->faker->city(),
-            'state' => $this->faker->randomElement(
-                array_keys(
-                    CountryState::getStates('US')
-                )
-            ),
+            'state' => $this->faker->stateAbbr(),
             'started_at' => $startedAt,
             'ended_at' => $endedAt,
         ];
     }
 
-    /**
-     * @return array<string, mixed>
-     */
     public function current(): self
     {
         return $this->state(function (array $attributes) {

@@ -1,17 +1,21 @@
 <?php
 
-namespace Database\Factories;
+namespace Database\Factories\Domains\Resumes\Models;
 
+use App\Domains\Resumes\Models\SubjectHighlight;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\SubjectHighlight>
+ * @extends Factory<SubjectHighlight>
  */
 class SubjectHighlightFactory extends Factory
 {
     /**
-     * Define the model's default state.
-     *
+     * @var class-string
+     */
+    protected $model = SubjectHighlight::class;
+
+    /**
      * @return array<string, mixed>
      */
     public function definition()

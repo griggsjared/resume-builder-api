@@ -1,36 +1,35 @@
 <?php
 
-namespace Database\Factories;
+namespace Database\Factories\Domains\Resumes\Models;
 
+use App\Domains\Resumes\Models\Skill;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Skill>
+ * @extends Factory<Skill>
  */
 class SkillFactory extends Factory
 {
-    private array $categories = [
-        'Cumque',
-        'Occaecati',
-        'Minus',
-    ];
+    /**
+     * @var class-string
+     */
+    protected $model = Skill::class;
 
     /**
-     * Define the model's default state.
-     *
      * @return array<string, mixed>
      */
     public function definition()
     {
         return [
             'name' => ucwords($this->faker->words(1, true)),
-            'category' => $this->faker->randomElement($this->categories),
+            'category' => $this->faker->randomElement([
+                'Cumque',
+                'Occaecati',
+                'Minus',
+            ]),
         ];
     }
 
-    /**
-     * @return array<string, mixed>
-     */
     public function uncategorized(): self
     {
         return $this->state(function (array $attributes) {
