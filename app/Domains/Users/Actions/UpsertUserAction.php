@@ -6,7 +6,7 @@ use App\Domains\Users\Data\UserData;
 use App\Domains\Users\Models\User;
 use Illuminate\Support\Facades\Hash;
 
-class Upsert
+class UpsertUserAction
 {
     public function handle(UserData $data): UserData
     {
