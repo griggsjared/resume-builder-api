@@ -3,6 +3,7 @@
 namespace Tests\Feature\Actions\Users;
 
 use App\Actions\Users\Delete;
+use App\Models\DTO\UserData;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
@@ -12,15 +13,14 @@ class DeleteTest extends TestCase
     use RefreshDatabase;
 
     /** @test */
-    public function user_is_deleted()
+    public function is_user_deleted()
     {
         $user = User::factory()->create();
 
-        $deleted = (new Delete)->execute($user);
+        app(Delete::class)->handle(UserData::from($user));
 
-        $user = User::whereUuid($user->uuid)->first();
+        $user = User::find($user->id);
 
-        $this->assertTrue($deleted);
         $this->assertNull($user);
     }
 }
