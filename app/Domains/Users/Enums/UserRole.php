@@ -17,12 +17,4 @@ enum UserRole: string
             self::Basic => 'Basic',
         };
     }
-
-    public function priority(): int
-    {
-        return match ($this) {
-            self::SuperAdmin => 10,
-            self::Basic => 5,
-        };
-    }
 }

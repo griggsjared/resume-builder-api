@@ -1,9 +1,9 @@
 <?php
 
-namespace Tests\Feature\Policies;
+namespace Tests\Feature\Domains\Resumes\Policies;
 
-use App\Models\Subject;
-use App\Models\User;
+use App\Domains\Resumes\Models\Subject;
+use App\Domains\Users\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
@@ -12,17 +12,17 @@ class SubjectPolicyTest extends TestCase
     use RefreshDatabase;
 
     /** @test */
-    public function user_roles_can_view_all_subjects()
+    public function it_can_decide_if_user_can_view_any_subjects()
     {
         $superAdmin = User::factory()->superAdmin()->create();
         $basic = User::factory()->basic()->create();
 
         $this->assertTrue($superAdmin->can('viewAny', Subject::class));
-        $this->assertTrue($basic->can('viewAny', Subject::class));
+        $this->assertFalse($basic->can('viewAny', Subject::class));
     }
 
     /** @test */
-    public function user_roles_can_view_subjects()
+    public function it_can_decide_if_user_can_view_a_subject()
     {
         $superAdmin = User::factory()->superAdmin()->create();
         $basic = User::factory()->basic()->create();
@@ -45,7 +45,7 @@ class SubjectPolicyTest extends TestCase
     }
 
     /** @test */
-    public function user_roles_can_create_subjects()
+    public function it_can_decide_if_user_can_create_a_subject()
     {
         $superAdmin = User::factory()->superAdmin()->create();
         $basic = User::factory()->basic()->create();
@@ -55,7 +55,7 @@ class SubjectPolicyTest extends TestCase
     }
 
     /** @test */
-    public function user_roles_can_update_subjects()
+    public function it_can_decide_if_user_can_update_a_subject()
     {
         $superAdmin = User::factory()->superAdmin()->create();
         $basic = User::factory()->basic()->create();
@@ -78,7 +78,7 @@ class SubjectPolicyTest extends TestCase
     }
 
     /** @test */
-    public function user_roles_can_delete_subjects()
+    public function it_can_decide_if_user_can_delete_a_subject()
     {
         $superAdmin = User::factory()->superAdmin()->create();
         $basic = User::factory()->basic()->create();

@@ -1,12 +1,11 @@
 <?php
 
-namespace Tests\Feature\Models;
+namespace Tests\Feature\Domains\Resumes\Models;
 
-use App\Models\Subject;
-use App\Models\SubjectImage;
+use App\Domains\Resumes\Models\Subject;
+use App\Domains\Resumes\Models\SubjectImage;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Schema;
-use Ramsey\Uuid\Uuid;
 use Tests\TestCase;
 
 class SubjectImageTest extends TestCase
@@ -14,32 +13,17 @@ class SubjectImageTest extends TestCase
     use RefreshDatabase;
 
     /** @test */
-    public function table_has_expected_columns()
+    public function its_table_has_the_expected_columns()
     {
-        $this->assertTrue(
-            Schema::hasColumns('subject_images', [
-                'id',
-                'uuid',
-                'subject_id',
-                'filename',
-                'created_at',
-                'updated_at',
-            ])
-        );
+        $this->assertTrue(Schema::hasColumn('subject_images', 'id'));
+        $this->assertTrue(Schema::hasColumn('subject_images', 'subject_id'));
+        $this->assertTrue(Schema::hasColumn('subject_images', 'filename'));
+        $this->assertTrue(Schema::hasColumn('subject_images', 'created_at'));
+        $this->assertTrue(Schema::hasColumn('subject_images', 'updated_at'));
     }
 
     /** @test */
-    public function uuid_is_valid()
-    {
-        $subject = SubjectImage::factory()->create();
-
-        $this->assertTrue(
-            Uuid::isValid($subject->uuid)
-        );
-    }
-
-    /** @test */
-    public function has_relationships()
+    public function it_has_model_relationships()
     {
         $image = SubjectImage::factory()
             ->for(Subject::factory(), 'subject')
@@ -50,7 +34,7 @@ class SubjectImageTest extends TestCase
     }
 
     /** @test */
-    public function has_image_encodings_defined()
+    public function it_defines_the_image_decodings()
     {
         $image = SubjectImage::factory()->create();
 
@@ -58,7 +42,7 @@ class SubjectImageTest extends TestCase
     }
 
     /** @test */
-    public function has_image_storage_disk_defined()
+    public function it_defines_the_storage_disk()
     {
         $image = SubjectImage::factory()->create();
 
@@ -66,7 +50,7 @@ class SubjectImageTest extends TestCase
     }
 
     /** @test */
-    public function has_image_base_directory_defined()
+    public function it_defines_the_image_base_directory()
     {
         $image = SubjectImage::factory()->create();
 
@@ -74,7 +58,7 @@ class SubjectImageTest extends TestCase
     }
 
     /** @test */
-    public function has_image_dims_defined()
+    public function it_defines_the_images_dims()
     {
         $image = SubjectImage::factory()->create();
 

@@ -18,16 +18,16 @@ class Employer extends Model
      */
     protected $fillable = [
         'name',
+        'city',
+        'state',
     ];
 
     /**
      * @var array<int, string>
      */
-    protected $dates = [
-        'created_at',
-        'updated_at',
-        'started_at',
-        'ended_at',
+    protected $casts = [
+        'started_at' => 'date',
+        'ended_at' => 'date',
     ];
 
     public function subject(): BelongsTo

@@ -13,7 +13,7 @@ class SubjectPolicy
 
     public function viewAny(User $user): bool
     {
-        return true;
+        return $user->role === UserRole::SuperAdmin;
     }
 
     public function view(User $user, Subject $model): bool

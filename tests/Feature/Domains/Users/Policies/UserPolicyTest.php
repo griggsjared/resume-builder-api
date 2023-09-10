@@ -1,8 +1,8 @@
 <?php
 
-namespace Tests\Feature\Policies;
+namespace Tests\Feature\Domains\Users\Policies;
 
-use App\Models\User;
+use App\Domains\Users\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
@@ -11,7 +11,7 @@ class UserPolicyTest extends TestCase
     use RefreshDatabase;
 
     /** @test */
-    public function user_roles_can_view_all_users()
+    public function it_can_decide_if_user_can_view_any_users()
     {
         $superAdmin = User::factory()->superAdmin()->create();
         $basic = User::factory()->basic()->create();
@@ -21,7 +21,7 @@ class UserPolicyTest extends TestCase
     }
 
     /** @test */
-    public function user_roles_can_view_users()
+    public function it_can_decide_if_user_can_view_a_user()
     {
         $superAdmin = User::factory()->superAdmin()->create();
         $superAdmin2 = User::factory()->superAdmin()->create();
@@ -35,7 +35,7 @@ class UserPolicyTest extends TestCase
     }
 
     /** @test */
-    public function user_roles_can_create_users()
+    public function it_can_decide_if_user_can_create_a_user()
     {
         $superAdmin = User::factory()->superAdmin()->create();
         $basic = User::factory()->basic()->create();
@@ -45,7 +45,7 @@ class UserPolicyTest extends TestCase
     }
 
     /** @test */
-    public function user_roles_can_update_users()
+    public function it_can_decide_if_user_can_update_a_user()
     {
         $superAdmin = User::factory()->superAdmin()->create();
         $superAdmin2 = User::factory()->superAdmin()->create();
@@ -62,7 +62,7 @@ class UserPolicyTest extends TestCase
     }
 
     /** @test */
-    public function user_roles_can_delete_users()
+    public function it_can_decide_if_user_can_delete_a_user()
     {
         $superAdmin = User::factory()->superAdmin()->create();
         $superAdmin2 = User::factory()->superAdmin()->create();
