@@ -4,6 +4,7 @@
 /public/storage
 /storage/*.key
 /vendor
+/bootstrap/ssr
 .env
 .env.backup
 .phpunit.result.cache
@@ -14,5 +15,8 @@ npm-debug.log
 yarn-error.log
 /.idea
 /.vscode
-/bootstrap/ssr
-/_docker/volumes
+/_docker
+_ide_helper.php
+_ide_helper_models.php
+.phpstorm.meta.php
+.DS_Store
