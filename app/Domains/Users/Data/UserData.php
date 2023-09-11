@@ -7,18 +7,17 @@ use Spatie\LaravelData\Attributes\Validation\Uuid;
 use Spatie\LaravelData\Attributes\WithCast;
 use Spatie\LaravelData\Casts\EnumCast;
 use Spatie\LaravelData\Data;
+use Spatie\LaravelData\Optional;
 
 class UserData extends Data
 {
     public function __construct(
         #[Uuid]
         public ?string $id,
-        public string $first_name,
-        public string $last_name,
         public string $email,
         #[WithCast(EnumCast::class)]
         public UserRole $role,
-        public ?string $password
+        public Optional|string $password
     ) {
     }
 }

@@ -4,10 +4,12 @@ namespace App\Domains\Resumes\Actions;
 
 use App\Domains\Resumes\Data\SubjectData;
 use App\Domains\Resumes\Models\Subject;
+use App\Domains\Users\Data\UserData;
+use App\Domains\Users\Models\User;
 
 class UpsertSubjectAction
 {
-    public function handle(SubjectData $data): SubjectData
+    public function execute(SubjectData $data): SubjectData
     {
         $subject = Subject::updateOrCreate(
             ['id' => $data->id],
@@ -23,10 +25,8 @@ class UpsertSubjectAction
             ]
         );
 
-        if ($data->author) {
-            $subject->author()->associate($data->author->id);
-        } else {
-            $subject->author()->dissociate();
+        if ($data->author instanceof UserData && $user = User::find($data->author?->id)) {
+            $subject->author()->associate($user);
         }
 
         $subject->save();

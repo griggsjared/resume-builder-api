@@ -7,7 +7,7 @@ use App\Domains\Resumes\Models\Skill;
 
 class UpsertSkillAction
 {
-    public function handle(SkillData $data): SkillData
+    public function execute(SkillData $data): SkillData
     {
         $skill = Skill::updateOrCreate(
             ['id' => $data->id],
@@ -18,10 +18,8 @@ class UpsertSkillAction
             ]
         );
 
-        if ($data->subject) {
+        if ($data->subject instanceof SubjectData) {
             $skill->subject()->associate($data->subject->id);
-        } else {
-            $skill->subject()->dissociate();
         }
 
         return SkillData::from($skill);

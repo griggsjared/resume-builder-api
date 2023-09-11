@@ -7,7 +7,7 @@ use App\Domains\Resumes\Models\Subject;
 
 class DeleteSubjectAction
 {
-    public function handle(SubjectData $subject): ?SubjectData
+    public function execute(SubjectData $subject): ?SubjectData
     {
         $subject = Subject::find($subject->id);
 

@@ -2,23 +2,16 @@
 
 namespace App\Domains\Resumes\Data;
 
-use App\Domains\Resumes\Models\SubjectHighlight;
 use Spatie\LaravelData\Data;
+use Spatie\LaravelData\Optional;
 
 class SubjectHighlightData extends Data
 {
     public function __construct(
-        public ?int $id,
-        public string $content,
-        public ?SubjectData $subject = null
+        #[Uuid]
+        public readonly ?string $id,
+        public readonly ?string $content,
+        public readonly Optional|SubjectData $subject
     ) {
-    }
-
-    public static function fromModel(SubjectHighlight $highlight): self
-    {
-        return self::from([
-            ...$highlight->toArray(),
-            'subject' => $highlight->subject,
-        ]);
     }
 }

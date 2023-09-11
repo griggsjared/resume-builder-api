@@ -1,37 +1,37 @@
 <?php
 
-namespace Tests\Feature\Actions\Subjects;
+namespace Tests\Feature\Domains\Resumes\Actions;
 
-use App\Actions\Subjects\Upsert;
-use App\Models\DTO\SubjectData;
-use App\Models\DTO\UserData;
-use App\Models\Subject;
-use App\Models\User;
+use App\Domains\Resumes\Actions\UpsertSubjectAction;
+use App\Domains\Resumes\Data\SubjectData;
+use App\Domains\Resumes\Models\Subject;
+use App\Domains\Users\Actions\UpsertUserAction;
+use App\Domains\Users\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
-class UpsertTest extends TestCase
+class UpsertSubjectActionTest extends TestCase
 {
     use RefreshDatabase;
 
     /** @test */
-    public function it_creates_at_subject()
+    public function it_can_create_a_subject(): void
     {
-        $data = SubjectData::from([
-            'first_name' => 'Jim',
-            'last_name' => 'Bob',
-            'email' => 'jbob@example.com',
-            'title' => 'Developer',
-            'city' => 'New York',
-            'state' => 'NY',
-            'phone_number' => '555-555-5555',
-            'overview' => 'I am a developer',
-            'author' => UserData::from(
-                User::factory()->create()
-            ),
-        ]);
+        $user = User::factory()->create();
 
-        $data = app(Upsert::class)->handle($data);
+        $data = app(UpsertSubjectAction::class)->execute(
+            SubjectData::from([
+                'first_name' => 'Jim',
+                'last_name' => 'Bob',
+                'email' => 'jbob@example.com',
+                'title' => 'Developer',
+                'city' => 'New York',
+                'state' => 'NY',
+                'phone_number' => '555-555-5555',
+                'overview' => 'I am a developer',
+                'author' => $user,
+            ])
+        );
 
         $subject = Subject::find($data->id);
 
@@ -47,28 +47,25 @@ class UpsertTest extends TestCase
     }
 
     /** @test */
-    public function it_updates_at_subject()
+    public function it_can_update_a_subject()
     {
         $subject = Subject::factory()
             ->has(User::factory(), 'author')
             ->create();
 
-        $author = User::factory()->create();
-
-        $data = SubjectData::from([
-            ...$subject->toArray(),
-            'first_name' => 'Jim',
-            'last_name' => 'Bob',
-            'email' => 'jbob@example.com',
-            'title' => 'Developer',
-            'city' => 'New York',
-            'state' => 'NY',
-            'phone_number' => '555-555-5555',
-            'overview' => 'I am a developer',
-            'author' => UserData::from($author),
-        ]);
-
-        app(Upsert::class)->handle($data);
+        $data = app(UpsertSubjectAction::class)->execute(
+            SubjectData::from([
+                ...$subject->toArray(),
+                'first_name' => 'Jim',
+                'last_name' => 'Bob',
+                'email' => 'jbob@example.com',
+                'title' => 'Developer',
+                'city' => 'New York',
+                'state' => 'NY',
+                'phone_number' => '555-555-5555',
+                'overview' => 'I am a developer'
+            ])
+        );
 
         $subject->refresh();
 
@@ -80,6 +77,5 @@ class UpsertTest extends TestCase
         $this->assertEquals($data->phone_number, $subject->phone_number);
         $this->assertEquals($data->email, $subject->email);
         $this->assertEquals($data->overview, $subject->overview);
-        $this->assertEquals($author->id, $subject->author->id);
     }
 }

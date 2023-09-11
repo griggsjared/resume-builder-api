@@ -7,7 +7,7 @@ use App\Domains\Users\Models\User;
 
 class DeleteUserAction
 {
-    public function handle(UserData $user): ?UserData
+    public function execute(UserData $user): ?UserData
     {
         $user = User::find($user->id);
 

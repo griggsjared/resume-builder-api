@@ -2,23 +2,16 @@
 
 namespace App\Domains\Resumes\Data;
 
-use App\Domains\Resumes\Models\EmployerHighlight;
 use Spatie\LaravelData\Data;
+use Spatie\LaravelData\Optional;
 
 class EmployerHighlightData extends Data
 {
     public function __construct(
-        public ?int $id,
-        public string $content,
-        public ?EmployerData $employer = null
+        #[Uuid]
+        public readonly ?string $id,
+        public readonly string $content,
+        public readonly Optional|EmployerData $employer
     ) {
-    }
-
-    public static function fromModel(EmployerHighlight $highlight): self
-    {
-        return self::from([
-            ...$highlight->toArray(),
-            'employer' => $highlight->employer,
-        ]);
     }
 }

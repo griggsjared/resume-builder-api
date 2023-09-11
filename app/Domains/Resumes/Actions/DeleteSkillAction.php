@@ -7,7 +7,7 @@ use App\Domains\Resumes\Models\Skill;
 
 class DeleteSkillAction
 {
-    public function handle(SkillData $skillData): ?SkillData
+    public function execute(SkillData $skillData): ?SkillData
     {
         $skill = Skill::find($skillData->id);
 

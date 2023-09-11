@@ -2,25 +2,18 @@
 
 namespace App\Domains\Resumes\Data;
 
-use App\Domains\Resumes\Models\Skill;
 use Spatie\LaravelData\Data;
+use Spatie\LaravelData\Optional;
 
 class SkillData extends Data
 {
     public function __construct(
-        public ?int $id,
-        public string $name,
-        public ?string $category,
-        public ?int $sort = null,
-        public ?SubjectData $subject = null
+        #[Uuid]
+        public readonly ?string $id,
+        public readonly ?string $name,
+        public readonly ?string $category,
+        public readonly ?int $sort,
+        public Optional|SubjectData $subject
     ) {
-    }
-
-    public static function fromModel(Skill $skill): self
-    {
-        return self::from([
-            ...$skill->toArray(),
-            'subject' => $skill->subject,
-        ]);
     }
 }
