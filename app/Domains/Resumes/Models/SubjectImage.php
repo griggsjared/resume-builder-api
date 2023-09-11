@@ -10,7 +10,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class SubjectImage extends Model
 {
-    use HasFactory, Imageable, HasUuids;
+    use HasFactory, HasUuids, Imageable;
 
     /**
      * @var array<int, string>

@@ -55,7 +55,7 @@ trait Imageable
         return $this->imageBaseDirectory().'/'.$this->{$this->imageIdProperty()};
     }
 
-    public function imageUrl(string $size = 'full', ?string $filename = null, ?string $extension = null): string
+    public function imageUrl(string $size = 'full', string $filename = null, string $extension = null): string
     {
         $filename = $filename ? $filename : $this->{$this->imageFilenameProperty()};
 

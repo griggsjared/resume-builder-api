@@ -2,7 +2,6 @@
 
 namespace App\Domains\Users\Policies;
 
-
 use App\Domains\Users\Enums\UserRole;
 use App\Domains\Users\Models\User;
 use Illuminate\Auth\Access\HandlesAuthorization;

@@ -6,7 +6,6 @@ use App\Domains\Resumes\Actions\UpsertSkillAction;
 use App\Domains\Resumes\Data\SkillData;
 use App\Domains\Resumes\Models\Skill;
 use App\Domains\Resumes\Models\Subject;
-use App\Domains\Users\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 

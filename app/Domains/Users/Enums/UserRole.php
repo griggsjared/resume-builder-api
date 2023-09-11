@@ -7,9 +7,6 @@ enum UserRole: string
     case SuperAdmin = 'super-admin';
     case Basic = 'basic';
 
-    /**
-     * @return string
-     */
     public function label(): string
     {
         return match ($this) {

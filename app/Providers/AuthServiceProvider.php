@@ -2,9 +2,7 @@
 
 namespace App\Providers;
 
-use App\Domains\Support\Oauth\Models\Client;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
-use Laravel\Passport\Passport;
 
 class AuthServiceProvider extends ServiceProvider
 {

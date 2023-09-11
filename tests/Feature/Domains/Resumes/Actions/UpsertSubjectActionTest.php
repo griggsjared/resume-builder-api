@@ -5,7 +5,6 @@ namespace Tests\Feature\Domains\Resumes\Actions;
 use App\Domains\Resumes\Actions\UpsertSubjectAction;
 use App\Domains\Resumes\Data\SubjectData;
 use App\Domains\Resumes\Models\Subject;
-use App\Domains\Users\Actions\UpsertUserAction;
 use App\Domains\Users\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
@@ -63,7 +62,7 @@ class UpsertSubjectActionTest extends TestCase
                 'city' => 'New York',
                 'state' => 'NY',
                 'phone_number' => '555-555-5555',
-                'overview' => 'I am a developer'
+                'overview' => 'I am a developer',
             ])
         );
 

@@ -20,7 +20,6 @@ class ImageProcessor
 
     /**
      * @param  array<int, string>  $encodings
-     * @return void
      */
     public function setEncodings(array $encoding): void
     {
