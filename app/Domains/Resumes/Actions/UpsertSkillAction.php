@@ -3,7 +3,9 @@
 namespace App\Domains\Resumes\Actions;
 
 use App\Domains\Resumes\Data\SkillData;
+use App\Domains\Resumes\Data\SubjectData;
 use App\Domains\Resumes\Models\Skill;
+use App\Domains\Resumes\Models\Subject;
 
 class UpsertSkillAction
 {
@@ -18,9 +20,11 @@ class UpsertSkillAction
             ]
         );
 
-        if ($data->subject instanceof SubjectData) {
-            $skill->subject()->associate($data->subject->id);
+        if ($data->subject instanceof SubjectData && $subject = Subject::find($data->subject?->id)) {
+            $skill->subject()->associate($subject);
         }
+
+        $skill->save();
 
         return SkillData::from($skill);
     }
