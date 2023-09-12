@@ -2,6 +2,7 @@
 
 namespace Tests\Feature\Domains\Resumes\Models;
 
+use App\Domains\Resumes\Models\Education;
 use App\Domains\Resumes\Models\Employer;
 use App\Domains\Resumes\Models\Skill;
 use App\Domains\Resumes\Models\Subject;
@@ -40,12 +41,14 @@ class SubjectTest extends TestCase
             ->has(SubjectHighlight::factory(6), 'highlights')
             ->has(Employer::factory(3), 'employers')
             ->has(Skill::factory(3), 'skills')
+            ->has(Education::factory(3), 'education')
             ->create();
 
+        $this->assertInstanceOf(User::class, $subject->user);
         $this->assertCount(6, $subject->highlights);
         $this->assertCount(3, $subject->employers);
         $this->assertCount(3, $subject->skills);
-        $this->assertInstanceOf(User::class, $subject->user);
+        $this->assertCount(3, $subject->education);
     }
 
     /** @test */

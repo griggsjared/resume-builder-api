@@ -2,6 +2,7 @@
 
 namespace App\Domains\Resumes\Actions;
 
+use App\Domains\Resumes\Data\EducationData;
 use App\Domains\Resumes\Data\EmployerData;
 use App\Domains\Resumes\Data\SkillData;
 use App\Domains\Resumes\Data\SubjectData;
@@ -14,6 +15,7 @@ class DeleteSubjectAction
         private DeleteSubjectHighlightAction $deleteSubjectHighlightAction,
         private DeleteSkillAction $deleteSkillAction,
         private DeleteEmployerAction $deleteEmployerAction,
+        private DeleteEducationAction $deleteEducationAction,
     ) {
     }
 
@@ -40,6 +42,12 @@ class DeleteSubjectAction
         $subject->employers->each(function ($employer) {
             $this->deleteEmployerAction->execute(
                 EmployerData::from($employer)
+            );
+        });
+
+        $subject->education->each(function ($education) {
+            $this->deleteEducationAction->execute(
+                EducationData::from($education)
             );
         });
 

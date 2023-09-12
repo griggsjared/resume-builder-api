@@ -49,6 +49,11 @@ class Subject extends Model
         return $this->hasMany(Skill::class);
     }
 
+    public function education(): HasMany
+    {
+        return $this->hasMany(Education::class);
+    }
+
     protected function fullName(): Attribute
     {
         return Attribute::make(

@@ -41,7 +41,7 @@ class EmployerTest extends TestCase
     }
 
     /** @test */
-    public function it_can_assess_a_is_current_attribute()
+    public function it_can_assess_an_is_current_attribute()
     {
         $current = Employer::factory()->current()->create();
         $past = Employer::factory()->create();

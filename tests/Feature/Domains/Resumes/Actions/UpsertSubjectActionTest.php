@@ -4,6 +4,7 @@ namespace Tests\Feature\Domains\Resumes\Actions;
 
 use App\Domains\Resumes\Actions\UpsertSubjectAction;
 use App\Domains\Resumes\Data\SubjectData;
+use App\Domains\Resumes\Models\Education;
 use App\Domains\Resumes\Models\Employer;
 use App\Domains\Resumes\Models\Skill;
 use App\Domains\Resumes\Models\Subject;
@@ -234,5 +235,60 @@ class UpsertSubjectActionTest extends TestCase
         $this->assertEquals(now()->format('Y-m-d'), $subject->employers->last()->ended_at->format('Y-m-d'));
         $this->assertEquals('I did a thing', $subject->employers->last()->highlights->first()->content);
         $this->assertNull($deleteEmployer);
+    }
+
+    /** @test */
+    public function it_can_upsert_education_for_a_subject()
+    {
+        $this->freezeTime();
+
+        $subject = Subject::factory()
+            ->has(User::factory(), 'user')
+            ->has(Education::factory()->count(2), 'education')
+            ->create();
+
+        $keepEducation = $subject->education->first();
+        $deleteEducation = $subject->education->last();
+
+        app(UpsertSubjectAction::class)->execute(
+            SubjectData::from([
+                ...$subject->toArray(),
+                'education' => [
+                    [
+                        ...$keepEducation->toArray(),
+                        'name' => 'Education 1',
+                    ],
+                    [
+                        'name' => 'Education 2',
+                        'city' => 'New York',
+                        'state' => 'NY',
+                        'degree' => 'B.S.',
+                        'started_at' => now()->subYears(1),
+                        'ended_at' => now(),
+                        'highlights' => [
+                            [
+                                'content' => 'I did a thing',
+                            ],
+                        ],
+                    ],
+                ],
+            ])
+        );
+
+        $subject->refresh();
+        $keepEducation->refresh();
+        $deleteEducation = Education::find($deleteEducation->id);
+
+        $this->assertCount(2, $subject->education);
+        $this->assertEquals('Education 1', $keepEducation->name);
+        $this->assertEquals($keepEducation->id, $subject->education->first()->id);
+        $this->assertEquals('Education 2', $subject->education->last()->name);
+        $this->assertEquals('New York', $subject->education->last()->city);
+        $this->assertEquals('NY', $subject->education->last()->state);
+        $this->assertEquals('B.S.', $subject->education->last()->degree);
+        $this->assertEquals(now()->subYears(1)->format('Y-m-d'), $subject->education->last()->started_at->format('Y-m-d'));
+        $this->assertEquals(now()->format('Y-m-d'), $subject->education->last()->ended_at->format('Y-m-d'));
+        $this->assertEquals('I did a thing', $subject->education->last()->highlights->first()->content);
+        $this->assertNull($deleteEducation);
     }
 }

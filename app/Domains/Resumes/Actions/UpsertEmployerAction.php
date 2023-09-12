@@ -7,11 +7,7 @@ use App\Domains\Resumes\Data\EmployerHighlightData;
 use App\Domains\Resumes\Data\SubjectData;
 use App\Domains\Resumes\Models\Employer;
 use App\Domains\Resumes\Models\Subject;
-use App\Domains\Users\Data\UserData;
-use App\Domains\Users\Models\User;
 use Spatie\LaravelData\DataCollection;
-
-use function Ramsey\Uuid\v1;
 
 class UpsertEmployerAction
 {
@@ -38,7 +34,6 @@ class UpsertEmployerAction
         if ($data->subject instanceof SubjectData && $subject = Subject::find($data->subject?->id)) {
             $employer->subject()->associate($subject);
         }
-
 
         if($data->highlights instanceof DataCollection) {
 

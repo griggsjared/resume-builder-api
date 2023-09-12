@@ -3,6 +3,7 @@
 namespace App\Domains\Resumes\Data;
 
 use App\Domains\Resumes\Data\EmployerData;
+use App\Domains\Resumes\Models\Education;
 use App\Domains\Users\Data\UserData;
 use Spatie\LaravelData\Attributes\DataCollectionOf;
 use Spatie\LaravelData\Attributes\Validation\Uuid;
@@ -30,6 +31,8 @@ class SubjectData extends Data
         public readonly Optional|DataCollection $skills,
         #[DataCollectionOf(EmployerData::class)]
         public readonly Optional|DataCollection $employers,
+        #[DataCollectionOf(EducationData::class)]
+        public readonly Optional|DataCollection $education,
     ) {
     }
 }

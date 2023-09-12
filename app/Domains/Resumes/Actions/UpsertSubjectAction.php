@@ -2,6 +2,7 @@
 
 namespace App\Domains\Resumes\Actions;
 
+use App\Domains\Resumes\Data\EducationData;
 use App\Domains\Resumes\Data\EmployerData;
 use App\Domains\Resumes\Data\SkillData;
 use App\Domains\Resumes\Data\SubjectData;
@@ -20,6 +21,8 @@ class UpsertSubjectAction
         private DeleteSkillAction $deleteSkillAction,
         private UpsertEmployerAction $upsertEmployerAction,
         private DeleteEmployerAction $deleteEmployerAction,
+        private UpsertEducationAction $upsertEducationAction,
+        private DeleteEducationAction $deleteEducationAction,
     ) {
     }
 
@@ -97,6 +100,26 @@ class UpsertSubjectAction
                 $this->upsertEmployerAction->execute(
                     EmployerData::from([
                         ...$employer->toArray(),
+                        'subject' => $subject,
+                    ])
+                );
+            });
+        }
+
+        if($data->education instanceof DataCollection) {
+
+            $subject->education->filter(
+                fn ($education) => ! $data->education->toCollection()->contains('id', $education->id)
+            )->each(function ($education) {
+                $this->deleteEducationAction->execute(
+                    EducationData::from($education)
+                );
+            });
+
+            $data->education->each(function ($education) use ($subject) {
+                $this->upsertEducationAction->execute(
+                    EducationData::from([
+                        ...$education->toArray(),
                         'subject' => $subject,
                     ])
                 );

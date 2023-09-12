@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
-class EmployerHighlight extends Model
+class EducationHighlight extends Model
 {
     use HasFactory, HasUuids;
 
@@ -18,8 +18,8 @@ class EmployerHighlight extends Model
         'content',
     ];
 
-    public function employer(): BelongsTo
+    public function education(): BelongsTo
     {
-        return $this->belongsTo(Employer::class);
+        return $this->belongsTo(Education::class);
     }
 }
