@@ -17,6 +17,7 @@ class Skill extends Model
     protected $fillable = [
         'name',
         'category',
+        'sort',
     ];
 
     public function subject(): BelongsTo

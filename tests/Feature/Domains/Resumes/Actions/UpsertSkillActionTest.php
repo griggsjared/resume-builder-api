@@ -22,6 +22,7 @@ class UpsertSkillActionTest extends TestCase
             SkillData::from([
                 'name' => 'PHP',
                 'category' => 'Programming Language',
+                'sort'  => 1,
                 'subject' => $subject,
             ])
         );
@@ -29,8 +30,10 @@ class UpsertSkillActionTest extends TestCase
         $skill = Skill::find($data->id);
 
         $this->assertInstanceOf(Subject::class, $skill->subject);
+        $this->assertEquals($subject->id, $skill->subject->id);
         $this->assertEquals($data->name, $skill->name);
         $this->assertEquals($data->category, $skill->category);
+        $this->assertEquals($data->sort, $skill->sort);
     }
 
     /** @test */
@@ -45,6 +48,7 @@ class UpsertSkillActionTest extends TestCase
                 ...$skill->toArray(),
                 'name' => 'PHP',
                 'category' => 'Programming Language',
+                'sort'  => 1,
             ])
         );
 
@@ -52,5 +56,28 @@ class UpsertSkillActionTest extends TestCase
 
         $this->assertEquals($data->name, $skill->name);
         $this->assertEquals($data->category, $skill->category);
+        $this->assertEquals($data->sort, $skill->sort);
+    }
+
+    /** @test */
+    public function it_can_update_a_skill_with_a_subject()
+    {
+        $skill = Skill::factory()
+            ->has(Subject::factory(), 'subject')
+            ->create();
+
+        $subject = Subject::factory()->create();
+
+        $data = app(UpsertSkillAction::class)->execute(
+            SkillData::from([
+                ...$skill->toArray(),
+                'subject' => $subject,
+            ])
+        );
+
+        $skill->refresh();
+
+        $this->assertInstanceOf(Subject::class, $skill->subject);
+        $this->assertEquals($subject->id, $skill->subject->id);
     }
 }
