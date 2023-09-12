@@ -34,11 +34,6 @@ class Subject extends Model
         return $this->belongsTo(User::class, 'author_id');
     }
 
-    public function image(): HasOne
-    {
-        return $this->hasOne(SubjectImage::class);
-    }
-
     public function highlights(): HasMany
     {
         return $this->hasMany(SubjectHighlight::class);

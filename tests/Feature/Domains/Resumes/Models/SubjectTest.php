@@ -37,13 +37,11 @@ class SubjectTest extends TestCase
     {
         $subject = Subject::factory()
             ->for(User::factory(), 'author')
-            ->has(SubjectImage::factory(1), 'image')
             ->has(SubjectHighlight::factory(6), 'highlights')
             ->has(Employer::factory(3), 'employers')
             ->has(Skill::factory(3), 'skills')
             ->create();
 
-        $this->assertInstanceOf(SubjectImage::class, $subject->image);
         $this->assertCount(6, $subject->highlights);
         $this->assertCount(3, $subject->employers);
         $this->assertCount(3, $subject->skills);
