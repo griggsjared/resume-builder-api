@@ -29,11 +29,11 @@ class SubjectPolicyTest extends TestCase
         $basic2 = User::factory()->basic()->create();
 
         $subject = Subject::factory()
-            ->for($basic, 'author')
+            ->for($basic, 'user')
             ->create();
 
         $subject2 = Subject::factory()
-            ->for($basic2, 'author')
+            ->for($basic2, 'user')
             ->create();
 
         $this->assertTrue($superAdmin->can('view', $subject));
@@ -62,11 +62,11 @@ class SubjectPolicyTest extends TestCase
         $basic2 = User::factory()->basic()->create();
 
         $subject = Subject::factory()
-            ->for($basic, 'author')
+            ->for($basic, 'user')
             ->create();
 
         $subject2 = Subject::factory()
-            ->for($basic2, 'author')
+            ->for($basic2, 'user')
             ->create();
 
         $this->assertTrue($superAdmin->can('update', $subject));
@@ -85,11 +85,11 @@ class SubjectPolicyTest extends TestCase
         $basic2 = User::factory()->basic()->create();
 
         $subject = Subject::factory()
-            ->for($basic, 'author')
+            ->for($basic, 'user')
             ->create();
 
         $subject2 = Subject::factory()
-            ->for($basic2, 'author')
+            ->for($basic2, 'user')
             ->create();
 
         $this->assertTrue($superAdmin->can('delete', $subject));

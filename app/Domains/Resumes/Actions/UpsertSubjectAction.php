@@ -39,8 +39,8 @@ class UpsertSubjectAction
             ]
         );
 
-        if ($data->author instanceof UserData && $user = User::find($data->author?->id)) {
-            $subject->author()->associate($user);
+        if ($data->user instanceof UserData && $user = User::find($data->user?->id)) {
+            $subject->user()->associate($user);
         }
 
         if($data->highlights instanceof DataCollection) {

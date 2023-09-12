@@ -23,7 +23,7 @@ class SubjectData extends Data
         public readonly ?string $phone_number,
         public readonly ?string $email,
         public readonly ?string $overview,
-        public readonly Optional|UserData $author,
+        public readonly Optional|UserData $user,
         #[DataCollectionOf(SubjectHighlightData::class)]
         public readonly Optional|DataCollection $highlights,
         #[DataCollectionOf(SkillData::class)]

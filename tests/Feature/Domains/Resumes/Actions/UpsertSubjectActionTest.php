@@ -32,14 +32,14 @@ class UpsertSubjectActionTest extends TestCase
                 'state' => 'NY',
                 'phone_number' => '555-555-5555',
                 'overview' => 'I am a developer',
-                'author' => $user,
+                'user' => $user,
             ])
         );
 
         $subject = Subject::find($data->id);
 
-        $this->assertInstanceOf(User::class, $subject->author);
-        $this->assertEquals($user->id, $subject->author->id);
+        $this->assertInstanceOf(User::class, $subject->user);
+        $this->assertEquals($user->id, $subject->user->id);
         $this->assertEquals($data->first_name, $subject->first_name);
         $this->assertEquals($data->last_name, $subject->last_name);
         $this->assertEquals($data->title, $subject->title);
@@ -54,7 +54,7 @@ class UpsertSubjectActionTest extends TestCase
     public function it_can_update_a_subject()
     {
         $subject = Subject::factory()
-            ->has(User::factory(), 'author')
+            ->has(User::factory(), 'user')
             ->create();
 
         $data = app(UpsertSubjectAction::class)->execute(
@@ -84,10 +84,10 @@ class UpsertSubjectActionTest extends TestCase
     }
 
     /** @test */
-    public function it_can_update_a_subject_with_an_author()
+    public function it_can_update_a_subject_with_an_user()
     {
         $subject = Subject::factory()
-            ->has(User::factory(), 'author')
+            ->has(User::factory(), 'user')
             ->create();
 
         $user = User::factory()->create();
@@ -95,21 +95,21 @@ class UpsertSubjectActionTest extends TestCase
         app(UpsertSubjectAction::class)->execute(
             SubjectData::from([
                 ...$subject->toArray(),
-                'author' => $user,
+                'user' => $user,
             ])
         );
 
         $subject->refresh();
 
-        $this->assertInstanceOf(User::class, $subject->author);
-        $this->assertEquals($user->id, $subject->author->id);
+        $this->assertInstanceOf(User::class, $subject->user);
+        $this->assertEquals($user->id, $subject->user->id);
     }
 
     /** @test */
     public function it_can_upsert_subject_highlights_for_a_subject()
     {
         $subject = Subject::factory()
-            ->has(User::factory(), 'author')
+            ->has(User::factory(), 'user')
             ->has(SubjectHighlight::factory()->count(2), 'highlights')
             ->create();
 
@@ -146,7 +146,7 @@ class UpsertSubjectActionTest extends TestCase
     public function it_can_upsert_skills_for_a_subject()
     {
         $subject = Subject::factory()
-            ->has(User::factory(), 'author')
+            ->has(User::factory(), 'user')
             ->has(Skill::factory()->count(2), 'skills')
             ->create();
 
@@ -189,7 +189,7 @@ class UpsertSubjectActionTest extends TestCase
         $this->freezeTime();
 
         $subject = Subject::factory()
-            ->has(User::factory(), 'author')
+            ->has(User::factory(), 'user')
             ->has(Employer::factory()->count(2), 'employers')
             ->create();
 
