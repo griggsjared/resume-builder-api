@@ -22,7 +22,7 @@ class UpsertSkillActionTest extends TestCase
             SkillData::from([
                 'name' => 'PHP',
                 'category' => 'Programming Language',
-                'sort'  => 1,
+                'sort' => 1,
                 'subject' => $subject,
             ])
         );
@@ -48,7 +48,7 @@ class UpsertSkillActionTest extends TestCase
                 ...$skill->toArray(),
                 'name' => 'PHP',
                 'category' => 'Programming Language',
-                'sort'  => 1,
+                'sort' => 1,
             ])
         );
 

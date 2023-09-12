@@ -7,7 +7,6 @@ use App\Domains\Resumes\Models\Employer;
 use App\Domains\Resumes\Models\Skill;
 use App\Domains\Resumes\Models\Subject;
 use App\Domains\Resumes\Models\SubjectHighlight;
-use App\Domains\Resumes\Models\SubjectImage;
 use App\Domains\Users\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Schema;

@@ -36,7 +36,7 @@ class UpsertEducationAction
             $education->subject()->associate($subject);
         }
 
-        if($data->highlights instanceof DataCollection) {
+        if ($data->highlights instanceof DataCollection) {
 
             $education->highlights->filter(
                 fn ($highlight) => ! $data->highlights->toCollection()->contains('id', $highlight->id)

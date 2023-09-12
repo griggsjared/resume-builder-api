@@ -46,7 +46,7 @@ class UpsertSubjectAction
             $subject->user()->associate($user);
         }
 
-        if($data->highlights instanceof DataCollection) {
+        if ($data->highlights instanceof DataCollection) {
 
             $subject->highlights->filter(
                 fn ($highlight) => ! $data->highlights->toCollection()->contains('id', $highlight->id)
@@ -66,7 +66,7 @@ class UpsertSubjectAction
             });
         }
 
-        if($data->skills instanceof DataCollection) {
+        if ($data->skills instanceof DataCollection) {
 
             $subject->skills->filter(
                 fn ($skill) => ! $data->skills->toCollection()->contains('id', $skill->id)
@@ -86,7 +86,7 @@ class UpsertSubjectAction
             });
         }
 
-        if($data->employers instanceof DataCollection) {
+        if ($data->employers instanceof DataCollection) {
 
             $subject->employers->filter(
                 fn ($employer) => ! $data->employers->toCollection()->contains('id', $employer->id)
@@ -106,7 +106,7 @@ class UpsertSubjectAction
             });
         }
 
-        if($data->education instanceof DataCollection) {
+        if ($data->education instanceof DataCollection) {
 
             $subject->education->filter(
                 fn ($education) => ! $data->education->toCollection()->contains('id', $education->id)

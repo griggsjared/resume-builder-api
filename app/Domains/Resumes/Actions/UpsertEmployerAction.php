@@ -35,7 +35,7 @@ class UpsertEmployerAction
             $employer->subject()->associate($subject);
         }
 
-        if($data->highlights instanceof DataCollection) {
+        if ($data->highlights instanceof DataCollection) {
 
             $employer->highlights->filter(
                 fn ($highlight) => ! $data->highlights->toCollection()->contains('id', $highlight->id)

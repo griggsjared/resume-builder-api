@@ -2,8 +2,6 @@
 
 namespace App\Domains\Resumes\Data;
 
-use App\Domains\Resumes\Data\EmployerData;
-use App\Domains\Resumes\Models\Education;
 use App\Domains\Users\Data\UserData;
 use Spatie\LaravelData\Attributes\DataCollectionOf;
 use Spatie\LaravelData\Attributes\Validation\Uuid;

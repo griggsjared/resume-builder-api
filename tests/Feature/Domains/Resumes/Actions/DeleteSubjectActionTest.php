@@ -41,7 +41,6 @@ class DeleteSubjectActionTest extends TestCase
         $education = $subject->education->first();
         $educationHighlight = $education->highlights->first();
 
-
         app(DeleteSubjectAction::class)->execute(SubjectData::from($subject));
 
         $subject = Subject::find($subject->id);
