@@ -1,6 +1,6 @@
-# Resume Builder
+# Resume Builder API
 
-Requires composer 2.0+, php 8.1+, and node 16.6+.
+Requires composer 2.0+, and php 8.2+.
 
 To serve the dev env:
 ```
@@ -12,11 +12,6 @@ php artisan migrate --seed
 php artisan serve
 ```
 
-To start the dev build:
-```
-npm i
-npm run dev
-```
 To run tests:
 ```
 php artisan test
