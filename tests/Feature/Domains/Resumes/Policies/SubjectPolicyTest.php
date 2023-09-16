@@ -14,17 +14,17 @@ class SubjectPolicyTest extends TestCase
     /** @test */
     public function it_can_decide_if_user_can_view_any_subjects()
     {
-        $superAdmin = User::factory()->superAdmin()->create();
+        $admin = User::factory()->admin()->create();
         $basic = User::factory()->basic()->create();
 
-        $this->assertTrue($superAdmin->can('viewAny', Subject::class));
+        $this->assertTrue($admin->can('viewAny', Subject::class));
         $this->assertFalse($basic->can('viewAny', Subject::class));
     }
 
     /** @test */
     public function it_can_decide_if_user_can_view_a_subject()
     {
-        $superAdmin = User::factory()->superAdmin()->create();
+        $admin = User::factory()->admin()->create();
         $basic = User::factory()->basic()->create();
         $basic2 = User::factory()->basic()->create();
 
@@ -36,8 +36,8 @@ class SubjectPolicyTest extends TestCase
             ->for($basic2, 'user')
             ->create();
 
-        $this->assertTrue($superAdmin->can('view', $subject));
-        $this->assertTrue($superAdmin->can('view', $subject2));
+        $this->assertTrue($admin->can('view', $subject));
+        $this->assertTrue($admin->can('view', $subject2));
         $this->assertTrue($basic->can('view', $subject));
         $this->assertFalse($basic->can('view', $subject2));
         $this->assertFalse($basic2->can('view', $subject));
@@ -47,17 +47,17 @@ class SubjectPolicyTest extends TestCase
     /** @test */
     public function it_can_decide_if_user_can_create_a_subject()
     {
-        $superAdmin = User::factory()->superAdmin()->create();
+        $admin = User::factory()->admin()->create();
         $basic = User::factory()->basic()->create();
 
-        $this->assertTrue($superAdmin->can('create', Subject::class));
+        $this->assertTrue($admin->can('create', Subject::class));
         $this->assertTrue($basic->can('create', Subject::class));
     }
 
     /** @test */
     public function it_can_decide_if_user_can_update_a_subject()
     {
-        $superAdmin = User::factory()->superAdmin()->create();
+        $admin = User::factory()->admin()->create();
         $basic = User::factory()->basic()->create();
         $basic2 = User::factory()->basic()->create();
 
@@ -69,8 +69,8 @@ class SubjectPolicyTest extends TestCase
             ->for($basic2, 'user')
             ->create();
 
-        $this->assertTrue($superAdmin->can('update', $subject));
-        $this->assertTrue($superAdmin->can('update', $subject2));
+        $this->assertTrue($admin->can('update', $subject));
+        $this->assertTrue($admin->can('update', $subject2));
         $this->assertTrue($basic->can('update', $subject));
         $this->assertFalse($basic->can('update', $subject2));
         $this->assertFalse($basic2->can('update', $subject));
@@ -80,7 +80,7 @@ class SubjectPolicyTest extends TestCase
     /** @test */
     public function it_can_decide_if_user_can_delete_a_subject()
     {
-        $superAdmin = User::factory()->superAdmin()->create();
+        $admin = User::factory()->admin()->create();
         $basic = User::factory()->basic()->create();
         $basic2 = User::factory()->basic()->create();
 
@@ -92,8 +92,8 @@ class SubjectPolicyTest extends TestCase
             ->for($basic2, 'user')
             ->create();
 
-        $this->assertTrue($superAdmin->can('delete', $subject));
-        $this->assertTrue($superAdmin->can('delete', $subject2));
+        $this->assertTrue($admin->can('delete', $subject));
+        $this->assertTrue($admin->can('delete', $subject2));
         $this->assertTrue($basic->can('delete', $subject));
         $this->assertFalse($basic->can('delete', $subject2));
         $this->assertFalse($basic2->can('delete', $subject));

@@ -20,7 +20,7 @@ class UpsertUserActionTest extends TestCase
         $data = UserData::from([
             'email' => 'tomcruise@example.com',
             'password' => 'Secret!',
-            'role' => UserRole::SuperAdmin,
+            'role' => UserRole::Admin,
         ]);
 
         $updatedData = app(UpsertUserAction::class)->execute($data);
@@ -43,7 +43,7 @@ class UpsertUserActionTest extends TestCase
             ...$user->toArray(),
             'email' => 'tomcruise@example.com',
             'password' => 'Secret!',
-            'role' => UserRole::SuperAdmin,
+            'role' => UserRole::Admin,
         ]);
 
         app(UpsertUserAction::class)->execute($data);

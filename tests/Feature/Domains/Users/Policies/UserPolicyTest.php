@@ -13,23 +13,23 @@ class UserPolicyTest extends TestCase
     /** @test */
     public function it_can_decide_if_user_can_view_any_users()
     {
-        $superAdmin = User::factory()->superAdmin()->create();
+        $admin = User::factory()->admin()->create();
         $basic = User::factory()->basic()->create();
 
-        $this->assertTrue($superAdmin->can('viewAny', User::class));
+        $this->assertTrue($admin->can('viewAny', User::class));
         $this->assertFalse($basic->can('viewAny', User::class));
     }
 
     /** @test */
     public function it_can_decide_if_user_can_view_a_user()
     {
-        $superAdmin = User::factory()->superAdmin()->create();
-        $superAdmin2 = User::factory()->superAdmin()->create();
+        $admin = User::factory()->admin()->create();
+        $admin2 = User::factory()->admin()->create();
         $basic = User::factory()->basic()->create();
         $basic2 = User::factory()->basic()->create();
 
-        $this->assertTrue($superAdmin->can('view', $superAdmin));
-        $this->assertTrue($superAdmin->can('view', $superAdmin2));
+        $this->assertTrue($admin->can('view', $admin));
+        $this->assertTrue($admin->can('view', $admin2));
         $this->assertFalse($basic->can('view', $basic));
         $this->assertFalse($basic->can('view', $basic2));
     }
@@ -37,26 +37,26 @@ class UserPolicyTest extends TestCase
     /** @test */
     public function it_can_decide_if_user_can_create_a_user()
     {
-        $superAdmin = User::factory()->superAdmin()->create();
+        $admin = User::factory()->admin()->create();
         $basic = User::factory()->basic()->create();
 
-        $this->assertTrue($superAdmin->can('create', User::class));
+        $this->assertTrue($admin->can('create', User::class));
         $this->assertFalse($basic->can('create', User::class));
     }
 
     /** @test */
     public function it_can_decide_if_user_can_update_a_user()
     {
-        $superAdmin = User::factory()->superAdmin()->create();
-        $superAdmin2 = User::factory()->superAdmin()->create();
+        $admin = User::factory()->admin()->create();
+        $admin2 = User::factory()->admin()->create();
         $basic = User::factory()->basic()->create();
         $basic2 = User::factory()->basic()->create();
 
-        $this->assertFalse($superAdmin->can('update', $superAdmin));
-        $this->assertTrue($superAdmin->can('update', $superAdmin2));
-        $this->assertTrue($superAdmin->can('update', $basic));
+        $this->assertFalse($admin->can('update', $admin));
+        $this->assertTrue($admin->can('update', $admin2));
+        $this->assertTrue($admin->can('update', $basic));
 
-        $this->assertFalse($basic->can('update', $superAdmin));
+        $this->assertFalse($basic->can('update', $admin));
         $this->assertFalse($basic->can('update', $basic));
         $this->assertFalse($basic->can('update', $basic2));
     }
@@ -64,16 +64,16 @@ class UserPolicyTest extends TestCase
     /** @test */
     public function it_can_decide_if_user_can_delete_a_user()
     {
-        $superAdmin = User::factory()->superAdmin()->create();
-        $superAdmin2 = User::factory()->superAdmin()->create();
+        $admin = User::factory()->admin()->create();
+        $admin2 = User::factory()->admin()->create();
         $basic = User::factory()->basic()->create();
         $basic2 = User::factory()->basic()->create();
 
-        $this->assertFalse($superAdmin->can('delete', $superAdmin));
-        $this->assertTrue($superAdmin->can('delete', $superAdmin2));
-        $this->assertTrue($superAdmin->can('delete', $basic));
+        $this->assertFalse($admin->can('delete', $admin));
+        $this->assertTrue($admin->can('delete', $admin2));
+        $this->assertTrue($admin->can('delete', $basic));
 
-        $this->assertFalse($basic->can('delete', $superAdmin));
+        $this->assertFalse($basic->can('delete', $admin));
         $this->assertFalse($basic->can('delete', $basic));
         $this->assertFalse($basic->can('delete', $basic2));
     }

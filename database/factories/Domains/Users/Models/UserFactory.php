@@ -28,10 +28,10 @@ class UserFactory extends Factory
         ];
     }
 
-    public function superAdmin(): self
+    public function admin(): self
     {
         return $this->state(fn () => [
-            'role' => UserRole::SuperAdmin,
+            'role' => UserRole::Admin,
         ]);
     }
 

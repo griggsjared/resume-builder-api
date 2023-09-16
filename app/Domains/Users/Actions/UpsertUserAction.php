@@ -29,3 +29,4 @@ class UpsertUserAction
         return UserData::from($user);
     }
 }
+

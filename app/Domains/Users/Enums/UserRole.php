@@ -2,15 +2,17 @@
 
 namespace App\Domains\Users\Enums;
 
-enum UserRole: string
+use App\Domains\Support\Enum\Interfaces\HasLabelInterface;
+
+enum UserRole: string implements HasLabelInterface
 {
-    case SuperAdmin = 'super-admin';
+    case Admin = 'admin';
     case Basic = 'basic';
 
     public function label(): string
     {
         return match ($this) {
-            self::SuperAdmin => 'Super Admin',
+            self::Admin => 'Admin',
             self::Basic => 'Basic',
         };
     }

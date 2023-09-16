@@ -13,12 +13,12 @@ class SubjectPolicy
 
     public function viewAny(User $user): bool
     {
-        return $user->role === UserRole::SuperAdmin;
+        return $user->role === UserRole::Admin;
     }
 
     public function view(User $user, Subject $model): bool
     {
-        if ($user->role === UserRole::SuperAdmin) {
+        if ($user->role === UserRole::Admin) {
             return true;
         }
 
@@ -32,7 +32,7 @@ class SubjectPolicy
 
     public function update(User $user, Subject $model): bool
     {
-        if ($user->role === UserRole::SuperAdmin) {
+        if ($user->role === UserRole::Admin) {
             return true;
         }
 
@@ -41,7 +41,7 @@ class SubjectPolicy
 
     public function delete(User $user, Subject $model): bool
     {
-        if ($user->role === UserRole::SuperAdmin) {
+        if ($user->role === UserRole::Admin) {
             return true;
         }
 
