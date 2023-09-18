@@ -4,13 +4,14 @@ use App\Http\Controllers\Auth;
 use App\Http\Controllers\FallbackController;
 use Illuminate\Support\Facades\Route;
 
-//Route::post('login', Auth\LoginController::class)->name('login');
+Route::post('auth/login', Auth\LoginController::class)->name('auth.login');
 
 Route::middleware('auth:api')->group(function () {
 
     Route::group(['prefix' => 'auth'], function () {
-        Route::get('user', Auth\AuthorizedUserController::class)->name('authorized-user');
-        //Route::post('logout', Auth\LogoutController::class)->name('logout');
+        Route::get('user', Auth\UserController::class)->name('auth.user');
+        Route::post('refresh', Auth\RefreshController::class)->name('auth.refresh');
+        Route::post('logout', Auth\LogoutController::class)->name('auth.logout');
     });
 
     //users

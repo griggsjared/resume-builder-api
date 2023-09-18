@@ -9,13 +9,12 @@ use App\Http\ViewData\UserData;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
-class AuthorizedUserController extends Controller
+class UserController extends Controller
 {
     public function __invoke(Request $request): JsonResponse
     {
-        return response()->json([
-            'success' => true,
-            'data' => UserData::from($request->user()),
-        ]);
+        return response()->json(
+            UserData::from($request->user())
+        );
     }
 }

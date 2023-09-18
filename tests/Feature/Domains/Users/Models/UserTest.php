@@ -3,6 +3,7 @@
 namespace Tests\Feature\Domains\Users\Models;
 
 use App\Domains\Resumes\Models\Subject;
+use App\Domains\Users\Models\AccessToken;
 use App\Domains\Users\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Schema;
@@ -28,8 +29,10 @@ class UserTest extends TestCase
     {
         $user = User::factory()
             ->has(Subject::factory(5), 'subjects')
+            ->has(AccessToken::factory(5), 'accessTokens')
             ->create();
 
         $this->assertCount(5, $user->subjects);
+        $this->assertCount(5, $user->accessTokens);
     }
 }

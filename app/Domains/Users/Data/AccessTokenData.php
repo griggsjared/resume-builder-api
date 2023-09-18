@@ -9,7 +9,7 @@ use Spatie\LaravelData\Attributes\WithCast;
 use Spatie\LaravelData\Data;
 use Spatie\LaravelData\Optional;
 
-class UserAccessTokenData extends Data
+class AccessTokenData extends Data
 {
     public function __construct(
         #[Uuid]
@@ -18,6 +18,7 @@ class UserAccessTokenData extends Data
         public readonly Optional|string $token,
         #[WithCast(AsCarbonCast::class)]
         public readonly ?Carbon $expires_at,
+        public readonly ?int $expires_in,
     ) {
     }
 }

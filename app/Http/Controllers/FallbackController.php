@@ -11,7 +11,7 @@ class FallbackController extends Controller
     public function __invoke(): JsonResponse
     {
         return response()->json([
-            'message' => '404: Not Found',
+            'message' => 'Not Found',
         ], 404);
     }
 }

@@ -2,15 +2,15 @@
 
 namespace App\Domains\Users\Actions;
 
-use App\Domains\Users\Data\UserAccessTokenData;
+use App\Domains\Users\Data\AccessTokenData;
 use App\Domains\Users\Data\UserData;
+use App\Domains\Users\Models\AccessToken;
 use App\Domains\Users\Models\User;
-use App\Domains\Users\Models\UserAccessToken;
 
 class DeleteUserAction
 {
     public function __construct(
-        private DeleteUserAccessTokenAction $deleteUserAccessTokenAction,
+        private DeleteAccessTokenAction $deleteAccessTokenAction,
     ) {
     }
 
@@ -22,9 +22,9 @@ class DeleteUserAction
             return null;
         }
 
-        $user->tokens()->each(function(UserAccessToken $token) {
-            $this->deleteUserAccessTokenAction->execute(
-                UserAccessTokenData::from($token)
+        $user->accessTokens->each(function (AccessToken $token) {
+            $this->deleteAccessTokenAction->execute(
+                AccessTokenData::from($token)
             );
         });
 

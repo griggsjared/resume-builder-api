@@ -7,13 +7,14 @@ use App\Domains\Users\Enums\UserRole;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 
 class User extends Authenticatable
 {
-    use HasFactory, HasUuids, Notifiable, HasApiTokens;
+    use HasApiTokens, HasFactory, HasUuids, Notifiable;
 
     /**
      * @var array<int, string>
@@ -40,5 +41,10 @@ class User extends Authenticatable
     public function subjects(): HasMany
     {
         return $this->hasMany(Subject::class, 'user_id');
+    }
+
+    public function accessTokens(): MorphMany
+    {
+        return $this->tokens();
     }
 }

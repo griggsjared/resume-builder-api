@@ -9,7 +9,6 @@ use App\Domains\Resumes\Models\Skill;
 use App\Domains\Resumes\Models\Subject;
 use App\Domains\Resumes\Models\SubjectHighlight;
 use App\Domains\Users\Models\User;
-use App\Domains\Users\Models\UserAccessToken;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -26,7 +25,7 @@ class DatabaseSeeder extends Seeder
 
         $user = User::factory()->admin()->create([
             'email' => $email,
-            'password' => bcrypt($password)
+            'password' => bcrypt($password),
         ]);
 
         $token = $user->createToken('test-token');

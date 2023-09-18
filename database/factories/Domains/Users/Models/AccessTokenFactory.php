@@ -2,19 +2,19 @@
 
 namespace Database\Factories\Domains\Users\Models;
 
-use App\Domains\Users\Models\UserAccessToken;
+use App\Domains\Users\Models\AccessToken;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Str;
 
 /**
- * @extends Factory<UserAccessToken>
+ * @extends Factory<AccessToken>
  */
-class UserAccessTokenFactory extends Factory
+class AccessTokenFactory extends Factory
 {
     /**
      * @var class-string
      */
-    protected $model = UserAccessToken::class;
+    protected $model = AccessToken::class;
 
     /**
      * @return array<string, mixed>

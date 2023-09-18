@@ -2,13 +2,13 @@
 
 namespace Tests\Feature\Domains\Users\Actions;
 
-use App\Domains\Users\Actions\GenerateUserAccessTokenAction;
+use App\Domains\Users\Actions\GenerateAccessTokenAction;
 use App\Domains\Users\Data\UserData;
 use App\Domains\Users\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
-class GenerateUserAccessTokenActionTest extends TestCase
+class GenerateAccessTokenActionTest extends TestCase
 {
     use RefreshDatabase;
 
@@ -19,7 +19,7 @@ class GenerateUserAccessTokenActionTest extends TestCase
 
         $expiresAt = now()->addDay();
 
-        $tokenData = app(GenerateUserAccessTokenAction::class)->execute(
+        $tokenData = app(GenerateAccessTokenAction::class)->execute(
             UserData::from($user),
             'test-token',
             $expiresAt,

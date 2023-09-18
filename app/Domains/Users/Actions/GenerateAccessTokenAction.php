@@ -2,14 +2,14 @@
 
 namespace App\Domains\Users\Actions;
 
-use App\Domains\Users\Data\UserAccessTokenData;
+use App\Domains\Users\Data\AccessTokenData;
 use App\Domains\Users\Data\UserData;
 use App\Domains\Users\Models\User;
 use Illuminate\Support\Carbon;
 
-class GenerateUserAccessTokenAction
+class GenerateAccessTokenAction
 {
-    public function execute(UserData $data, string $name, ?Carbon $expiresAt = null): ?UserAccessTokenData
+    public function execute(UserData $data, string $name, Carbon $expiresAt = null): ?AccessTokenData
     {
         $user = User::find($data->id);
 
@@ -22,10 +22,9 @@ class GenerateUserAccessTokenAction
             expiresAt: $expiresAt
         );
 
-        return UserAccessTokenData::from([
+        return AccessTokenData::from([
             ...$token->accessToken->toArray(),
             'token' => $token->plainTextToken,
         ]);
     }
 }
-

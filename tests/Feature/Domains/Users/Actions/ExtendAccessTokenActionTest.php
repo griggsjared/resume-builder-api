@@ -2,23 +2,21 @@
 
 namespace Tests\Feature\Domains\Users\Actions;
 
-use App\Domains\Users\Actions\ExtendUserAccessTokenAction;
-use App\Domains\Users\Actions\GenerateUserAccessTokenAction;
-use App\Domains\Users\Data\UserAccessTokenData;
-use App\Domains\Users\Data\UserData;
+use App\Domains\Users\Actions\ExtendAccessTokenAction;
+use App\Domains\Users\Data\AccessTokenData;
+use App\Domains\Users\Models\AccessToken;
 use App\Domains\Users\Models\User;
-use App\Domains\Users\Models\UserAccessToken;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
-class ExtendUserAccessTokenActionTest extends TestCase
+class ExtendAccessTokenActionTest extends TestCase
 {
     use RefreshDatabase;
 
     /** @test */
     public function it_can_extend_a_user_access_token(): void
     {
-        $accessToken = UserAccessToken::factory()
+        $accessToken = AccessToken::factory()
             ->for(User::factory()->admin(), 'tokenable')
             ->create([
                 'expires_at' => now()->addDay(),
@@ -26,8 +24,8 @@ class ExtendUserAccessTokenActionTest extends TestCase
 
         $newExpiresAt = now()->addWeek();
 
-        app(ExtendUserAccessTokenAction::class)->execute(
-            UserAccessTokenData::from($accessToken),
+        app(ExtendAccessTokenAction::class)->execute(
+            AccessTokenData::from($accessToken),
             $newExpiresAt,
         );
 
@@ -39,7 +37,7 @@ class ExtendUserAccessTokenActionTest extends TestCase
     /** @test */
     public function it_cant_extend_a_user_token_that_is_expired()
     {
-        $accessToken = UserAccessToken::factory()
+        $accessToken = AccessToken::factory()
             ->for(User::factory()->admin(), 'tokenable')
             ->create([
                 'expires_at' => now()->subDay(),
@@ -47,8 +45,8 @@ class ExtendUserAccessTokenActionTest extends TestCase
 
         $newExpiresAt = now()->addWeek();
 
-        $tokenData = app(ExtendUserAccessTokenAction::class)->execute(
-            UserAccessTokenData::from($accessToken),
+        $tokenData = app(ExtendAccessTokenAction::class)->execute(
+            AccessTokenData::from($accessToken),
             $newExpiresAt,
         );
 
@@ -61,7 +59,7 @@ class ExtendUserAccessTokenActionTest extends TestCase
     /** @test */
     public function it_cant_extend_a_user_token_that_never_expires()
     {
-        $accessToken = UserAccessToken::factory()
+        $accessToken = AccessToken::factory()
             ->for(User::factory()->admin(), 'tokenable')
             ->create([
                 'expires_at' => null,
@@ -69,8 +67,8 @@ class ExtendUserAccessTokenActionTest extends TestCase
 
         $newExpiresAt = now()->addWeek();
 
-        $tokenData = app(ExtendUserAccessTokenAction::class)->execute(
-            UserAccessTokenData::from($accessToken),
+        $tokenData = app(ExtendAccessTokenAction::class)->execute(
+            AccessTokenData::from($accessToken),
             $newExpiresAt,
         );
 
