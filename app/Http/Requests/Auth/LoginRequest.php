@@ -7,7 +7,7 @@ namespace App\Http\Requests\Auth;
 use App\Domains\Users\Models\User;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Validation\ValidationException;
+use Illuminate\Validation\Validator;
 
 class LoginRequest extends FormRequest
 {
@@ -22,17 +22,17 @@ class LoginRequest extends FormRequest
         ];
     }
 
-    /**
-     * @throws ValidationException
-     */
-    public function authenticatedUser(): User
+    public function withValidator(Validator $validator): void
     {
-        if (! Auth::once($this->only('email', 'password'))) {
-            throw ValidationException::withMessages([
-                'email' => 'Login credentials were incorrect.',
-            ]);
-        }
+        $validator->after(function (Validator $validator) {
+            if(Auth::once($this->only('email', 'password')) === false) {
+                $validator->errors()->add('email', 'Login credentials were incorrect.');
+            }
+        });
+    }
 
+    public function authenticatedUser(): ?User
+    {
         return Auth::getUser();
     }
 }

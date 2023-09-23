@@ -6,23 +6,21 @@ namespace App\Http\Requests\Auth;
 
 use App\Domains\Users\Models\AccessToken;
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Validation\ValidationException;
+use Illuminate\Validation\Validator;
 
 class LogoutRequest extends FormRequest
 {
-    /**
-     * @throws ValidationException
-     */
+    public function withValidator(Validator $validator): void
+    {
+        $validator->after(function (Validator $validator) {
+            if ($this->accessToken()->expires_at === null) {
+                $validator->errors()->add('token', 'The current access token cannot be used to logout.');
+            }
+        });
+    }
+
     public function accessToken(): AccessToken
     {
-        $accessToken = $this->user()->currentAccessToken();
-
-        if (! $accessToken->expires_at) {
-            throw ValidationException::withMessages([
-                'token' => 'The current access token cannot be used to logout.',
-            ]);
-        }
-
-        return $accessToken;
+        return $this->user()->currentAccessToken();
     }
 }

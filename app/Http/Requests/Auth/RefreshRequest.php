@@ -6,23 +6,21 @@ namespace App\Http\Requests\Auth;
 
 use App\Domains\Users\Models\AccessToken;
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Validation\ValidationException;
+use Illuminate\Validation\Validator;
 
 class RefreshRequest extends FormRequest
 {
-    /**
-     * @throws ValidationException
-     */
+    public function withValidator(Validator $validator): void
+    {
+        $validator->after(function (Validator $validator) {
+            if (! $this->accessToken()->expires_at || $this->accessToken()->expires_at->isPast()) {
+                $validator->errors()->add('token', 'The current access token cannot be refreshed.');
+            }
+        });
+    }
+
     public function accessToken(): AccessToken
     {
-        $accessToken = $this->user()->currentAccessToken();
-
-        if (! $accessToken->expires_at || $accessToken->expires_at->isPast()) {
-            throw ValidationException::withMessages([
-                'token' => 'The current access token cannot be refreshed.',
-            ]);
-        }
-
-        return $accessToken;
+        return $this->user()->currentAccessToken();
     }
 }
