@@ -6,12 +6,12 @@ namespace App\Http\ViewData;
 
 use Spatie\LaravelData\Data;
 
-class UserData extends Data
+class UserViewData extends Data
 {
     public function __construct(
         public readonly string $id,
         public readonly string $email,
-        public readonly UserRoleData $role
+        public readonly UserRoleViewData $role
     ) {
     }
 }

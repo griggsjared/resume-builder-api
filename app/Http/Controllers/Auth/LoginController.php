@@ -8,7 +8,7 @@ use App\Domains\Users\Actions\GenerateAccessTokenAction;
 use App\Domains\Users\Data\UserData;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Auth\LoginRequest;
-use App\Http\ViewData\AccessTokenData as AccessTokenViewData;
+use App\Http\ViewData\AccessTokenViewData;
 use Illuminate\Http\JsonResponse;
 
 class LoginController extends Controller

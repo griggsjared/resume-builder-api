@@ -7,7 +7,7 @@ namespace App\Http\ViewData;
 use App\Domains\Users\Enums\UserRole;
 use Spatie\LaravelData\Data;
 
-class UserRoleData extends Data
+class UserRoleViewData extends Data
 {
     public function __construct(
         public readonly string $value,

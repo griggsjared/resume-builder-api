@@ -7,7 +7,7 @@ namespace App\Http\ViewData;
 use Spatie\LaravelData\Data;
 use Spatie\LaravelData\Optional;
 
-class AccessTokenData extends Data
+class AccessTokenViewData extends Data
 {
     public function __construct(
         public readonly Optional|string $token,

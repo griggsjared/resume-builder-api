@@ -10,7 +10,7 @@ use App\Domains\Users\Data\UserData;
 use App\Domains\Users\Enums\UserRole;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Auth\RegisterRequest;
-use App\Http\ViewData\AccessTokenData as AccessTokenViewData;
+use App\Http\ViewData\AccessTokenViewData;
 use Illuminate\Http\JsonResponse;
 
 class RegisterController extends Controller

@@ -8,7 +8,7 @@ use App\Domains\Users\Actions\ExtendAccessTokenAction;
 use App\Domains\Users\Data\AccessTokenData;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Auth\RefreshRequest;
-use App\Http\ViewData\AccessTokenData as AccessTokenViewData;
+use App\Http\ViewData\AccessTokenViewData;
 use Illuminate\Http\JsonResponse;
 
 class RefreshController extends Controller
