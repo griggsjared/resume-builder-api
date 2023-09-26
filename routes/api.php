@@ -4,24 +4,30 @@ use App\Http\Controllers\Auth;
 use App\Http\Controllers\FallbackController;
 use Illuminate\Support\Facades\Route;
 
-Route::post('auth/login', Auth\LoginController::class)->name('auth.login');
 
-Route::middleware('auth:api')->group(function () {
+Route::as('auth.')->group(function() {
 
-    Route::group(['prefix' => 'auth'], function () {
-        Route::get('user', Auth\UserController::class)->name('auth.user');
-        Route::post('refresh', Auth\RefreshController::class)->name('auth.refresh');
-        Route::post('logout', Auth\LogoutController::class)->name('auth.logout');
+    Route::post('auth/login', Auth\LoginController::class)->name('login');
+    Route::post('auth/register', Auth\RegisterController::class)->name('register');
+
+    Route::middleware('auth:api')->group(function () {
+        Route::group(['prefix' => 'auth'], function () {
+            Route::get('user', Auth\UserController::class)->name('user');
+            Route::post('refresh', Auth\RefreshController::class)->name('refresh');
+            Route::post('logout', Auth\LogoutController::class)->name('logout');
+        });
     });
-
-    //users
-    //subjects
-    //subjects/{subject}/highlights
-    //subjects/{subject}/skills
-    //subjects/{subject}/employers
-    //subjects/{subject}/employers/{employer}/highlights
-    //subjects/{subject}/education
-    //subjects/{subject}/education/{education}/highlights
 });
+
+// Route::middleware('auth:api')->group(function () {
+//     Route::resource('users', UserController::class)->except(['show]);
+//     Route::resource('subjects', SubjectController::class);->except(['show]);
+//     Route::resource('subjects.highlights', SubjectHighlightController::class)->except(['show]);
+//     Route::resource('subjects.skills', SubjectSkillController::class)->except(['show]);
+//     Route::resource('subjects.employers', SubjectEmployerController::class)->except(['show]);
+//     Route::resource('subjects.employers.highlights', SubjectEmployerHighlightController::class)->except(['show]);
+//     Route::resource('subjects.education', SubjectEducationController::class)->except(['show]);
+//     Route::resource('subjects.education.highlights', SubjectEducationHighlightController::class)->except(['show]);
+// });
 
 Route::fallback(FallbackController::class);
