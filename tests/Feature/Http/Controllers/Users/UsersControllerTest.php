@@ -11,7 +11,7 @@ class UsersControllerTest extends TestCase
     use RefreshDatabase;
 
     /** @test */
-    public function it_can_return_a_list_of_paginated_users_for_an_admin_user()
+    public function it_can_return_a_list_of_paginated_users()
     {
         $user = User::factory()->admin()->create();
         $basicUser = User::factory()->basic()->create();
