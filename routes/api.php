@@ -1,6 +1,8 @@
 <?php
 
 use App\Http\Controllers\Auth;
+use App\Http\Controllers\Subjects;
+use App\Http\Controllers\Users;
 use App\Http\Controllers\FallbackController;
 use Illuminate\Support\Facades\Route;
 
@@ -19,15 +21,15 @@ Route::as('auth.')->group(function() {
     });
 });
 
-// Route::middleware('auth:api')->group(function () {
-//     Route::resource('users', UserController::class)->except(['show]);
-//     Route::resource('subjects', SubjectController::class);->except(['show]);
+Route::middleware('auth:api')->group(function () {
+    Route::resource('users', Users\UsersController::class)->except(['edit', 'create']);
+//     Route::resource('subjects', Subjects\SubjectsController::class)->except(['edit', 'create']);
 //     Route::resource('subjects.highlights', SubjectHighlightController::class)->except(['show]);
 //     Route::resource('subjects.skills', SubjectSkillController::class)->except(['show]);
 //     Route::resource('subjects.employers', SubjectEmployerController::class)->except(['show]);
 //     Route::resource('subjects.employers.highlights', SubjectEmployerHighlightController::class)->except(['show]);
 //     Route::resource('subjects.education', SubjectEducationController::class)->except(['show]);
 //     Route::resource('subjects.education.highlights', SubjectEducationHighlightController::class)->except(['show]);
-// });
+});
 
 Route::fallback(FallbackController::class);

@@ -4,6 +4,7 @@ namespace App\Domains\Users\Models;
 
 use App\Domains\Resumes\Models\Subject;
 use App\Domains\Users\Enums\UserRole;
+use Illuminate\Contracts\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -46,5 +47,14 @@ class User extends Authenticatable
     public function accessTokens(): MorphMany
     {
         return $this->tokens();
+    }
+
+    public function scopeAuthorized(Builder $query, User $user): Builder
+    {
+        if($user->role === UserRole::Admin) {
+            return $query;
+        }
+
+        return $query->where('id', $user->id);
     }
 }

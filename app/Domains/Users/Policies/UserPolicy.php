@@ -12,12 +12,16 @@ class UserPolicy
 
     public function viewAny(User $user): bool
     {
-        return $user->role === UserRole::Admin;
+        return true;
     }
 
     public function view(User $user, User $model): bool
     {
-        return $user->role === UserRole::Admin;
+        if($user->role === UserRole::Admin) {
+            return true;
+        }
+
+        return $user->id === $model->id;
     }
 
     public function create(User $user): bool
@@ -27,11 +31,15 @@ class UserPolicy
 
     public function update(User $user, User $model): bool
     {
-        if ($user->id === $model->id) {
+        if($user->role === UserRole::Admin) {
+            return true;
+        }
+
+        if ($user->id !== $model->id) {
             return false;
         }
 
-        return $user->role === UserRole::Admin;
+        return true;
     }
 
     public function delete(User $user, User $model): bool
@@ -40,6 +48,11 @@ class UserPolicy
             return false;
         }
 
+        return $user->role === UserRole::Admin;
+    }
+
+    public function changeRole(User $user): bool
+    {
         return $user->role === UserRole::Admin;
     }
 }
