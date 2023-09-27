@@ -23,7 +23,7 @@ class AccessToken extends SanctumPersonalAccessToken
         'expires_in',
     ];
 
-    public function expiresIn(): Attribute
+    protected function expiresIn(): Attribute
     {
         return Attribute::get(
             fn (): ?int => $this->expires_at?->diffInSeconds(now()->subSecond())

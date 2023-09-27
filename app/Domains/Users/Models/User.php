@@ -49,7 +49,7 @@ class User extends Authenticatable
         return $this->tokens();
     }
 
-    public function scopeAuthorized(Builder $query, User $user): Builder
+    protected function scopeAuthorized(Builder $query, User $user): Builder
     {
         if($user->role === UserRole::Admin) {
             return $query;
