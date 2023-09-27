@@ -2,7 +2,9 @@
 
 namespace App\Domains\Resumes\Models;
 
+use App\Domains\Users\Enums\UserRole;
 use App\Domains\Users\Models\User;
+use Illuminate\Contracts\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -51,6 +53,15 @@ class Subject extends Model
     public function education(): HasMany
     {
         return $this->hasMany(Education::class);
+    }
+
+    protected function scopeAuthorized(Builder $query, User $user): Builder
+    {
+        if($user->role === UserRole::Admin) {
+            return $query;
+        }
+
+        return $query->whereHas('user', fn (Builder $query) => $query->where('id', $user->id));
     }
 
     protected function fullName(): Attribute

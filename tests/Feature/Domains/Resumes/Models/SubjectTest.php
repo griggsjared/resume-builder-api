@@ -60,4 +60,18 @@ class SubjectTest extends TestCase
 
         $this->assertEquals($user->full_name, $user->first_name.' '.$user->last_name);
     }
+
+    /** @test */
+    public function it_can_scope_to_authorized_subjects()
+    {
+        $admin = User::factory()->admin()->create();
+        $basic = User::factory()->basic()
+            ->has(Subject::factory()->count(2))
+            ->create();
+
+        Subject::factory()->create();
+
+        $this->assertCount(3, Subject::authorized($admin)->get());
+        $this->assertCount(2, Subject::authorized($basic)->get());
+    }
 }
