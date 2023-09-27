@@ -47,4 +47,9 @@ class SubjectPolicy
 
         return $user->id === $model->user_id;
     }
+
+    public function assignUser(User $user): bool
+    {
+        return $user->role === UserRole::Admin;
+    }
 }

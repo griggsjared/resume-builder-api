@@ -12,7 +12,7 @@ class SubjectPolicyTest extends TestCase
     use RefreshDatabase;
 
     /** @test */
-    public function it_can_decide_if_user_can_view_any_subjects()
+    public function it_can_allow_a_user_to_view_any_subjects()
     {
         $admin = User::factory()->admin()->create();
         $basic = User::factory()->basic()->create();
@@ -22,7 +22,7 @@ class SubjectPolicyTest extends TestCase
     }
 
     /** @test */
-    public function it_can_decide_if_user_can_view_a_subject()
+    public function it_can_allow_a_user_to_view_a_subject()
     {
         $admin = User::factory()->admin()->create();
         $basic = User::factory()->basic()->create();
@@ -45,7 +45,7 @@ class SubjectPolicyTest extends TestCase
     }
 
     /** @test */
-    public function it_can_decide_if_user_can_create_a_subject()
+    public function it_can_allow_a_user_to_create_a_subject()
     {
         $admin = User::factory()->admin()->create();
         $basic = User::factory()->basic()->create();
@@ -55,7 +55,7 @@ class SubjectPolicyTest extends TestCase
     }
 
     /** @test */
-    public function it_can_decide_if_user_can_update_a_subject()
+    public function it_can_allow_a_user_to_update_a_subject()
     {
         $admin = User::factory()->admin()->create();
         $basic = User::factory()->basic()->create();
@@ -78,7 +78,7 @@ class SubjectPolicyTest extends TestCase
     }
 
     /** @test */
-    public function it_can_decide_if_user_can_delete_a_subject()
+    public function it_can_allow_a_user_to_delete_a_subject()
     {
         $admin = User::factory()->admin()->create();
         $basic = User::factory()->basic()->create();
@@ -98,5 +98,15 @@ class SubjectPolicyTest extends TestCase
         $this->assertFalse($basic->can('delete', $subject2));
         $this->assertFalse($basic2->can('delete', $subject));
         $this->assertTrue($basic2->can('delete', $subject2));
+    }
+
+    /** @test */
+    public function it_can_allow_a_user_to_assign_a_user_to_a_subject()
+    {
+        $admin = User::factory()->admin()->create();
+        $basic = User::factory()->basic()->create();
+
+        $this->assertTrue($admin->can('assignUser', Subject::class));
+        $this->assertFalse($basic->can('assignUser', Subject::class));
     }
 }
