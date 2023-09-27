@@ -35,4 +35,17 @@ class UserTest extends TestCase
         $this->assertCount(5, $user->subjects);
         $this->assertCount(5, $user->accessTokens);
     }
+
+    /** @test */
+    public function it_can_scope_to_authorized_users()
+    {
+        $admin = User::factory()->admin()->create();
+        $basic = User::factory()->basic()
+            ->create();
+
+        User::factory()->count(3)->create();
+
+        $this->assertCount(5, User::authorized($admin)->get());
+        $this->assertCount(1, User::authorized($basic)->get());
+    }
 }
