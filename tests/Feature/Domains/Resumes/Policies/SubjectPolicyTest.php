@@ -18,7 +18,7 @@ class SubjectPolicyTest extends TestCase
         $basic = User::factory()->basic()->create();
 
         $this->assertTrue($admin->can('viewAny', Subject::class));
-        $this->assertFalse($basic->can('viewAny', Subject::class));
+        $this->assertTrue($basic->can('viewAny', Subject::class));
     }
 
     /** @test */

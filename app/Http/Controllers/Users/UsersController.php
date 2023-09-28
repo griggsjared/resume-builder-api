@@ -29,7 +29,7 @@ class UsersController extends Controller
         $this->authorize('viewAny', User::class);
 
         /**
-         * @var PaginatedViewData<UserViewData> $viewData
+         * @var PaginatedViewData<UserViewData>
          */
         $viewData = PaginatedViewData::fromPaginator(
             User::authorized($request->user())->orderBy('created_at', 'asc')->paginate(
@@ -50,9 +50,7 @@ class UsersController extends Controller
             ])
         );
 
-        return response()->json(
-            UserViewData::from($data), 201
-        );
+        return response()->json(UserViewData::from($data), 201);
     }
 
     public function show(User $user): JsonResponse
@@ -74,9 +72,7 @@ class UsersController extends Controller
             ])
         );
 
-        return response()->json(
-            UserViewData::from($data)
-        );
+        return response()->json(UserViewData::from($data));
     }
 
     public function destroy(User $user): JsonResponse

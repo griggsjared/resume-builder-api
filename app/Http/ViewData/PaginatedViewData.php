@@ -13,7 +13,7 @@ use Spatie\LaravelData\DataCollection;
 /**
  * @template TData of DataObject
  */
-final class PaginatedViewData extends Data
+class PaginatedViewData extends Data
 {
     /**
      * @param DataCollection<int, TData> $items

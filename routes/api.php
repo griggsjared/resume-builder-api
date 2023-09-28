@@ -23,7 +23,7 @@ Route::as('auth.')->group(function() {
 
 Route::middleware('auth:api')->group(function () {
     Route::resource('users', Users\UsersController::class)->except(['edit', 'create']);
-//     Route::resource('subjects', Subjects\SubjectsController::class)->except(['edit', 'create']);
+    Route::resource('subjects', Subjects\SubjectsController::class)->except(['edit', 'create']);
 //     Route::resource('subjects.highlights', SubjectHighlightController::class)->except(['show]);
 //     Route::resource('subjects.skills', SubjectSkillController::class)->except(['show]);
 //     Route::resource('subjects.employers', SubjectEmployerController::class)->except(['show]);
