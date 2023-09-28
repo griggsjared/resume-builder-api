@@ -16,6 +16,10 @@ To run tests:
 ```
 php artisan test
 ```
+or run
+```
+./vendor/bin/phpunit
+```
 
 To run code style test:
 ```
