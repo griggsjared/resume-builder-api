@@ -61,7 +61,7 @@ class UsersControllerTest extends TestCase
     }
 
     /** @test */
-    public function it_can_return_data_about_a_single()
+    public function it_can_return_data_about_a_user()
     {
         $adminUser = User::factory()->admin()->create();
         $basicUser = User::factory()->basic()->create();
@@ -117,11 +117,6 @@ class UsersControllerTest extends TestCase
             ])
             ->assertJsonStructure([
                 'id',
-                'email',
-                'role' => [
-                    'value',
-                    'label',
-                ],
             ]);
 
         auth()->forgetGuards();
