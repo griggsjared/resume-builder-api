@@ -32,8 +32,8 @@ class UpsertEducationAction
 
         $education->started_at = $data->started_at;
         $education->ended_at = $data->ended_at;
-        $education->earned_major_degree = $data->earned_major_degree;
-        $education->earned_minor_degree = $data->earned_minor_degree;
+        $education->earned_major_degree = $data->earned_major_degree ?? false;
+        $education->earned_minor_degree = $data->earned_minor_degree ?? false;
 
         if ($data->subject instanceof SubjectData && $subject = Subject::find($data->subject?->id)) {
             $education->subject()->associate($subject);

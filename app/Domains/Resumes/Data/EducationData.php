@@ -19,9 +19,9 @@ class EducationData extends Data
         public readonly ?string $city,
         public readonly ?string $state,
         public readonly ?string $major_degree,
-        public readonly bool $earned_major_degree,
+        public readonly ?bool $earned_major_degree,
         public readonly ?string $minor_degree,
-        public readonly bool $earned_minor_degree,
+        public readonly ?bool $earned_minor_degree,
         #[WithCast(AsCarbonCast::class)]
         public readonly ?Carbon $started_at,
         #[WithCast(AsCarbonCast::class)]
