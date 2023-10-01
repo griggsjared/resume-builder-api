@@ -24,9 +24,9 @@ Route::as('auth.')->group(function() {
 Route::middleware('auth:api')->group(function () {
     Route::resource('users', Users\UsersController::class)->except(['edit', 'create']);
     Route::resource('subjects', Subjects\SubjectsController::class)->except(['edit', 'create']);
-    Route::resource('subjects.highlights', Subjects\SubjectHighlightsController::class)->except(['edit', 'create']);
-    // Route::resource('subjects.skills', Subjects\SkillsController::class)->except(['edit', 'create']);
-    // Route::resource('subjects.employers', Subjects\EmployersController::class)->except(['edit', 'create']);
+    // Route::resource('subjects.highlights', Subjects\SubjectHighlightsController::class)->except(['edit', 'create']);
+    Route::resource('subjects.skills', Subjects\SkillsController::class)->except(['edit', 'create']);
+    Route::resource('subjects.employers', Subjects\EmployersController::class)->except(['edit', 'create']);
     // Route::resource('subjects.employers.highlights', Subjects\EmployerHighlightsController::class)->except(['edit', 'create']);
 //     Route::resource('subjects.education', SubjectEducationController::class)->except(['edit', 'create']);
 //     Route::resource('subjects.education.highlights', SubjectEducationHighlightController::class)->except(['edit', 'create']);
