@@ -30,6 +30,13 @@ class Employer extends Model
         'ended_at' => 'date',
     ];
 
+    /**
+     * @var array<int, string>
+     */
+    protected $appends = [
+        'is_current',
+    ];
+
     public function subject(): BelongsTo
     {
         return $this->belongsTo(Subject::class);
