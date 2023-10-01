@@ -21,7 +21,10 @@ class EducationTest extends TestCase
         $this->assertTrue(Schema::hasColumn('education', 'name'));
         $this->assertTrue(Schema::hasColumn('education', 'city'));
         $this->assertTrue(Schema::hasColumn('education', 'state'));
-        $this->assertTrue(Schema::hasColumn('education', 'degree'));
+        $this->assertTrue(Schema::hasColumn('education', 'major_degree'));
+        $this->assertTrue(Schema::hasColumn('education', 'earned_major_degree'));
+        $this->assertTrue(Schema::hasColumn('education', 'minor_degree'));
+        $this->assertTrue(Schema::hasColumn('education', 'earned_minor_degree'));
         $this->assertTrue(Schema::hasColumn('education', 'created_at'));
         $this->assertTrue(Schema::hasColumn('education', 'updated_at'));
         $this->assertTrue(Schema::hasColumn('education', 'started_at'));

@@ -17,7 +17,10 @@ return new class extends Migration
             $table->string('name');
             $table->string('city')->nullable();
             $table->string('state')->nullable();
-            $table->string('degree')->nullable();
+            $table->string('major_degree')->nullable();
+            $table->boolean('earned_major_degree')->default(false);
+            $table->string('minor_degree')->nullable();
+            $table->boolean('earned_minor_degree')->default(false);
             $table->timestamps();
             $table->date('started_at')->nullable();
             $table->date('ended_at')->nullable();

@@ -28,7 +28,10 @@ class EducationFactory extends Factory
             'name' => $this->faker->company(),
             'city' => $this->faker->city(),
             'state' => $this->faker->stateAbbr(),
-            'degree' => $this->faker->jobTitle(),
+            'major_degree' => $this->faker->jobTitle(),
+            'earned_major_degree' => $this->faker->boolean(),
+            'minor_degree' => $this->faker->jobTitle(),
+            'earned_minor_degree' => $this->faker->boolean(),
             'started_at' => $startedAt,
             'ended_at' => $endedAt,
         ];

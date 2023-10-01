@@ -24,7 +24,10 @@ class UpsertEducationActionTest extends TestCase
                 'name' => 'Acme',
                 'city' => 'New York',
                 'state' => 'NY',
-                'degree' => 'B.S.',
+                'major_degree' => 'B.S.',
+                'earned_major_degree' => true,
+                'minor_degree' => 'B.A.',
+                'earned_minor_degree' => true,
                 'started_at' => now()->subDay(),
                 'ended_at' => now(),
                 'subject' => $subject,
@@ -38,7 +41,10 @@ class UpsertEducationActionTest extends TestCase
         $this->assertEquals($data->name, $education->name);
         $this->assertEquals($data->city, $education->city);
         $this->assertEquals($data->state, $education->state);
-        $this->assertEquals($data->degree, $education->degree);
+        $this->assertEquals($data->major_degree, $education->major_degree);
+        $this->assertEquals($data->earned_major_degree, $education->earned_major_degree);
+        $this->assertEquals($data->minor_degree, $education->minor_degree);
+        $this->assertEquals($data->earned_minor_degree, $education->earned_minor_degree);
         $this->assertEquals($data->started_at, $education->started_at);
         $this->assertEquals($data->ended_at, $education->ended_at);
     }
@@ -56,7 +62,10 @@ class UpsertEducationActionTest extends TestCase
                 'name' => 'Acme',
                 'city' => 'New York',
                 'state' => 'NY',
-                'degree' => 'B.S.',
+                'major_degree' => 'B.S.',
+                'earned_major_degree' => true,
+                'minor_degree' => 'B.A.',
+                'earned_minor_degree' => true,
                 'started_at' => now()->subDay(),
                 'ended_at' => now(),
             ])
@@ -67,7 +76,10 @@ class UpsertEducationActionTest extends TestCase
         $this->assertEquals($data->name, $education->name);
         $this->assertEquals($data->city, $education->city);
         $this->assertEquals($data->state, $education->state);
-        $this->assertEquals($data->degree, $education->degree);
+        $this->assertEquals($data->major_degree, $education->major_degree);
+        $this->assertEquals($data->earned_major_degree, $education->earned_major_degree);
+        $this->assertEquals($data->minor_degree, $education->minor_degree);
+        $this->assertEquals($data->earned_minor_degree, $education->earned_minor_degree);
         $this->assertEquals($data->started_at, $education->started_at);
         $this->assertEquals($data->ended_at, $education->ended_at);
     }

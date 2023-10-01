@@ -20,7 +20,8 @@ class Education extends Model
         'name',
         'city',
         'state',
-        'degree',
+        'major_degree',
+        'minor_degree',
     ];
 
     /**
@@ -29,6 +30,15 @@ class Education extends Model
     protected $casts = [
         'started_at' => 'date',
         'ended_at' => 'date',
+        'earned_major_degree' => 'boolean',
+        'earned_minor_degree' => 'boolean',
+    ];
+
+    /**
+     * @var array<int, string>
+     */
+    protected $appends = [
+        'is_current',
     ];
 
     public function subject(): BelongsTo
