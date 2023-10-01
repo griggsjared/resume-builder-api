@@ -57,4 +57,18 @@ class Education extends Model
             get: fn ($value, $attributes) => is_null($attributes['ended_at'])
         );
     }
+
+    protected function earnedMajorDegree(): Attribute
+    {
+        return Attribute::make(
+            get: fn ($value, $attributes) => ! is_null($attributes['major_degree']) && $attributes['earned_major_degree']
+        );
+    }
+
+    protected function earnedMinorDegree(): Attribute
+    {
+        return Attribute::make(
+            get: fn ($value, $attributes) => ! is_null($attributes['minor_degree']) && $attributes['earned_minor_degree']
+        );
+    }
 }

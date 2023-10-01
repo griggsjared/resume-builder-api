@@ -53,4 +53,38 @@ class EducationTest extends TestCase
         $this->assertTrue($current->is_current);
         $this->assertFalse($past->is_current);
     }
+
+    /** @test */
+    public function it_can_assess_an_earned_major_degree_attribute()
+    {
+        $earned = Education::factory()->create([
+            'major_degree' => 'Bachelor of Science',
+            'earned_major_degree' => true,
+        ]);
+
+        $notEarned = Education::factory()->create([
+            'major_degree' => null,
+            'earned_major_degree' => true
+        ]);
+
+        $this->assertTrue($earned->earned_major_degree);
+        $this->assertFalse($notEarned->earned_major_degree);
+    }
+
+    /** @test */
+    public function it_can_assess_an_earned_minor_degree_attribute()
+    {
+        $earned = Education::factory()->create([
+            'minor_degree' => 'Bachelor of Science',
+            'earned_minor_degree' => true,
+        ]);
+
+        $notEarned = Education::factory()->create([
+            'minor_degree' => null,
+            'earned_minor_degree' => true
+        ]);
+
+        $this->assertTrue($earned->earned_minor_degree);
+        $this->assertFalse($notEarned->earned_minor_degree);
+    }
 }
