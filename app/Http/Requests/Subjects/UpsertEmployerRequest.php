@@ -22,6 +22,10 @@ class UpsertEmployerRequest extends FormRequest
             'name' => ['required', 'string'],
             'city' => ['required', 'string'],
             'state' => ['required', 'string'],
+            'major_degree' => ['nullable', 'string'],
+            'earned_major_degree' => ['nullable', 'boolean'],
+            'minor_degree' => ['nullable', 'string'],
+            'earned_minor_degree' => ['nullable', 'boolean'],
             'started_at' => ['nullable', 'date'],
             'ended_at' => ['nullable', 'date', 'after:start_date'],
         ];
