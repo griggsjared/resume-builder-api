@@ -29,7 +29,7 @@ Route::middleware('auth:api')->scopeBindings()->group(function () {
     Route::resource('subjects.employers', Subjects\EmployersController::class)->except(['edit', 'create']);
     Route::resource('subjects.employers.highlights', Subjects\EmployerHighlightsController::class)->except(['edit', 'create']);
     Route::resource('subjects.education', Subjects\EducationController::class)->except(['edit', 'create']);
-    //Route::resource('subjects.education.highlights', SubjectEducationHighlightController::class)->except(['edit', 'create']);
+    Route::resource('subjects.education.highlights', Subjects\EducationHighlightsController::class)->except(['edit', 'create']);
 });
 
 Route::fallback(FallbackController::class);
