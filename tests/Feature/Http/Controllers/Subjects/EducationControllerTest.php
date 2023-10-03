@@ -96,7 +96,7 @@ class EducationControllerTest extends TestCase
     }
 
     /** @test */
-    public function it_can_return_data_about_a_education_for_a_subject()
+    public function it_can_return_data_about_an_education_for_a_subject()
     {
         $adminUser = User::factory()->admin()->create();
         $basicUser = User::factory()->basic()
@@ -125,7 +125,6 @@ class EducationControllerTest extends TestCase
         $basicUsersSubject = $basicUser->subjects->first();
         $basicUsersEducation = $basicUsersSubject->education->first();
 
-        //admin can view any education for any subject
         $this->withHeader('Authorization', 'Bearer '.$adminUser->createToken('test')->plainTextToken)
             ->get(route('subjects.education.show', [
                 'subject' => $viewingSubject->id,
@@ -144,7 +143,6 @@ class EducationControllerTest extends TestCase
 
         auth()->forgetGuards();
 
-        //basic cannot view education for subjects they do not own
         $this->withHeader('Authorization', 'Bearer '.$basicUser->createToken('test')->plainTextToken)
             ->get(route('subjects.education.show', [
                 'subject' => $viewingSubject->id,
@@ -152,7 +150,6 @@ class EducationControllerTest extends TestCase
             ]))
             ->assertForbidden();
 
-        //basic can view education for subjects they own
         $this->withHeader('Authorization', 'Bearer '.$basicUser->createToken('test')->plainTextToken)
             ->get(route('subjects.education.show', [
                 'subject' => $basicUsersSubject->id,
@@ -173,7 +170,6 @@ class EducationControllerTest extends TestCase
 
         $basicUsersSubject = $basicUser->subjects->first();
 
-        //admin can create an education
         $this->withHeader('Authorization', 'Bearer '.$adminUser->createToken('test')->plainTextToken)
             ->post(route('subjects.education.store', [
                 'subject' => $viewingSubject->id,
@@ -207,7 +203,6 @@ class EducationControllerTest extends TestCase
 
         auth()->forgetGuards();
 
-        //basic cannot create an education for a subject they do not own
         $this->withHeader('Authorization', 'Bearer '.$basicUser->createToken('test')->plainTextToken)
             ->post(route('subjects.education.store', [
                 'subject' => $viewingSubject->id,
@@ -224,7 +219,6 @@ class EducationControllerTest extends TestCase
             ])
             ->assertForbidden();
 
-        //basic can create a education for their own subject
         $this->withHeader('Authorization', 'Bearer '.$basicUser->createToken('test')->plainTextToken)
             ->post(route('subjects.education.store', [
                 'subject' => $basicUsersSubject->id,
@@ -243,7 +237,7 @@ class EducationControllerTest extends TestCase
     }
 
     /** @test */
-    public function it_can_update_an_education_for_subject()
+    public function it_can_update_an_education_for_a_subject()
     {
         $adminUser = User::factory()->admin()->create();
         $basicUser = User::factory()->basic()
@@ -304,7 +298,6 @@ class EducationControllerTest extends TestCase
 
         auth()->forgetGuards();
 
-        //basic user cannot update education they do not own
         $this->withHeader('Authorization', 'Bearer '.$basicUser->createToken('test')->plainTextToken)
             ->patch(route('subjects.education.update', [
                 'subject' => $viewingSubject->id,
@@ -322,7 +315,6 @@ class EducationControllerTest extends TestCase
             ])
             ->assertForbidden();
 
-        //basic user can update education they own
         $this->withHeader('Authorization', 'Bearer '.$basicUser->createToken('test')->plainTextToken)
             ->patch(route('subjects.education.update', [
                 'subject' => $basicUsersSubject->id,

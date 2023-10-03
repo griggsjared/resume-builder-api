@@ -325,7 +325,7 @@ class EmployerHighlightsControllerTest extends TestCase
     }
 
     /** @test */
-    public function it_can_delete_an_highlight_for_a_subject()
+    public function it_can_delete_an_highlight_for_an_employer()
     {
         $adminUser = User::factory()->admin()->create();
         $basicUser = User::factory()->basic()

@@ -77,7 +77,6 @@ class SubjectsControllerTest extends TestCase
             ->for($basicUser, 'user')
             ->create();
 
-        //admin can view any subject
         $this->withHeader('Authorization', 'Bearer '.$adminUser->createToken('test')->plainTextToken)
             ->get(route('subjects.show', $showingSubject->id))
             ->assertOk()
@@ -95,12 +94,10 @@ class SubjectsControllerTest extends TestCase
 
         auth()->forgetGuards();
 
-        //basic cannot view subjects they do not own
         $this->withHeader('Authorization', 'Bearer '.$basicUser->createToken('test')->plainTextToken)
             ->get(route('subjects.show', $showingSubject->id))
             ->assertForbidden();
 
-        //basic can view subjects they own
         $this->withHeader('Authorization', 'Bearer '.$basicUser->createToken('test')->plainTextToken)
             ->get(route('subjects.show', $basicUsersSubject->id))
             ->assertOk();
@@ -112,7 +109,6 @@ class SubjectsControllerTest extends TestCase
         $adminUser = User::factory()->admin()->create();
         $basicUser = User::factory()->basic()->create();
 
-        //admin can create a subject
         $this->withHeader('Authorization', 'Bearer '.$adminUser->createToken('test')->plainTextToken)
             ->post(route('subjects.store'), [
                 'first_name' => 'Test',
@@ -141,7 +137,6 @@ class SubjectsControllerTest extends TestCase
 
         auth()->forgetGuards();
 
-        //basic can create a subject
         $this->withHeader('Authorization', 'Bearer '.$basicUser->createToken('test')->plainTextToken)
             ->post(route('subjects.store'), [
                 'first_name' => 'Test',
@@ -193,7 +188,6 @@ class SubjectsControllerTest extends TestCase
 
         auth()->forgetGuards();
 
-        //basic user cannot update subjects they do not own
         $this->withHeader('Authorization', 'Bearer '.$basicUser->createToken('test')->plainTextToken)
             ->patch(route('subjects.update', $updatingSubject->id), [
                 'first_name' => 'Test',
@@ -207,7 +201,6 @@ class SubjectsControllerTest extends TestCase
             ])
             ->assertForbidden();
 
-        //basic user can update subjects they own
         $this->withHeader('Authorization', 'Bearer '.$basicUser->createToken('test')->plainTextToken)
             ->patch(route('subjects.update', $basicUsersSubject->id), [
                 'first_name' => 'Test',

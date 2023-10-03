@@ -118,7 +118,6 @@ class SkillsControllerTest extends TestCase
         $basicUsersSubject = $basicUser->subjects->first();
         $basicUsersSkill = $basicUsersSubject->skills->first();
 
-        //admin can view any skill for any subject
         $this->withHeader('Authorization', 'Bearer '.$adminUser->createToken('test')->plainTextToken)
             ->get(route('subjects.skills.show', [
                 'subject' => $viewingSubject->id,
@@ -134,7 +133,6 @@ class SkillsControllerTest extends TestCase
 
         auth()->forgetGuards();
 
-        //basic cannot view skills for subjects they do not own
         $this->withHeader('Authorization', 'Bearer '.$basicUser->createToken('test')->plainTextToken)
             ->get(route('subjects.skills.show', [
                 'subject' => $viewingSubject->id,
@@ -142,7 +140,6 @@ class SkillsControllerTest extends TestCase
             ]))
             ->assertForbidden();
 
-        //basic can view skills for subjects they own
         $this->withHeader('Authorization', 'Bearer '.$basicUser->createToken('test')->plainTextToken)
             ->get(route('subjects.skills.show', [
                 'subject' => $basicUsersSubject->id,
@@ -152,7 +149,7 @@ class SkillsControllerTest extends TestCase
     }
 
     /** @test */
-    public function it_can_create_an_skill_for_a_subject()
+    public function it_can_create_a_skill_for_a_subject()
     {
         $adminUser = User::factory()->admin()->create();
         $basicUser = User::factory()->basic()
@@ -163,7 +160,6 @@ class SkillsControllerTest extends TestCase
 
         $basicUsersSubject = $basicUser->subjects->first();
 
-        //admin can create an skill
         $this->withHeader('Authorization', 'Bearer '.$adminUser->createToken('test')->plainTextToken)
             ->post(route('subjects.skills.store', [
                 'subject' => $viewingSubject->id,
@@ -184,7 +180,6 @@ class SkillsControllerTest extends TestCase
 
         auth()->forgetGuards();
 
-        //basic cannot create an skill for a subject they do not own
         $this->withHeader('Authorization', 'Bearer '.$basicUser->createToken('test')->plainTextToken)
             ->post(route('subjects.skills.store', [
                 'subject' => $viewingSubject->id,
@@ -195,7 +190,6 @@ class SkillsControllerTest extends TestCase
             ])
             ->assertForbidden();
 
-        //basic can create a skill for their own subject
         $this->withHeader('Authorization', 'Bearer '.$basicUser->createToken('test')->plainTextToken)
             ->post(route('subjects.skills.store', [
                 'subject' => $basicUsersSubject->id,
@@ -256,7 +250,6 @@ class SkillsControllerTest extends TestCase
 
         auth()->forgetGuards();
 
-        //basic user cannot update skills they do not own
         $this->withHeader('Authorization', 'Bearer '.$basicUser->createToken('test')->plainTextToken)
             ->patch(route('subjects.skills.update', [
                 'subject' => $viewingSubject->id,
@@ -268,7 +261,6 @@ class SkillsControllerTest extends TestCase
             ])
             ->assertForbidden();
 
-        //basic user can update skills they own
         $this->withHeader('Authorization', 'Bearer '.$basicUser->createToken('test')->plainTextToken)
             ->patch(route('subjects.skills.update', [
                 'subject' => $basicUsersSubject->id,
@@ -288,7 +280,7 @@ class SkillsControllerTest extends TestCase
     }
 
     /** @test */
-    public function it_can_delete_an_skill_for_a_subject()
+    public function it_can_delete_a_skill_for_a_subject()
     {
         $adminUser = User::factory()->admin()->create();
         $basicUser = User::factory()->basic()

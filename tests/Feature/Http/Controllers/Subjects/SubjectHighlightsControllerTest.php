@@ -116,7 +116,6 @@ class SubjectHighlightsControllerTest extends TestCase
         $basicUsersSubject = $basicUser->subjects->first();
         $basicUsersHighlight = $basicUsersSubject->highlights->first();
 
-        //admin can view any highlight for any subject
         $this->withHeader('Authorization', 'Bearer '.$adminUser->createToken('test')->plainTextToken)
             ->get(route('subjects.highlights.show', [
                 'subject' => $viewingSubject->id,
@@ -130,7 +129,6 @@ class SubjectHighlightsControllerTest extends TestCase
 
         auth()->forgetGuards();
 
-        //basic cannot view highlights for subjects they do not own
         $this->withHeader('Authorization', 'Bearer '.$basicUser->createToken('test')->plainTextToken)
             ->get(route('subjects.highlights.show', [
                 'subject' => $viewingSubject->id,
@@ -138,7 +136,6 @@ class SubjectHighlightsControllerTest extends TestCase
             ]))
             ->assertForbidden();
 
-        //basic can view highlights for subjects they own
         $this->withHeader('Authorization', 'Bearer '.$basicUser->createToken('test')->plainTextToken)
             ->get(route('subjects.highlights.show', [
                 'subject' => $basicUsersSubject->id,
@@ -159,7 +156,6 @@ class SubjectHighlightsControllerTest extends TestCase
 
         $basicUsersSubject = $basicUser->subjects->first();
 
-        //admin can create an highlight
         $this->withHeader('Authorization', 'Bearer '.$adminUser->createToken('test')->plainTextToken)
             ->post(route('subjects.highlights.store', [
                 'subject' => $viewingSubject->id,
@@ -176,7 +172,6 @@ class SubjectHighlightsControllerTest extends TestCase
 
         auth()->forgetGuards();
 
-        //basic cannot create an highlight for a subject they do not own
         $this->withHeader('Authorization', 'Bearer '.$basicUser->createToken('test')->plainTextToken)
             ->post(route('subjects.highlights.store', [
                 'subject' => $viewingSubject->id,
@@ -185,7 +180,6 @@ class SubjectHighlightsControllerTest extends TestCase
             ])
             ->assertForbidden();
 
-        //basic can create a highlight for their own subject
         $this->withHeader('Authorization', 'Bearer '.$basicUser->createToken('test')->plainTextToken)
             ->post(route('subjects.highlights.store', [
                 'subject' => $basicUsersSubject->id,
@@ -240,7 +234,6 @@ class SubjectHighlightsControllerTest extends TestCase
 
         auth()->forgetGuards();
 
-        //basic user cannot update highlights they do not own
         $this->withHeader('Authorization', 'Bearer '.$basicUser->createToken('test')->plainTextToken)
             ->patch(route('subjects.highlights.update', [
                 'subject' => $viewingSubject->id,
@@ -250,7 +243,6 @@ class SubjectHighlightsControllerTest extends TestCase
             ])
             ->assertForbidden();
 
-        //basic user can update highlights they own
         $this->withHeader('Authorization', 'Bearer '.$basicUser->createToken('test')->plainTextToken)
             ->patch(route('subjects.highlights.update', [
                 'subject' => $basicUsersSubject->id,
@@ -266,7 +258,7 @@ class SubjectHighlightsControllerTest extends TestCase
     }
 
     /** @test */
-    public function it_can_delete_an_highlight_for_a_subject()
+    public function it_can_delete_a_highlight_for_a_subject()
     {
         $adminUser = User::factory()->admin()->create();
         $basicUser = User::factory()->basic()
