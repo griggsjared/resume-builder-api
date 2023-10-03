@@ -27,7 +27,7 @@ Route::middleware('auth:api')->scopeBindings()->group(function () {
     Route::resource('subjects.highlights', Subjects\SubjectHighlightsController::class)->except(['edit', 'create']);
     Route::resource('subjects.skills', Subjects\SkillsController::class)->except(['edit', 'create']);
     Route::resource('subjects.employers', Subjects\EmployersController::class)->except(['edit', 'create']);
-    //Route::resource('subjects.employers.highlights', Subjects\EmployerHighlightsController::class)->except(['edit', 'create']);
+    Route::resource('subjects.employers.highlights', Subjects\EmployerHighlightsController::class)->except(['edit', 'create']);
     Route::resource('subjects.education', Subjects\EducationController::class)->except(['edit', 'create']);
     //Route::resource('subjects.education.highlights', SubjectEducationHighlightController::class)->except(['edit', 'create']);
 });
