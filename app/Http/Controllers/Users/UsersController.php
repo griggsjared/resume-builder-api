@@ -68,7 +68,7 @@ class UsersController extends Controller
             UserData::from([
                 ...$user->toArray(),
                 ...$request->validated(),
-                'role' => $request->assignRole()
+                'role' => $request->assignRole(),
             ])
         );
 

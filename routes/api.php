@@ -1,13 +1,12 @@
 <?php
 
 use App\Http\Controllers\Auth;
+use App\Http\Controllers\FallbackController;
 use App\Http\Controllers\Subjects;
 use App\Http\Controllers\Users;
-use App\Http\Controllers\FallbackController;
 use Illuminate\Support\Facades\Route;
 
-
-Route::as('auth.')->group(function() {
+Route::as('auth.')->group(function () {
 
     Route::post('auth/login', Auth\LoginController::class)->name('login');
     Route::post('auth/register', Auth\RegisterController::class)->name('register');

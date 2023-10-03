@@ -26,7 +26,7 @@ class StoreUserRequest extends FormRequest
             'password' => ['required', 'string', 'max:255'],
         ];
 
-        if($this->user()->can('changeRole', User::class)) {
+        if ($this->user()->can('changeRole', User::class)) {
             $rules['role'] = ['nullable', 'string', Rule::in(collect(UserRole::cases())->pluck('value'))];
         }
 
@@ -35,7 +35,7 @@ class StoreUserRequest extends FormRequest
 
     public function assignRole(): UserRole
     {
-        if($this->user()->cannot('changeRole', User::class) || $this->has('role') === false) {
+        if ($this->user()->cannot('changeRole', User::class) || $this->has('role') === false) {
             return UserRole::Basic;
         }
 

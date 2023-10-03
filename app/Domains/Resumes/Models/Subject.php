@@ -57,7 +57,7 @@ class Subject extends Model
 
     protected function scopeAuthorized(Builder $query, User $user): Builder
     {
-        if($user->role === UserRole::Admin) {
+        if ($user->role === UserRole::Admin) {
             return $query;
         }
 

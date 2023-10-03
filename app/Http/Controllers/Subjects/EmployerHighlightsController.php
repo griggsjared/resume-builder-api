@@ -47,7 +47,7 @@ class EmployerHighlightsController extends Controller
         $data = $this->upsertEmployerHighlightAction->execute(
             EmployerHighlightData::from([
                 ...$request->validated(),
-                'employer' => $employer
+                'employer' => $employer,
             ])
         );
 
@@ -66,7 +66,7 @@ class EmployerHighlightsController extends Controller
         $data = $this->upsertEmployerHighlightAction->execute(
             EmployerHighlightData::from([
                 ...$highlight->toArray(),
-                ...$request->validated()
+                ...$request->validated(),
             ])
         );
 

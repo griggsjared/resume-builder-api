@@ -17,7 +17,7 @@ class UserPolicy
 
     public function view(User $user, User $model): bool
     {
-        if($user->role === UserRole::Admin) {
+        if ($user->role === UserRole::Admin) {
             return true;
         }
 
@@ -31,7 +31,7 @@ class UserPolicy
 
     public function update(User $user, User $model): bool
     {
-        if($user->role === UserRole::Admin) {
+        if ($user->role === UserRole::Admin) {
             return true;
         }
 

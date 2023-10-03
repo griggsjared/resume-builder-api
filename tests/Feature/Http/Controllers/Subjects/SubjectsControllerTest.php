@@ -62,7 +62,7 @@ class SubjectsControllerTest extends TestCase
                 'total_items' => 5,
                 'total_pages' => 1,
                 'previous_page_url' => null,
-                'next_page_url' => null
+                'next_page_url' => null,
             ]);
     }
 
@@ -118,7 +118,7 @@ class SubjectsControllerTest extends TestCase
                 'state' => 'Test State',
                 'phone_number' => '555-555-5555',
                 'email' => 'test@example.com',
-                'overview' => 'Test Overview'
+                'overview' => 'Test Overview',
             ])
             ->assertCreated()
             ->assertJson([
@@ -129,7 +129,7 @@ class SubjectsControllerTest extends TestCase
                 'state' => 'Test State',
                 'phone_number' => '555-555-5555',
                 'email' => 'test@example.com',
-                'overview' => 'Test Overview'
+                'overview' => 'Test Overview',
             ])
             ->assertJsonStructure([
                 'id',
@@ -146,7 +146,7 @@ class SubjectsControllerTest extends TestCase
                 'state' => 'Test State',
                 'phone_number' => '555-555-5555',
                 'email' => 'test2@example.com',
-                'overview' => 'Test Overview'
+                'overview' => 'Test Overview',
             ])
             ->assertCreated();
     }
@@ -171,7 +171,7 @@ class SubjectsControllerTest extends TestCase
                 'state' => 'Test State',
                 'phone_number' => '555-555-5555',
                 'email' => 'test@example.com',
-                'overview' => 'Test Overview'
+                'overview' => 'Test Overview',
             ])
             ->assertOk()
             ->assertJson([
@@ -183,7 +183,7 @@ class SubjectsControllerTest extends TestCase
                 'state' => 'Test State',
                 'phone_number' => '555-555-5555',
                 'email' => 'test@example.com',
-                'overview' => 'Test Overview'
+                'overview' => 'Test Overview',
             ]);
 
         auth()->forgetGuards();
@@ -197,7 +197,7 @@ class SubjectsControllerTest extends TestCase
                 'state' => 'Test State',
                 'phone_number' => '555-555-5555',
                 'email' => 'test@example.com',
-                'overview' => 'Test Overview'
+                'overview' => 'Test Overview',
             ])
             ->assertForbidden();
 
@@ -210,7 +210,7 @@ class SubjectsControllerTest extends TestCase
                 'state' => 'Test State',
                 'phone_number' => '555-555-5555',
                 'email' => 'test@example.com',
-                'overview' => 'Test Overview'
+                'overview' => 'Test Overview',
             ])
             ->assertOk()
             ->assertJson([
@@ -222,7 +222,7 @@ class SubjectsControllerTest extends TestCase
                 'state' => 'Test State',
                 'phone_number' => '555-555-5555',
                 'email' => 'test@example.com',
-                'overview' => 'Test Overview'
+                'overview' => 'Test Overview',
             ]);
     }
 
@@ -241,7 +241,7 @@ class SubjectsControllerTest extends TestCase
             ->delete(route('subjects.destroy', $deletingSubject->id))
             ->assertOk()
             ->assertJson([
-                'message' => 'Ok'
+                'message' => 'Ok',
             ]);
 
         $deletingSubject = Subject::find($deletingSubject)->first();

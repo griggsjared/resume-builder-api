@@ -16,7 +16,7 @@ use Spatie\LaravelData\DataCollection;
 class PaginatedViewData extends Data
 {
     /**
-     * @param DataCollection<int, TData> $items
+     * @param  DataCollection<int, TData>  $items
      */
     public function __construct(
         public readonly int $total_items,
@@ -29,7 +29,7 @@ class PaginatedViewData extends Data
     }
 
     /**
-     * @param class-string<TData> $dataClass
+     * @param  class-string<TData>  $dataClass
      */
     public static function fromPaginator(LengthAwarePaginator $paginator, string $dataClass): self
     {

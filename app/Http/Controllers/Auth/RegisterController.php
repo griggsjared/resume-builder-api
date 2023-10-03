@@ -26,7 +26,7 @@ class RegisterController extends Controller
         $userData = $this->upsertUserAction->execute(
             UserData::from([
                 ...$request->validated(),
-                'role' => UserRole::Basic
+                'role' => UserRole::Basic,
             ]),
         );
 

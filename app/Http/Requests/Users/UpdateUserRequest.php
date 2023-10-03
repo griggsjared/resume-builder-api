@@ -22,11 +22,11 @@ class UpdateUserRequest extends FormRequest
     public function rules(): array
     {
         $rules = [
-            'email' => ['required', 'email', 'max:255', 'unique:users,email,' . $this->route('user')->id],
+            'email' => ['required', 'email', 'max:255', 'unique:users,email,'.$this->route('user')->id],
             'password' => ['nullable', 'string', 'max:255'],
         ];
 
-        if($this->user()->can('changeRole', User::class)) {
+        if ($this->user()->can('changeRole', User::class)) {
             $rules['role'] = ['nullable', 'string', Rule::in(collect(UserRole::cases())->pluck('value'))];
         }
 
@@ -35,11 +35,11 @@ class UpdateUserRequest extends FormRequest
 
     public function assignRole(): UserRole
     {
-        if($this->user()->cannot('changeRole', User::class)) {
+        if ($this->user()->cannot('changeRole', User::class)) {
             return UserRole::Basic;
         }
 
-        if($this->has('role') === false) {
+        if ($this->has('role') === false) {
             return $this->route('user')->role;
         }
 

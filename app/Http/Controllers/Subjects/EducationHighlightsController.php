@@ -47,7 +47,7 @@ class EducationHighlightsController extends Controller
         $data = $this->upsertEducationHighlightAction->execute(
             EducationHighlightData::from([
                 ...$request->validated(),
-                'education' => $education
+                'education' => $education,
             ])
         );
 
@@ -66,7 +66,7 @@ class EducationHighlightsController extends Controller
         $data = $this->upsertEducationHighlightAction->execute(
             EducationHighlightData::from([
                 ...$highlight->toArray(),
-                ...$request->validated()
+                ...$request->validated(),
             ])
         );
 

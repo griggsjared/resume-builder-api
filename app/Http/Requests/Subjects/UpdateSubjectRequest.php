@@ -31,7 +31,7 @@ class UpdateSubjectRequest extends FormRequest
             'overview' => ['nullable', 'string'],
         ];
 
-        if($this->user()->can('assignUser', Subject::class)) {
+        if ($this->user()->can('assignUser', Subject::class)) {
             $rules['user'] = ['nullable', 'uuid', 'exists:users,id'];
         }
 
@@ -40,7 +40,7 @@ class UpdateSubjectRequest extends FormRequest
 
     public function assignUser(): User
     {
-        if($this->user()->cannot('assignUser', Subject::class) || $this->has('user') === false) {
+        if ($this->user()->cannot('assignUser', Subject::class) || $this->has('user') === false) {
             return $this->route('subject')->user ?? $this->user();
         }
 

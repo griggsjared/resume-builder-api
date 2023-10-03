@@ -11,8 +11,8 @@ use App\Domains\Resumes\Models\Skill;
 use App\Domains\Resumes\Models\Subject;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Subjects\UpsertSkillRequest;
-use App\Http\ViewData\SkillViewData;
 use App\Http\ViewData\PaginatedViewData;
+use App\Http\ViewData\SkillViewData;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
@@ -46,7 +46,7 @@ class SkillsController extends Controller
         $data = $this->upsertSkillAction->execute(
             SkillData::from([
                 ...$request->validated(),
-                'subject' => $subject
+                'subject' => $subject,
             ])
         );
 
@@ -67,7 +67,7 @@ class SkillsController extends Controller
         $this->upsertSkillAction->execute(
             SkillData::from([
                 ...$skill->toArray(),
-                ...$request->validated()
+                ...$request->validated(),
             ])
         );
 

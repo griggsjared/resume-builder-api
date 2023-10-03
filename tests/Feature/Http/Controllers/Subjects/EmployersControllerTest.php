@@ -87,7 +87,7 @@ class EmployersControllerTest extends TestCase
                 'total_items' => 5,
                 'total_pages' => 1,
                 'previous_page_url' => null,
-                'next_page_url' => null
+                'next_page_url' => null,
             ]);
     }
 
@@ -342,7 +342,7 @@ class EmployersControllerTest extends TestCase
             ]))
             ->assertOk()
             ->assertJson([
-                'message' => 'Ok'
+                'message' => 'Ok',
             ]);
 
         $deletingEmployer = Employer::find($deletingEmployer)->first();

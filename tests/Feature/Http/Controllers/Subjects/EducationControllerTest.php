@@ -91,7 +91,7 @@ class EducationControllerTest extends TestCase
                 'total_items' => 5,
                 'total_pages' => 1,
                 'previous_page_url' => null,
-                'next_page_url' => null
+                'next_page_url' => null,
             ]);
     }
 
@@ -370,7 +370,7 @@ class EducationControllerTest extends TestCase
             ]))
             ->assertOk()
             ->assertJson([
-                'message' => 'Ok'
+                'message' => 'Ok',
             ]);
 
         $deletingEducation = Education::find($deletingEducation)->first();

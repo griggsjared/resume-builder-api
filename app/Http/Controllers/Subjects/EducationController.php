@@ -46,7 +46,7 @@ class EducationController extends Controller
         $data = $this->upsertEducationAction->execute(
             EducationData::from([
                 ...$request->validated(),
-                'subject' => $subject
+                'subject' => $subject,
             ])
         );
 
@@ -67,7 +67,7 @@ class EducationController extends Controller
         $this->upsertEducationAction->execute(
             EducationData::from([
                 ...$education->toArray(),
-                ...$request->validated()
+                ...$request->validated(),
             ])
         );
 

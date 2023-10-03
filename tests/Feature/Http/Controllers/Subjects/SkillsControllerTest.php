@@ -84,7 +84,7 @@ class SkillsControllerTest extends TestCase
                 'total_items' => 5,
                 'total_pages' => 1,
                 'previous_page_url' => null,
-                'next_page_url' => null
+                'next_page_url' => null,
             ]);
     }
 
@@ -128,7 +128,7 @@ class SkillsControllerTest extends TestCase
                 'id' => $viewingSkill->id,
                 'name' => $viewingSkill->name,
                 'category' => $viewingSkill->category,
-                'sort' => $viewingSkill->sort
+                'sort' => $viewingSkill->sort,
             ]);
 
         auth()->forgetGuards();
@@ -316,7 +316,7 @@ class SkillsControllerTest extends TestCase
             ]))
             ->assertOk()
             ->assertJson([
-                'message' => 'Ok'
+                'message' => 'Ok',
             ]);
 
         $deletingSkill = Skill::find($deletingSkill)->first();

@@ -2,8 +2,8 @@
 
 namespace Tests\Feature\Http\Controllers\Highlights;
 
-use App\Domains\Resumes\Models\SubjectHighlight;
 use App\Domains\Resumes\Models\Subject;
+use App\Domains\Resumes\Models\SubjectHighlight;
 use App\Domains\Users\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
@@ -56,7 +56,7 @@ class SubjectHighlightsControllerTest extends TestCase
                 'items' => [
                     '*' => [
                         'id',
-                        'content'
+                        'content',
                     ],
                 ],
             ]);
@@ -82,7 +82,7 @@ class SubjectHighlightsControllerTest extends TestCase
                 'total_items' => 5,
                 'total_pages' => 1,
                 'previous_page_url' => null,
-                'next_page_url' => null
+                'next_page_url' => null,
             ]);
     }
 
@@ -294,7 +294,7 @@ class SubjectHighlightsControllerTest extends TestCase
             ]))
             ->assertOk()
             ->assertJson([
-                'message' => 'Ok'
+                'message' => 'Ok',
             ]);
 
         $deletingHighlight = SubjectHighlight::find($deletingHighlight)->first();

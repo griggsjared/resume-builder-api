@@ -46,7 +46,7 @@ class EmployersController extends Controller
         $data = $this->upsertEmployerAction->execute(
             EmployerData::from([
                 ...$request->validated(),
-                'subject' => $subject
+                'subject' => $subject,
             ])
         );
 
@@ -67,7 +67,7 @@ class EmployersController extends Controller
         $this->upsertEmployerAction->execute(
             EmployerData::from([
                 ...$employer->toArray(),
-                ...$request->validated()
+                ...$request->validated(),
             ])
         );
 

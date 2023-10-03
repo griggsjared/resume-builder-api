@@ -31,17 +31,16 @@ class StoreSubjectRequest extends FormRequest
             'overview' => ['nullable', 'string'],
         ];
 
-        if($this->user()->can('assignUser', Subject::class)) {
+        if ($this->user()->can('assignUser', Subject::class)) {
             $rules['user'] = ['nullable', 'uuid', 'exists:users,id'];
         }
 
         return $rules;
     }
 
-
     public function assignUser(): User
     {
-        if($this->user()->cannot('assignUser', Subject::class) || $this->has('user') === false) {
+        if ($this->user()->cannot('assignUser', Subject::class) || $this->has('user') === false) {
             return $this->user();
         }
 

@@ -71,7 +71,7 @@ class EducationHighlightsControllerTest extends TestCase
                 'items' => [
                     '*' => [
                         'id',
-                        'content'
+                        'content',
                     ],
                 ],
             ]);
@@ -99,7 +99,7 @@ class EducationHighlightsControllerTest extends TestCase
                 'total_items' => 5,
                 'total_pages' => 1,
                 'previous_page_url' => null,
-                'next_page_url' => null
+                'next_page_url' => null,
             ]);
     }
 
@@ -371,7 +371,7 @@ class EducationHighlightsControllerTest extends TestCase
             ]))
             ->assertOk()
             ->assertJson([
-                'message' => 'Ok'
+                'message' => 'Ok',
             ]);
 
         $deletingHighlight = EducationHighlight::find($deletingHighlight)->first();

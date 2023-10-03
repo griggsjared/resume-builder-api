@@ -56,7 +56,7 @@ class UsersControllerTest extends TestCase
                 'total_items' => 1,
                 'total_pages' => 1,
                 'previous_page_url' => null,
-                'next_page_url' => null
+                'next_page_url' => null,
             ]);
     }
 
@@ -90,7 +90,7 @@ class UsersControllerTest extends TestCase
 
         //basic can view themselves
         $this->withHeader('Authorization', 'Bearer '.$basicUser->createToken('test')->plainTextToken)
-            ->get(route('users.show', $basicUser ->id))
+            ->get(route('users.show', $basicUser->id))
             ->assertOk();
     }
 
@@ -112,8 +112,8 @@ class UsersControllerTest extends TestCase
                 'email' => 'test@example.com',
                 'role' => [
                     'value' => 'admin',
-                    'label' => 'Admin'
-                ]
+                    'label' => 'Admin',
+                ],
             ])
             ->assertJsonStructure([
                 'id',
@@ -151,8 +151,8 @@ class UsersControllerTest extends TestCase
                 'email' => 'test@example.com',
                 'role' => [
                     'value' => 'admin',
-                    'label' => 'Admin'
-                ]
+                    'label' => 'Admin',
+                ],
             ]);
 
         auth()->forgetGuards();
@@ -179,8 +179,8 @@ class UsersControllerTest extends TestCase
                 'email' => 'newemail@example.com',
                 'role' => [
                     'value' => 'basic',
-                    'label' => 'Basic'
-                ]
+                    'label' => 'Basic',
+                ],
             ]);
     }
 
@@ -196,7 +196,7 @@ class UsersControllerTest extends TestCase
             ->delete(route('users.destroy', $deletingUser->id))
             ->assertOk()
             ->assertJson([
-                'message' => 'Ok'
+                'message' => 'Ok',
             ]);
 
         $deletingUser = User::find($deletingUser)->first();
@@ -210,7 +210,6 @@ class UsersControllerTest extends TestCase
         $this->withHeader('Authorization', 'Bearer '.$basicUser->createToken('test')->plainTextToken)
             ->delete(route('users.destroy', $deletingUser->id))
             ->assertForbidden();
-
 
         $deletingUser = User::find($deletingUser)->first();
 

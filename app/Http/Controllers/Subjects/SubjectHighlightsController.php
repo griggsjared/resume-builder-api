@@ -46,9 +46,9 @@ class SubjectHighlightsController extends Controller
         $data = $this->upsertSubjectHighlightAction->execute(
             SubjectHighlightData::from([
                 ...$request->validated(),
-                'subject' => $subject
+                'subject' => $subject,
             ])
-            );
+        );
 
         return response()->json(SubjectHighlightViewData::from($data), 201);
     }
@@ -65,12 +65,12 @@ class SubjectHighlightsController extends Controller
         $data = $this->upsertSubjectHighlightAction->execute(
             SubjectHighlightData::from([
                 ...$highlight->toArray(),
-                ...$request->validated()
+                ...$request->validated(),
             ])
         );
 
         return response()->json(SubjectHighlightViewData::from($data));
-}
+    }
 
     public function destroy(Subject $subject, SubjectHighlight $highlight): JsonResponse
     {

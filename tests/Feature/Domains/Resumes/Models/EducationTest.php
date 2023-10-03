@@ -64,7 +64,7 @@ class EducationTest extends TestCase
 
         $notEarned = Education::factory()->create([
             'major_degree' => null,
-            'earned_major_degree' => true
+            'earned_major_degree' => true,
         ]);
 
         $this->assertTrue($earned->earned_major_degree);
@@ -81,7 +81,7 @@ class EducationTest extends TestCase
 
         $notEarned = Education::factory()->create([
             'minor_degree' => null,
-            'earned_minor_degree' => true
+            'earned_minor_degree' => true,
         ]);
 
         $this->assertTrue($earned->earned_minor_degree);

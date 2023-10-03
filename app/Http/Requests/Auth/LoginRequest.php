@@ -25,7 +25,7 @@ class LoginRequest extends FormRequest
     public function withValidator(Validator $validator): void
     {
         $validator->after(function (Validator $validator) {
-            if(Auth::once($this->only('email', 'password')) === false) {
+            if (Auth::once($this->only('email', 'password')) === false) {
                 $validator->errors()->add('email', 'Login credentials were incorrect.');
             }
         });
