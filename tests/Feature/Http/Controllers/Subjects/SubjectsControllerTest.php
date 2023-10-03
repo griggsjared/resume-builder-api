@@ -14,14 +14,14 @@ class SubjectsControllerTest extends TestCase
     /** @test */
     public function it_can_return_a_list_of_paginated_subjects()
     {
-        $user = User::factory()->admin()->create();
+        $adminUser = User::factory()->admin()->create();
         $basicUser = User::factory()->basic()
             ->has(Subject::factory()->count(5))
             ->create();
 
         Subject::factory()->count(40)->create();
 
-        $this->withHeader('Authorization', 'Bearer '.$user->createToken('test')->plainTextToken)
+        $this->withHeader('Authorization', 'Bearer '.$adminUser->createToken('test')->plainTextToken)
             ->get(route('subjects.index', [
                 'page' => 1,
                 'per_page' => 10,
