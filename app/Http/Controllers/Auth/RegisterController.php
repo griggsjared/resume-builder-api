@@ -34,7 +34,7 @@ class RegisterController extends Controller
             AccessTokenViewData::from([
                 ...$this->generateAccessTokenAction->execute(
                     $userData,
-                    "login-token-{$userData->id}",
+                    'login-token',
                     now()->addSeconds(config('auth.token_expiration', 3600))
                 )->toArray(),
                 'type' => 'bearer',

@@ -26,7 +26,7 @@ class LoginController extends Controller
             AccessTokenViewData::from([
                 ...$this->generateAccessTokenAction->execute(
                     UserData::from($user),
-                    "login-token-{$user->id}",
+                    'login-token',
                     now()->addSeconds(config('auth.token_expiration', 3600))
                 )->toArray(),
                 'type' => 'bearer',
