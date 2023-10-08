@@ -28,11 +28,26 @@ class EmployersController extends Controller
     {
         $this->authorize('view', $subject);
 
+        $employers = $subject->employers();
+
+        if($request->has('search')) {
+            $employers->search($request->input('search'));
+        }
+
+        $order = $request->input('order', 'asc') === 'desc' ? 'desc' : 'asc';
+
+        match($request->input('order_by')) {
+            'name' => $employers->orderBy('name', $order),
+            'city' => $employers->orderBy('city', $order),
+            'state' => $employers->orderBy('state', $order),
+            default => $employers->orderBy('name', $order),
+        };
+
         /**
          * @var PaginatedViewData<EmployerViewData>
          */
         $viewData = PaginatedViewData::fromPaginator(
-            $subject->employers()->orderBy('created_at', 'asc')->paginate(
+            $employers->paginate(
                 $request->input('per_page', 20)
             )->withQueryString(),
             EmployerViewData::class
