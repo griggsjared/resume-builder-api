@@ -28,11 +28,17 @@ class SubjectHighlightsController extends Controller
     {
         $this->authorize('view', $subject);
 
+        $highlights = $subject->highlights();
+
+        if($request->has('search')) {
+            $highlights->search($request->input('search'));
+        }
+
         /**
          * @var PaginatedViewData<SubjectHighlightViewData>
          */
         $viewData = PaginatedViewData::fromPaginator(
-            $subject->highlights()->orderBy('created_at', 'asc')->paginate(
+            $highlights->paginate(
                 $request->input('per_page', 20)
             )->withQueryString(),
             SubjectHighlightViewData::class
@@ -50,7 +56,9 @@ class SubjectHighlightsController extends Controller
             ])
         );
 
-        return response()->json(SubjectHighlightViewData::from($data), 201);
+        return response()->json(SubjectHighlightViewData::from(
+            SubjectHighlight::find($data->id)
+        ), 201);
     }
 
     public function show(Subject $subject, SubjectHighlight $highlight): JsonResponse
@@ -69,7 +77,9 @@ class SubjectHighlightsController extends Controller
             ])
         );
 
-        return response()->json(SubjectHighlightViewData::from($data));
+        return response()->json(SubjectHighlightViewData::from(
+            $highlight->refresh()
+        ));
     }
 
     public function destroy(Subject $subject, SubjectHighlight $highlight): JsonResponse

@@ -29,11 +29,17 @@ class EducationHighlightsController extends Controller
     {
         $this->authorize('view', $subject);
 
+        $highlights = $education->highlights();
+
+        if($request->has('search')) {
+            $highlights->search($request->input('search'));
+        }
+
         /**
          * @var PaginatedViewData<EducationHighlightViewData>
          */
         $viewData = PaginatedViewData::fromPaginator(
-            $education->highlights()->orderBy('created_at', 'asc')->paginate(
+            $highlights->paginate(
                 $request->input('per_page', 20)
             )->withQueryString(),
             EducationHighlightViewData::class
@@ -51,7 +57,9 @@ class EducationHighlightsController extends Controller
             ])
         );
 
-        return response()->json(EducationHighlightViewData::from($data), 201);
+        return response()->json(EducationHighlightViewData::from(
+            EducationHighlight::find($data->id)
+        ), 201);
     }
 
     public function show(Subject $subject, Education $education, EducationHighlight $highlight): JsonResponse
@@ -70,7 +78,9 @@ class EducationHighlightsController extends Controller
             ])
         );
 
-        return response()->json(EducationHighlightViewData::from($data));
+        return response()->json(EducationHighlightViewData::from(
+            $highlight->refresh()
+        ));
     }
 
     public function destroy(Subject $subject, Education $education, EducationHighlight $highlight): JsonResponse

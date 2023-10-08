@@ -29,11 +29,17 @@ class EmployerHighlightsController extends Controller
     {
         $this->authorize('view', $subject);
 
+        $highlights = $employer->highlights();
+
+        if($request->has('search')) {
+            $highlights->search($request->input('search'));
+        }
+
         /**
          * @var PaginatedViewData<EmployerHighlightViewData>
          */
         $viewData = PaginatedViewData::fromPaginator(
-            $employer->highlights()->orderBy('created_at', 'asc')->paginate(
+            $highlights->paginate(
                 $request->input('per_page', 20)
             )->withQueryString(),
             EmployerHighlightViewData::class
@@ -51,7 +57,9 @@ class EmployerHighlightsController extends Controller
             ])
         );
 
-        return response()->json(EmployerHighlightViewData::from($data), 201);
+        return response()->json(EmployerHighlightViewData::from(
+            EmployerHighlight::find($data->id)
+        ), 201);
     }
 
     public function show(Subject $subject, Employer $employer, EmployerHighlight $highlight): JsonResponse
@@ -70,7 +78,9 @@ class EmployerHighlightsController extends Controller
             ])
         );
 
-        return response()->json(EmployerHighlightViewData::from($data));
+        return response()->json(EmployerHighlightViewData::from(
+            $highlight->refresh()
+        ));
     }
 
     public function destroy(Subject $subject, Employer $employer, EmployerHighlight $highlight): JsonResponse
