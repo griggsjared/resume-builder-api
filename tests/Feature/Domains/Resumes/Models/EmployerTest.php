@@ -49,4 +49,28 @@ class EmployerTest extends TestCase
         $this->assertTrue($current->is_current);
         $this->assertFalse($past->is_current);
     }
+
+    /** @test */
+    public function it_can_scope_to_a_search_term()
+    {
+        Employer::factory()->create([
+            'name' => 'found name',
+            'city' => 'found city',
+            'state' => 'found state'
+        ]);
+
+
+        Employer::factory()->create([
+            'name' => 'missing name',
+            'city' => 'missing city',
+            'state' => 'missing state'
+        ]);
+
+
+        $this->assertCount(1, Employer::search('found')->get());
+        $this->assertCount(2, Employer::search('name')->get());
+        $this->assertCount(2, Employer::search('city')->get());
+        $this->assertCount(2, Employer::search('state')->get());
+        $this->assertCount(0, Employer::search('zero')->get());
+    }
 }

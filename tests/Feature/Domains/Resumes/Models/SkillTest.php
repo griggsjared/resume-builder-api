@@ -34,4 +34,25 @@ class SkillTest extends TestCase
         $this->assertInstanceOf(Skill::class, $skill);
         $this->assertInstanceOf(Subject::class, $skill->subject);
     }
+
+    /** @test */
+    public function it_can_scope_to_a_search_term()
+    {
+        Skill::factory()->create([
+            'name' => 'found name',
+            'category' => 'found category',
+        ]);
+
+
+        Skill::factory()->create([
+            'name' => 'missing name',
+            'category' => 'missing category',
+        ]);
+
+
+        $this->assertCount(1, Skill::search('found')->get());
+        $this->assertCount(2, Skill::search('name')->get());
+        $this->assertCount(2, Skill::search('category')->get());
+        $this->assertCount(0, Skill::search('zero')->get());
+    }
 }

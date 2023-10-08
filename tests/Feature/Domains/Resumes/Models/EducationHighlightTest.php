@@ -32,4 +32,22 @@ class EducationHighlightTest extends TestCase
         $this->assertInstanceOf(EducationHighlight::class, $highlight);
         $this->assertInstanceOf(Education::class, $highlight->education);
     }
+
+    /** @test */
+    public function it_can_scope_to_a_search_term()
+    {
+        EducationHighlight::factory()->create([
+            'content' => 'found content',
+        ]);
+
+
+        EducationHighlight::factory()->create([
+            'content' => 'missing content',
+        ]);
+
+
+        $this->assertCount(1, EducationHighlight::search('found')->get());
+        $this->assertCount(2, EducationHighlight::search('content')->get());
+        $this->assertCount(0, EducationHighlight::search('zero')->get());
+    }
 }

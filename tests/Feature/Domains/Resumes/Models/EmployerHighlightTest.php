@@ -32,4 +32,22 @@ class EmployerHighlightTest extends TestCase
         $this->assertInstanceOf(EmployerHighlight::class, $highlight);
         $this->assertInstanceOf(Employer::class, $highlight->employer);
     }
+
+    /** @test */
+    public function it_can_scope_to_a_search_term()
+    {
+        EmployerHighlight::factory()->create([
+            'content' => 'found content',
+        ]);
+
+
+        EmployerHighlight::factory()->create([
+            'content' => 'missing content',
+        ]);
+
+
+        $this->assertCount(1, EmployerHighlight::search('found')->get());
+        $this->assertCount(2, EmployerHighlight::search('content')->get());
+        $this->assertCount(0, EmployerHighlight::search('zero')->get());
+    }
 }

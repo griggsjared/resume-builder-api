@@ -32,4 +32,22 @@ class SubjectHighlightTest extends TestCase
         $this->assertInstanceOf(SubjectHighlight::class, $highlight);
         $this->assertInstanceOf(Subject::class, $highlight->subject);
     }
+
+    /** @test */
+    public function it_can_scope_to_a_search_term()
+    {
+        SubjectHighlight::factory()->create([
+            'content' => 'found content',
+        ]);
+
+
+        SubjectHighlight::factory()->create([
+            'content' => 'missing content',
+        ]);
+
+
+        $this->assertCount(1, SubjectHighlight::search('found')->get());
+        $this->assertCount(2, SubjectHighlight::search('content')->get());
+        $this->assertCount(0, SubjectHighlight::search('zero')->get());
+    }
 }
