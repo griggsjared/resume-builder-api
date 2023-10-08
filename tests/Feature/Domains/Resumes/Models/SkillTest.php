@@ -43,12 +43,10 @@ class SkillTest extends TestCase
             'category' => 'found category',
         ]);
 
-
         Skill::factory()->create([
             'name' => 'missing name',
             'category' => 'missing category',
         ]);
-
 
         $this->assertCount(1, Skill::search('found')->get());
         $this->assertCount(2, Skill::search('name')->get());

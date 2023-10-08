@@ -89,7 +89,6 @@ class SubjectTest extends TestCase
             'overview' => 'found overview',
         ]);
 
-
         Subject::factory()->create([
             'first_name' => 'missing first name',
             'last_name' => 'missing last name',
@@ -100,7 +99,6 @@ class SubjectTest extends TestCase
             'state' => 'missing state',
             'overview' => 'missing overview',
         ]);
-
 
         $this->assertCount(1, Subject::search('found')->get());
         $this->assertCount(2, Subject::search('first name')->get());

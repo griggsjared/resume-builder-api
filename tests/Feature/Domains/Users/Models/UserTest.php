@@ -53,15 +53,15 @@ class UserTest extends TestCase
     public function it_can_scope_to_a_search_term()
     {
         User::factory()->create([
-            'email' => 'searchme@example.com'
+            'email' => 'searchme@example.com',
         ]);
 
         User::factory()->create([
-            'email' => 'orthat@example.com'
+            'email' => 'orthat@example.com',
         ]);
 
         User::factory()->create([
-            'email' => 'notthis@foo.com'
+            'email' => 'notthis@foo.com',
         ]);
 
         $this->assertCount(1, User::search('search')->get());

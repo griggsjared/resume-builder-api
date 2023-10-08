@@ -31,7 +31,7 @@ class EmployerHighlightsController extends Controller
 
         $highlights = $employer->highlights();
 
-        if($request->has('search')) {
+        if ($request->has('search')) {
             $highlights->search($request->input('search'));
         }
 

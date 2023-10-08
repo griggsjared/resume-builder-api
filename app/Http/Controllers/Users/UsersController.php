@@ -31,17 +31,17 @@ class UsersController extends Controller
 
         $users = User::authorized($request->user());
 
-        if($request->has('search')) {
+        if ($request->has('search')) {
             $users->search($request->input('search'));
         }
 
-        if($request->has('role') && UserRole::isValid($request->input('role'))) {
+        if ($request->has('role') && UserRole::isValid($request->input('role'))) {
             $users->role($request->input('role'));
         }
 
         $order = $request->input('order', 'asc') === 'desc' ? 'desc' : 'asc';
 
-        match($request->input('order_by')) {
+        match ($request->input('order_by')) {
             'email' => $users->orderBy('email', $order),
             'role' => $users->orderBy('role', $order),
             'updated_at' => $users->orderBy('updated_at', $order),

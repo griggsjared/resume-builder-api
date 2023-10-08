@@ -30,13 +30,13 @@ class EmployersController extends Controller
 
         $employers = $subject->employers();
 
-        if($request->has('search')) {
+        if ($request->has('search')) {
             $employers->search($request->input('search'));
         }
 
         $order = $request->input('order', 'asc') === 'desc' ? 'desc' : 'asc';
 
-        match($request->input('order_by')) {
+        match ($request->input('order_by')) {
             'name' => $employers->orderBy('name', $order),
             'city' => $employers->orderBy('city', $order),
             'state' => $employers->orderBy('state', $order),

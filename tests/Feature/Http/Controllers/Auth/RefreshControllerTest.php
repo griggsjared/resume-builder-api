@@ -30,7 +30,7 @@ class RefreshControllerTest extends TestCase
             ->assertJsonStructure([
                 'token',
                 'expires_in',
-                'type'
+                'type',
             ]);
     }
 

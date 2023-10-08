@@ -40,11 +40,9 @@ class SubjectHighlightTest extends TestCase
             'content' => 'found content',
         ]);
 
-
         SubjectHighlight::factory()->create([
             'content' => 'missing content',
         ]);
-
 
         $this->assertCount(1, SubjectHighlight::search('found')->get());
         $this->assertCount(2, SubjectHighlight::search('content')->get());

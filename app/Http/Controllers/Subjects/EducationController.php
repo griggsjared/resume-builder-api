@@ -30,13 +30,13 @@ class EducationController extends Controller
 
         $education = $subject->education();
 
-        if($request->has('search')) {
+        if ($request->has('search')) {
             $education->search($request->input('search'));
         }
 
         $order = $request->input('order', 'asc') === 'desc' ? 'desc' : 'asc';
 
-        match($request->input('order_by')) {
+        match ($request->input('order_by')) {
             'name' => $education->orderBy('name', $order),
             'city' => $education->orderBy('city', $order),
             'state' => $education->orderBy('state', $order),

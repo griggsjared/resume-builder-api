@@ -56,16 +56,14 @@ class EmployerTest extends TestCase
         Employer::factory()->create([
             'name' => 'found name',
             'city' => 'found city',
-            'state' => 'found state'
+            'state' => 'found state',
         ]);
-
 
         Employer::factory()->create([
             'name' => 'missing name',
             'city' => 'missing city',
-            'state' => 'missing state'
+            'state' => 'missing state',
         ]);
-
 
         $this->assertCount(1, Employer::search('found')->get());
         $this->assertCount(2, Employer::search('name')->get());

@@ -40,11 +40,9 @@ class EmployerHighlightTest extends TestCase
             'content' => 'found content',
         ]);
 
-
         EmployerHighlight::factory()->create([
             'content' => 'missing content',
         ]);
-
 
         $this->assertCount(1, EmployerHighlight::search('found')->get());
         $this->assertCount(2, EmployerHighlight::search('content')->get());

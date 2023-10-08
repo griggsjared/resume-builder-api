@@ -30,13 +30,13 @@ class SubjectsController extends Controller
 
         $subjects = Subject::authorized($request->user());
 
-        if($request->has('search')) {
+        if ($request->has('search')) {
             $subject->search($request->input('search'));
         }
 
         $order = $request->input('order', 'asc') === 'desc' ? 'desc' : 'asc';
 
-        match($request->input('order_by')) {
+        match ($request->input('order_by')) {
             'first_name' => $subjects->orderBy('first_name', $order),
             'last_name' => $subjects->orderBy('last_name', $order),
             'title' => $subjects->orderBy('title', $order),

@@ -40,11 +40,9 @@ class EducationHighlightTest extends TestCase
             'content' => 'found content',
         ]);
 
-
         EducationHighlight::factory()->create([
             'content' => 'missing content',
         ]);
-
 
         $this->assertCount(1, EducationHighlight::search('found')->get());
         $this->assertCount(2, EducationHighlight::search('content')->get());

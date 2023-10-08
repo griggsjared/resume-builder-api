@@ -2,7 +2,6 @@
 
 namespace App\Domains\Resumes\Models;
 
-use App\Domains\Resumes\Models\Education;
 use Illuminate\Contracts\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;

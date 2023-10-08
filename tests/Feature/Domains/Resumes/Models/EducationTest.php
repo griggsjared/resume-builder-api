@@ -99,7 +99,6 @@ class EducationTest extends TestCase
             'minor_degree' => 'found minor degree',
         ]);
 
-
         Education::factory()->create([
             'name' => 'missing name',
             'city' => 'missing city',
@@ -107,7 +106,6 @@ class EducationTest extends TestCase
             'major_degree' => 'missing major degree',
             'minor_degree' => 'missing minor degree',
         ]);
-
 
         $this->assertCount(1, Education::search('found')->get());
         $this->assertCount(2, Education::search('name')->get());

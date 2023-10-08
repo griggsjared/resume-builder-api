@@ -30,13 +30,13 @@ class SkillsController extends Controller
 
         $skills = $subject->skills();
 
-        if($request->has('search')) {
+        if ($request->has('search')) {
             $skills->search($request->input('search'));
         }
 
         $order = $request->input('order', 'asc') === 'desc' ? 'desc' : 'asc';
 
-        match($request->input('order_by')) {
+        match ($request->input('order_by')) {
             'name' => $skills->orderBy('name', $order),
             'category' => $skills->orderBy('category', $order),
             default => $skills->orderBy('name', $order),

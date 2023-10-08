@@ -31,7 +31,7 @@ class EducationHighlightsController extends Controller
 
         $highlights = $education->highlights();
 
-        if($request->has('search')) {
+        if ($request->has('search')) {
             $highlights->search($request->input('search'));
         }
 

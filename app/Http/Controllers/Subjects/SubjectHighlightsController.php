@@ -30,7 +30,7 @@ class SubjectHighlightsController extends Controller
 
         $highlights = $subject->highlights();
 
-        if($request->has('search')) {
+        if ($request->has('search')) {
             $highlights->search($request->input('search'));
         }
 
