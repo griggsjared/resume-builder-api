@@ -2,6 +2,7 @@
 
 namespace App\Domains\Resumes\Models;
 
+use Illuminate\Contracts\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -70,5 +71,16 @@ class Education extends Model
         return Attribute::make(
             get: fn ($value, $attributes) => ! is_null($attributes['minor_degree']) && $attributes['earned_minor_degree']
         );
+    }
+
+    protected function scopeSearch(Builder $query, string $search): Builder
+    {
+        return $query->where(function (Builder $query) use ($search) {
+            $query->where('name', 'like', "%{$search}%")
+                ->orWhere('city', 'like', "%{$search}%")
+                ->orWhere('state', 'like', "%{$search}%")
+                ->orWhere('major_degree', 'like', "%{$search}%")
+                ->orWhere('minor_degree', 'like', "%{$search}%");
+        });
     }
 }

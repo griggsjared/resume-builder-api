@@ -28,11 +28,30 @@ class EducationController extends Controller
     {
         $this->authorize('view', $subject);
 
+        $education = $subject->education();
+
+        if($request->has('search')) {
+            $education->search($request->input('search'));
+        }
+
+        $order = $request->input('order', 'asc') === 'desc' ? 'desc' : 'asc';
+
+        match($request->input('order_by')) {
+            'name' => $education->orderBy('name', $order),
+            'city' => $education->orderBy('city', $order),
+            'state' => $education->orderBy('state', $order),
+            'major_degree' => $education->orderBy('major_degree', $order),
+            'minor_degree' => $education->orderBy('minor_degree', $order),
+            'start_date' => $education->orderBy('start_date', $order),
+            'end_date' => $education->orderBy('end_date', $order),
+            default => $education->orderBy('name', $order),
+        };
+
         /**
          * @var PaginatedViewData<EducationViewData>
          */
         $viewData = PaginatedViewData::fromPaginator(
-            $subject->education()->orderBy('created_at', 'asc')->paginate(
+            $education->paginate(
                 $request->input('per_page', 20)
             )->withQueryString(),
             EducationViewData::class

@@ -87,4 +87,34 @@ class EducationTest extends TestCase
         $this->assertTrue($earned->earned_minor_degree);
         $this->assertFalse($notEarned->earned_minor_degree);
     }
+
+    /** @test */
+    public function it_can_scope_to_a_search_term()
+    {
+        Education::factory()->create([
+            'name' => 'found name',
+            'city' => 'found city',
+            'state' => 'found state',
+            'major_degree' => 'found major degree',
+            'minor_degree' => 'found minor degree',
+        ]);
+
+
+        Education::factory()->create([
+            'name' => 'missing name',
+            'city' => 'missing city',
+            'state' => 'missing state',
+            'major_degree' => 'missing major degree',
+            'minor_degree' => 'missing minor degree',
+        ]);
+
+
+        $this->assertCount(1, Education::search('found')->get());
+        $this->assertCount(2, Education::search('name')->get());
+        $this->assertCount(2, Education::search('city')->get());
+        $this->assertCount(2, Education::search('state')->get());
+        $this->assertCount(2, Education::search('major')->get());
+        $this->assertCount(2, Education::search('minor')->get());
+        $this->assertCount(0, Education::search('zero')->get());
+    }
 }
