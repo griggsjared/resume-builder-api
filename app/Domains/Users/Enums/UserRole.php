@@ -16,4 +16,12 @@ enum UserRole: string implements HasLabelInterface
             self::Basic => 'Basic',
         };
     }
+
+    public static function isValid(string $value): bool
+    {
+        return match ($value) {
+            self::Admin, self::Basic => true,
+            default => false,
+        };
+    }
 }

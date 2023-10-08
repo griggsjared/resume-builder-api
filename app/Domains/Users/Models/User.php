@@ -57,4 +57,11 @@ class User extends Authenticatable
 
         return $query->where('id', $user->id);
     }
+
+    protected function scopeSearch(Builder $query, string $search): Builder
+    {
+        return $query->where(function (Builder $query) use ($search) {
+            $query->where('email', 'like', "%{$search}%");
+        });
+    }
 }

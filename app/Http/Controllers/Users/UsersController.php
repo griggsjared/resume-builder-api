@@ -7,6 +7,7 @@ namespace App\Http\Controllers\Users;
 use App\Domains\Users\Actions\DeleteUserAction;
 use App\Domains\Users\Actions\UpsertUserAction;
 use App\Domains\Users\Data\UserData;
+use App\Domains\Users\Enums\UserRole;
 use App\Domains\Users\Models\User;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Users\StoreUserRequest;
@@ -28,11 +29,30 @@ class UsersController extends Controller
     {
         $this->authorize('viewAny', User::class);
 
+        $users = User::authorized($request->user());
+
+        if($request->has('search')) {
+            $users->search($request->input('search'));
+        }
+
+        if($request->has('role') && UserRole::isValid($request->input('role'))) {
+            $users->role($request->input('role'));
+        }
+
+        $order = $request->input('order', 'asc') === 'desc' ? 'desc' : 'asc';
+
+        match($request->input('order_by')) {
+            'email' => $users->orderBy('email', $order),
+            'role' => $users->orderBy('role', $order),
+            'updated_at' => $users->orderBy('updated_at', $order),
+            default => $users->orderBy('created_at', $order),
+        };
+
         /**
          * @var PaginatedViewData<UserViewData>
          */
         $viewData = PaginatedViewData::fromPaginator(
-            User::authorized($request->user())->orderBy('created_at', 'asc')->paginate(
+            $users->paginate(
                 $request->input('per_page', 20)
             )->withQueryString(),
             UserViewData::class
@@ -50,7 +70,9 @@ class UsersController extends Controller
             ])
         );
 
-        return response()->json(UserViewData::from($data), 201);
+        return response()->json(UserViewData::from(
+            User::find($data->id)
+        ), 201);
     }
 
     public function show(User $user): JsonResponse
@@ -64,7 +86,7 @@ class UsersController extends Controller
 
     public function update(UpdateUserRequest $request, User $user): JsonResponse
     {
-        $data = $this->upsertUserAction->execute(
+        $this->upsertUserAction->execute(
             UserData::from([
                 ...$user->toArray(),
                 ...$request->validated(),
@@ -72,7 +94,9 @@ class UsersController extends Controller
             ])
         );
 
-        return response()->json(UserViewData::from($data));
+        return response()->json(UserViewData::from(
+            $user->refresh()
+        ));
     }
 
     public function destroy(User $user): JsonResponse

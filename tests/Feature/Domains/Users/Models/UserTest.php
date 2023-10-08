@@ -48,4 +48,24 @@ class UserTest extends TestCase
         $this->assertCount(5, User::authorized($admin)->get());
         $this->assertCount(1, User::authorized($basic)->get());
     }
+
+    /** @test */
+    public function it_can_scope_to_a_search_term()
+    {
+        User::factory()->create([
+            'email' => 'searchme@example.com'
+        ]);
+
+        User::factory()->create([
+            'email' => 'orthat@example.com'
+        ]);
+
+        User::factory()->create([
+            'email' => 'notthis@foo.com'
+        ]);
+
+        $this->assertCount(1, User::search('search')->get());
+        $this->assertCount(1, User::search('me')->get());
+        $this->assertCount(2, User::search('example')->get());
+    }
 }
