@@ -40,6 +40,8 @@ class EmployersController extends Controller
             'name' => $employers->orderBy('name', $order),
             'city' => $employers->orderBy('city', $order),
             'state' => $employers->orderBy('state', $order),
+            'started_at' => $employers->orderBy('started_at', $order),
+            'ended_at' => $employers->orderBy('ended_at', $order),
             default => $employers->orderBy('name', $order),
         };
 

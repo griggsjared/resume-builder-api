@@ -42,8 +42,8 @@ class EducationController extends Controller
             'state' => $education->orderBy('state', $order),
             'major_degree' => $education->orderBy('major_degree', $order),
             'minor_degree' => $education->orderBy('minor_degree', $order),
-            'start_date' => $education->orderBy('start_date', $order),
-            'end_date' => $education->orderBy('end_date', $order),
+            'started_at' => $education->orderBy('started_at', $order),
+            'ended_at' => $education->orderBy('ended_at', $order),
             default => $education->orderBy('name', $order),
         };
 
