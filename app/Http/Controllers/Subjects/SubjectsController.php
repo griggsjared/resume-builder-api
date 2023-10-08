@@ -28,11 +28,30 @@ class SubjectsController extends Controller
     {
         $this->authorize('viewAny', Subject::class);
 
+        $subjects = Subject::authorized($request->user());
+
+        if($request->has('search')) {
+            $subject->search($request->input('search'));
+        }
+
+        $order = $request->input('order', 'asc') === 'desc' ? 'desc' : 'asc';
+
+        match($request->input('order_by')) {
+            'first_name' => $subjects->orderBy('first_name', $order),
+            'last_name' => $subjects->orderBy('last_name', $order),
+            'title' => $subjects->orderBy('title', $order),
+            'email' => $subjects->orderBy('email', $order),
+            'phone' => $subjects->orderBy('phone_number', $order),
+            'city' => $subjects->orderBy('city', $order),
+            'state' => $subjects->orderBy('state', $order),
+            default => $subjects->orderBy('last_name', $order)->orderBy('first_name', $order)
+        };
+
         /**
          * @var PaginatedViewData<SubjectViewData>
          */
         $viewData = PaginatedViewData::fromPaginator(
-            Subject::authorized($request->user())->orderBy('created_at', 'asc')->paginate(
+            $subjects->paginate(
                 $request->input('per_page', 20)
             )->withQueryString(),
             SubjectViewData::class
@@ -50,7 +69,9 @@ class SubjectsController extends Controller
             ])
         );
 
-        return response()->json(SubjectViewData::from($data), 201);
+        return response()->json(SubjectViewData::from(
+            Subject::find($data->id)
+        ), 201);
     }
 
     public function show(Subject $subject): JsonResponse
@@ -70,7 +91,9 @@ class SubjectsController extends Controller
             ])
         );
 
-        return response()->json(SubjectViewData::from($data));
+        return response()->json(SubjectViewData::from(
+            $subject->refresh()
+        ));
     }
 
     public function destroy(Subject $subject): JsonResponse

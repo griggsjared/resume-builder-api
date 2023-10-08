@@ -74,4 +74,42 @@ class SubjectTest extends TestCase
         $this->assertCount(3, Subject::authorized($admin)->get());
         $this->assertCount(2, Subject::authorized($basic)->get());
     }
+
+    /** @test */
+    public function it_can_scope_to_a_search_term()
+    {
+        Subject::factory()->create([
+            'first_name' => 'found first name',
+            'last_name' => 'found last name',
+            'title' => 'found title',
+            'email' => 'found email',
+            'phone_number' => 'found phone number',
+            'city' => 'found city',
+            'state' => 'found state',
+            'overview' => 'found overview',
+        ]);
+
+
+        Subject::factory()->create([
+            'first_name' => 'missing first name',
+            'last_name' => 'missing last name',
+            'title' => 'missing title',
+            'email' => 'missing email',
+            'phone_number' => 'missing phone number',
+            'city' => 'missing city',
+            'state' => 'missing state',
+            'overview' => 'missing overview',
+        ]);
+
+
+        $this->assertCount(1, Subject::search('found')->get());
+        $this->assertCount(2, Subject::search('first name')->get());
+        $this->assertCount(2, Subject::search('last name')->get());
+        $this->assertCount(2, Subject::search('title')->get());
+        $this->assertCount(2, Subject::search('email')->get());
+        $this->assertCount(2, Subject::search('city')->get());
+        $this->assertCount(2, Subject::search('state')->get());
+        $this->assertCount(2, Subject::search('overview')->get());
+        $this->assertCount(0, Subject::search('zero')->get());
+    }
 }

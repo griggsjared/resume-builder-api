@@ -70,4 +70,18 @@ class Subject extends Model
             get: fn ($value, $attributes) => trim($attributes['first_name'].' '.$attributes['last_name'])
         );
     }
+
+    protected function scopeSearch(Builder $query, string $search): Builder
+    {
+        return $query->where(function (Builder $query) use ($search) {
+            $query->where('first_name', 'like', "%{$search}%")
+                ->orWhere('last_name', 'like', "%{$search}%")
+                ->orWhere('title', 'like', "%{$search}%")
+                ->orWhere('email', 'like', "%{$search}%")
+                ->orWhere('phone_number', 'like', "%{$search}%")
+                ->orWhere('city', 'like', "%{$search}%")
+                ->orWhere('state', 'like', "%{$search}%")
+                ->orWhere('overview', 'like', "%{$search}%");
+        });
+    }
 }
