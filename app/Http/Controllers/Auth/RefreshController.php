@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers\Auth;
 
-use App\Domains\Users\Actions\ExtendAccessTokenAction;
+use App\Domains\Users\Actions\RefreshAccessTokenAction;
 use App\Domains\Users\Data\AccessTokenData;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Auth\RefreshRequest;
@@ -14,7 +14,7 @@ use Illuminate\Http\JsonResponse;
 class RefreshController extends Controller
 {
     public function __construct(
-        private ExtendAccessTokenAction $extendAccessTokenAction
+        private RefreshAccessTokenAction $refreshAccessTokenAction
     ) {
     }
 
@@ -24,11 +24,10 @@ class RefreshController extends Controller
 
         return response()->json(
             AccessTokenViewData::from([
-                ...$this->extendAccessTokenAction->execute(
+                ...$this->refreshAccessTokenAction->execute(
                     AccessTokenData::from($accessToken),
                     now()->addSeconds(config('auth.token_expiration', 3600))
                 )->toArray(),
-                'token' => $request->bearerToken(),
                 'type' => 'bearer',
             ])
         );

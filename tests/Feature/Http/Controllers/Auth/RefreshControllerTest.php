@@ -27,8 +27,10 @@ class RefreshControllerTest extends TestCase
         $this->withHeader('Authorization', 'Bearer '.$accessToken)
             ->post(route('auth.refresh'))
             ->assertOk()
-            ->assertJson([
-                'token' => $accessToken,
+            ->assertJsonStructure([
+                'token',
+                'expires_in',
+                'type'
             ]);
     }
 

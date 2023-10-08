@@ -22,9 +22,11 @@ class GenerateAccessTokenAction
             expiresAt: $expiresAt
         );
 
+        $tokenParts = explode('|', $token->plainTextToken);
+
         return AccessTokenData::from([
             ...$token->accessToken->toArray(),
-            'token' => $token->plainTextToken,
+            'token' => $tokenParts[1],
         ]);
     }
 }
