@@ -28,11 +28,25 @@ class SkillsController extends Controller
     {
         $this->authorize('view', $subject);
 
+        $skills = $subject->skills();
+
+        if($request->has('search')) {
+            $skills->search($request->input('search'));
+        }
+
+        $order = $request->input('order', 'asc') === 'desc' ? 'desc' : 'asc';
+
+        match($request->input('order_by')) {
+            'name' => $skills->orderBy('name', $order),
+            'category' => $skills->orderBy('category', $order),
+            default => $skills->orderBy('name', $order),
+        };
+
         /**
          * @var PaginatedViewData<SkillViewData>
          */
         $viewData = PaginatedViewData::fromPaginator(
-            $subject->skills()->orderBy('sort', 'asc')->paginate(
+            $skills->paginate(
                 $request->input('per_page', 20)
             )->withQueryString(),
             SkillViewData::class
