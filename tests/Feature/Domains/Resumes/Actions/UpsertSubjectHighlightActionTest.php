@@ -21,6 +21,7 @@ class UpsertSubjectHighlightActionTest extends TestCase
         $data = app(UpsertSubjectHighlightAction::class)->execute(
             SubjectHighlightData::from([
                 'content' => 'I am a highlight',
+                'sort' => 1,
                 'subject' => $subject,
             ])
         );
@@ -30,6 +31,7 @@ class UpsertSubjectHighlightActionTest extends TestCase
         $this->assertInstanceOf(Subject::class, $subjectHighlight->subject);
         $this->assertEquals($subject->id, $subjectHighlight->subject->id);
         $this->assertEquals($data->content, $subjectHighlight->content);
+        $this->assertEquals($data->sort, $subjectHighlight->sort);
     }
 
     /** @test */
@@ -43,12 +45,14 @@ class UpsertSubjectHighlightActionTest extends TestCase
             SubjectHighlightData::from([
                 ...$subjectHighlight->toArray(),
                 'content' => 'I am a highlight',
+                'sort' => 1,
             ])
         );
 
         $subjectHighlight->refresh();
 
         $this->assertEquals($data->content, $subjectHighlight->content);
+        $this->assertEquals($data->sort, $subjectHighlight->sort);
     }
 
     /** @test */

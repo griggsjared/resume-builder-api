@@ -17,6 +17,7 @@ return new class extends Migration
             $table->uuid('id')->primary();
             $table->uuid('employer_id')->index()->nullable();
             $table->text('content');
+            $table->integer('sort')->default(9999);
             $table->timestamps();
         });
     }

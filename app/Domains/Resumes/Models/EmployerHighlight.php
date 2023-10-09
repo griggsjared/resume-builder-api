@@ -17,6 +17,7 @@ class EmployerHighlight extends Model
      */
     protected $fillable = [
         'content',
+        'sort',
     ];
 
     public function employer(): BelongsTo

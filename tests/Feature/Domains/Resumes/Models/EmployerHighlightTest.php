@@ -18,6 +18,7 @@ class EmployerHighlightTest extends TestCase
         $this->assertTrue(Schema::hasColumn('employer_highlights', 'id'));
         $this->assertTrue(Schema::hasColumn('employer_highlights', 'employer_id'));
         $this->assertTrue(Schema::hasColumn('employer_highlights', 'content'));
+        $this->assertTrue(Schema::hasColumn('employer_highlights', 'sort'));
         $this->assertTrue(Schema::hasColumn('employer_highlights', 'created_at'));
         $this->assertTrue(Schema::hasColumn('employer_highlights', 'updated_at'));
     }

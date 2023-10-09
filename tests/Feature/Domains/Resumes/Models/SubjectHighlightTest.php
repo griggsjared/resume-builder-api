@@ -18,6 +18,7 @@ class SubjectHighlightTest extends TestCase
         $this->assertTrue(Schema::hasColumn('subject_highlights', 'id'));
         $this->assertTrue(Schema::hasColumn('subject_highlights', 'subject_id'));
         $this->assertTrue(Schema::hasColumn('subject_highlights', 'content'));
+        $this->assertTrue(Schema::hasColumn('subject_highlights', 'sort'));
         $this->assertTrue(Schema::hasColumn('subject_highlights', 'created_at'));
         $this->assertTrue(Schema::hasColumn('subject_highlights', 'updated_at'));
     }

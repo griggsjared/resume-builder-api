@@ -22,6 +22,7 @@ class SkillFactory extends Factory
     {
         return [
             'name' => ucwords($this->faker->words(1, true)),
+            'sort' => $this->faker->numberBetween(1, 9999),
             'category' => $this->faker->randomElement([
                 'Cumque',
                 'Occaecati',

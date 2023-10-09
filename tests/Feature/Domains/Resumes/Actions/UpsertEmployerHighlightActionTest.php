@@ -21,6 +21,7 @@ class UpsertEmployerHighlightActionTest extends TestCase
         $data = app(UpsertEmployerHighlightAction::class)->execute(
             EmployerHighlightData::from([
                 'content' => 'I am a highlight',
+                'sort' => 1,
                 'employer' => $employer,
             ])
         );
@@ -30,6 +31,7 @@ class UpsertEmployerHighlightActionTest extends TestCase
         $this->assertInstanceOf(Employer::class, $employerHighlight->employer);
         $this->assertEquals($employer->id, $employerHighlight->employer->id);
         $this->assertEquals($data->content, $employerHighlight->content);
+        $this->assertEquals($data->sort, $employerHighlight->sort);
     }
 
     /** @test */
@@ -43,12 +45,14 @@ class UpsertEmployerHighlightActionTest extends TestCase
             EmployerHighlightData::from([
                 ...$employerHighlight->toArray(),
                 'content' => 'I am a highlight',
+                'sort' => 1,
             ])
         );
 
         $employerHighlight->refresh();
 
         $this->assertEquals($data->content, $employerHighlight->content);
+        $this->assertEquals($data->sort, $employerHighlight->sort);
     }
 
     /** @test */

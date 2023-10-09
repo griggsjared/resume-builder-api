@@ -15,6 +15,7 @@ class UpsertEducationHighlightAction
             ['id' => $data->id],
             [
                 'content' => $data->content,
+                'sort' => $data->sort ?? 9999,
             ]
         );
 

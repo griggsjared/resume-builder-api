@@ -17,6 +17,7 @@ class SubjectHighlight extends Model
      */
     protected $fillable = [
         'content',
+        'sort',
     ];
 
     public function subject(): BelongsTo

@@ -22,6 +22,7 @@ class EmployerHighlightFactory extends Factory
     {
         return [
             'content' => $this->faker->sentences(4, true),
+            'sort' => $this->faker->numberBetween(1, 9999),
         ];
     }
 }

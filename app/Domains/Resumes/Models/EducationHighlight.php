@@ -17,6 +17,7 @@ class EducationHighlight extends Model
      */
     protected $fillable = [
         'content',
+        'sort',
     ];
 
     public function education(): BelongsTo
