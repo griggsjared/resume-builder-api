@@ -25,7 +25,7 @@ class SubjectHighlight extends Model
         return $this->belongsTo(Subject::class);
     }
 
-    protected function scopeSearch(Builder $query, string $search): Builder
+    protected function scopeSearch(Builder $query, ?string $search): Builder
     {
         return $query->where(function (Builder $query) use ($search) {
             $query->where('content', 'like', "%{$search}%");
