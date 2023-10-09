@@ -39,7 +39,8 @@ class SkillsController extends Controller
         match ($request->input('order_by')) {
             'name' => $skills->orderBy('name', $order),
             'category' => $skills->orderBy('category', $order),
-            default => $skills->orderBy('name', $order),
+            'sort' => $skills->orderBy('sort', $order),
+            default => $skills->orderBy('sort', $order),
         };
 
         /**

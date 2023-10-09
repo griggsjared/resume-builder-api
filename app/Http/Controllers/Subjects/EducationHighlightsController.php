@@ -35,6 +35,13 @@ class EducationHighlightsController extends Controller
             $highlights->search($request->input('search'));
         }
 
+        $order = $request->input('order', 'asc') === 'desc' ? 'desc' : 'asc';
+
+        match ($request->input('order_by')) {
+            'sort' => $highlights->orderBy('sort', $order),
+            default => $highlights->orderBy('sort', $order),
+        };
+
         /**
          * @var PaginatedViewData<EducationHighlightViewData>
          */
