@@ -20,6 +20,7 @@ class UpsertEmployerHighlightRequest extends FormRequest
     {
         return [
             'content' => ['required', 'string'],
+            'sort' => ['nullable', 'integer', 'min:0', 'max:9999'],
         ];
     }
 }

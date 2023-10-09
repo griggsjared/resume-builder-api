@@ -11,6 +11,7 @@ class SubjectHighlightViewData extends Data
     public function __construct(
         public readonly string $id,
         public readonly string $content,
+        public readonly int $sort,
     ) {
     }
 }

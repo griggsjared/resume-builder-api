@@ -72,6 +72,7 @@ class EducationHighlightsControllerTest extends TestCase
                     '*' => [
                         'id',
                         'content',
+                        'sort',
                     ],
                 ],
             ]);
@@ -155,6 +156,7 @@ class EducationHighlightsControllerTest extends TestCase
             ->assertJson([
                 'id' => $viewingHighlight->id,
                 'content' => $viewingHighlight->content,
+                'sort' => $viewingHighlight->sort,
             ]);
 
         auth()->forgetGuards();
@@ -210,10 +212,12 @@ class EducationHighlightsControllerTest extends TestCase
                 'education' => $viewingEducation->id,
             ]), [
                 'content' => 'Test',
+                'sort' =>  1,
             ])
             ->assertCreated()
             ->assertJson([
                 'content' => 'Test',
+                'sort' => 1,
             ])
             ->assertJsonStructure([
                 'id',
@@ -227,6 +231,7 @@ class EducationHighlightsControllerTest extends TestCase
                 'education' => $viewingEducation->id,
             ]), [
                 'content' => 'Test',
+                'sort' =>  1,
             ])
             ->assertForbidden();
 
@@ -236,6 +241,7 @@ class EducationHighlightsControllerTest extends TestCase
                 'education' => $basicUsersEducation->id,
             ]), [
                 'content' => 'Test',
+                'sort' =>  1,
             ])
             ->assertCreated();
     }
@@ -289,11 +295,13 @@ class EducationHighlightsControllerTest extends TestCase
                 'highlight' => $updatingHighlight->id,
             ]), [
                 'content' => 'Test',
+                'sort' =>  1,
             ])
             ->assertOk()
             ->assertJson([
                 'id' => $updatingHighlight->id,
                 'content' => 'Test',
+                'sort' => 1,
             ]);
 
         auth()->forgetGuards();
@@ -305,6 +313,7 @@ class EducationHighlightsControllerTest extends TestCase
                 'highlight' => $updatingHighlight->id,
             ]), [
                 'content' => 'Test',
+                'sort' =>  1,
             ])
             ->assertForbidden();
 
@@ -315,11 +324,13 @@ class EducationHighlightsControllerTest extends TestCase
                 'highlight' => $basicUsersHighlight->id,
             ]), [
                 'content' => 'Test',
+                'sort' =>  1,
             ])
             ->assertOk()
             ->assertJson([
                 'id' => $basicUsersHighlight->id,
                 'content' => 'Test',
+                'sort' => 1,
             ]);
     }
 
