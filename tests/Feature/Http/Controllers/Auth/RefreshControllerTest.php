@@ -28,7 +28,7 @@ class RefreshControllerTest extends TestCase
             ->post(route('auth.refresh'))
             ->assertOk()
             ->assertJsonStructure([
-                'token',
+                'access_token',
                 'expires_in',
                 'type',
             ]);
@@ -45,7 +45,7 @@ class RefreshControllerTest extends TestCase
             ->post(route('auth.refresh'))
             ->assertStatus(422)
             ->assertJsonValidationErrors([
-                'token' => 'The current access token cannot be refreshed.',
+                'access_token' => 'The current access token cannot be refreshed.',
             ]);
     }
 }

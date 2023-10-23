@@ -28,7 +28,7 @@ class GenerateAccessTokenActionTest extends TestCase
         $accessToken = $user->tokens()->find($tokenData->id);
 
         $this->assertNotNull($accessToken);
-        $this->assertIsString($tokenData->token);
+        $this->assertIsString($tokenData->access_token);
         $this->assertEquals($user->id, $accessToken->tokenable_id);
         $this->assertEquals($tokenData->name, $accessToken->name);
         $this->assertEquals($tokenData->expires_at, $accessToken->expires_at);

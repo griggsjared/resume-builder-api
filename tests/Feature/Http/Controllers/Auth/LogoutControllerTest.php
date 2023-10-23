@@ -43,7 +43,7 @@ class LogoutControllerTest extends TestCase
             ->post(route('auth.refresh'))
             ->assertStatus(422)
             ->assertJsonValidationErrors([
-                'token' => 'The current access token cannot be refreshed.',
+                'access_token' => 'The current access token cannot be refreshed.',
             ]);
     }
 }

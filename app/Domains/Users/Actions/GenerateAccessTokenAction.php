@@ -26,7 +26,7 @@ class GenerateAccessTokenAction
 
         return AccessTokenData::from([
             ...$token->accessToken->toArray(),
-            'token' => $tokenParts[1],
+            'access_token' => $tokenParts[1],
         ]);
     }
 }

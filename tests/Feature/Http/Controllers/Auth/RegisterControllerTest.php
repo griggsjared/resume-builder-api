@@ -19,7 +19,7 @@ class RegisterControllerTest extends TestCase
         ])
             ->assertOk()
             ->assertJsonStructure([
-                'token',
+                'access_token',
                 'type',
                 'expires_in',
             ]);

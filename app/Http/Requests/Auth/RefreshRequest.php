@@ -14,7 +14,7 @@ class RefreshRequest extends FormRequest
     {
         $validator->after(function (Validator $validator) {
             if (! $this->accessToken()->expires_at || $this->accessToken()->expires_at->isPast()) {
-                $validator->errors()->add('token', 'The current access token cannot be refreshed.');
+                $validator->errors()->add('access_token', 'The current access token cannot be refreshed.');
             }
         });
     }

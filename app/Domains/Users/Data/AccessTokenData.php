@@ -15,7 +15,7 @@ class AccessTokenData extends Data
         #[Uuid]
         public readonly ?string $id,
         public readonly string $name,
-        public readonly Optional|string $token,
+        public readonly Optional|string $access_token,
         #[WithCast(AsCarbonCast::class)]
         public readonly ?Carbon $expires_at,
         public readonly ?int $expires_in,
