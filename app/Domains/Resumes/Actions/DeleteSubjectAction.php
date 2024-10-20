@@ -16,8 +16,7 @@ class DeleteSubjectAction
         private DeleteSkillAction $deleteSkillAction,
         private DeleteEmployerAction $deleteEmployerAction,
         private DeleteEducationAction $deleteEducationAction,
-    ) {
-    }
+    ) {}
 
     public function execute(SubjectData $subject): ?SubjectData
     {

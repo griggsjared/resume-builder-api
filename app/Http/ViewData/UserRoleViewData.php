@@ -12,8 +12,7 @@ class UserRoleViewData extends Data
     public function __construct(
         public readonly string $value,
         public readonly string $label,
-    ) {
-    }
+    ) {}
 
     public static function fromEnum(UserRole $enum): self
     {

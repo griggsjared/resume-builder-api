@@ -22,8 +22,7 @@ class EducationHighlightsController extends Controller
     public function __construct(
         private UpsertEducationHighlightAction $upsertEducationHighlightAction,
         private DeleteEducationHighlightAction $deleteEducationHighlightAction,
-    ) {
-    }
+    ) {}
 
     public function index(Request $request, Subject $subject, Education $education): JsonResponse
     {

@@ -13,6 +13,5 @@ class SkillViewData extends Data
         public readonly string $name,
         public readonly ?string $category,
         public readonly int $sort,
-    ) {
-    }
+    ) {}
 }

@@ -21,8 +21,7 @@ class SubjectHighlightsController extends Controller
     public function __construct(
         private UpsertSubjectHighlightAction $upsertSubjectHighlightAction,
         private DeleteSubjectHighlightAction $deleteSubjectHighlightAction,
-    ) {
-    }
+    ) {}
 
     public function index(Request $request, Subject $subject): JsonResponse
     {

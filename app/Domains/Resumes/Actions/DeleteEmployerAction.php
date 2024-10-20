@@ -10,8 +10,7 @@ class DeleteEmployerAction
 {
     public function __construct(
         private DeleteEmployerHighlightAction $deleteEmployerHighlightAction
-    ) {
-    }
+    ) {}
 
     public function execute(EmployerData $employerData): ?EmployerData
     {

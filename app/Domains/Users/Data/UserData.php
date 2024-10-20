@@ -18,6 +18,5 @@ class UserData extends Data
         #[WithCast(EnumCast::class)]
         public UserRole $role,
         public Optional|string $password
-    ) {
-    }
+    ) {}
 }

@@ -21,8 +21,7 @@ class SkillsController extends Controller
     public function __construct(
         private UpsertSkillAction $upsertSkillAction,
         private DeleteSkillAction $deleteSkillAction,
-    ) {
-    }
+    ) {}
 
     public function index(Request $request, Subject $subject): JsonResponse
     {

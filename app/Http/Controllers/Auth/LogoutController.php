@@ -14,8 +14,7 @@ class LogoutController extends Controller
 {
     public function __construct(
         private DeleteAccessTokenAction $deleteAccessTokenAction
-    ) {
-    }
+    ) {}
 
     public function __invoke(LogoutRequest $request): JsonResponse
     {

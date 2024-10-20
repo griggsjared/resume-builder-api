@@ -18,6 +18,5 @@ class SubjectViewData extends Data
         public readonly ?string $phone_number,
         public readonly ?string $email,
         public readonly ?string $overview,
-    ) {
-    }
+    ) {}
 }

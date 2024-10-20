@@ -15,8 +15,7 @@ class RefreshController extends Controller
 {
     public function __construct(
         private RefreshAccessTokenAction $refreshAccessTokenAction
-    ) {
-    }
+    ) {}
 
     public function __invoke(RefreshRequest $request): JsonResponse
     {

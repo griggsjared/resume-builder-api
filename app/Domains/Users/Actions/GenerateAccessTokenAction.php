@@ -9,7 +9,7 @@ use Illuminate\Support\Carbon;
 
 class GenerateAccessTokenAction
 {
-    public function execute(UserData $data, string $name, Carbon $expiresAt = null): ?AccessTokenData
+    public function execute(UserData $data, string $name, ?Carbon $expiresAt = null): ?AccessTokenData
     {
         $user = User::find($data->id);
 

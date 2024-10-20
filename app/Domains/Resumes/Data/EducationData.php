@@ -2,12 +2,11 @@
 
 namespace App\Domains\Resumes\Data;
 
-use App\Domains\Support\Data\Casts\AsCarbonCast;
-use Carbon\Carbon;
-use Spatie\LaravelData\Attributes\DataCollectionOf;
+use Illuminate\Support\Carbon;
+use Illuminate\Support\Collection;
 use Spatie\LaravelData\Attributes\WithCast;
+use Spatie\LaravelData\Casts\DateTimeInterfaceCast;
 use Spatie\LaravelData\Data;
-use Spatie\LaravelData\DataCollection;
 use Spatie\LaravelData\Optional;
 
 class EducationData extends Data
@@ -22,13 +21,14 @@ class EducationData extends Data
         public readonly ?bool $earned_major_degree,
         public readonly ?string $minor_degree,
         public readonly ?bool $earned_minor_degree,
-        #[WithCast(AsCarbonCast::class)]
+        #[WithCast(DateTimeInterfaceCast::class)]
         public readonly ?Carbon $started_at,
-        #[WithCast(AsCarbonCast::class)]
+        #[WithCast(DateTimeInterfaceCast::class)]
         public readonly ?Carbon $ended_at,
         public readonly Optional|SubjectData $subject,
-        #[DataCollectionOf(EducationHighlightData::class)]
-        public readonly Optional|DataCollection $highlights,
-    ) {
-    }
+        /**
+         * @var Optional|Collection<int, EducationHighlightData>
+         */
+        public readonly Optional|Collection $highlights,
+    ) {}
 }

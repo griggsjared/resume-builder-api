@@ -12,6 +12,5 @@ class EmployerHighlightViewData extends Data
         public readonly string $id,
         public readonly string $content,
         public readonly int $sort,
-    ) {
-    }
+    ) {}
 }

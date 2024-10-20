@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Feature\Http\Controllers\Education;
+namespace Tests\Feature\Http\Controllers\Subjects;
 
 use App\Domains\Resumes\Models\Education;
 use App\Domains\Resumes\Models\Subject;

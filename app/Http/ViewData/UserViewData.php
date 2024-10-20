@@ -12,6 +12,5 @@ class UserViewData extends Data
         public readonly string $id,
         public readonly string $email,
         public readonly UserRoleViewData $role
-    ) {
-    }
+    ) {}
 }

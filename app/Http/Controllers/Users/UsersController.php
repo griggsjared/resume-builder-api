@@ -22,8 +22,7 @@ class UsersController extends Controller
     public function __construct(
         private UpsertUserAction $upsertUserAction,
         private DeleteUserAction $deleteUserAction,
-    ) {
-    }
+    ) {}
 
     public function index(Request $request): JsonResponse
     {

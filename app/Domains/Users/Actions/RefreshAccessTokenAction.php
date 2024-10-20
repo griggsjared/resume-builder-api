@@ -12,8 +12,7 @@ class RefreshAccessTokenAction
     public function __construct(
         private DeleteAccessTokenAction $deleteAccessTokenAction,
         private GenerateAccessTokenAction $generateAccessTokenAction
-    ) {
-    }
+    ) {}
 
     public function execute(AccessTokenData $data, Carbon $expiresAt): ?AccessTokenData
     {

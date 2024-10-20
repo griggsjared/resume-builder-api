@@ -13,6 +13,5 @@ class EducationHighlightData extends Data
         public readonly string $content,
         public readonly ?int $sort,
         public readonly Optional|EducationData $education
-    ) {
-    }
+    ) {}
 }

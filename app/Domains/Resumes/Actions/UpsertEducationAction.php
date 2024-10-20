@@ -7,15 +7,14 @@ use App\Domains\Resumes\Data\EducationHighlightData;
 use App\Domains\Resumes\Data\SubjectData;
 use App\Domains\Resumes\Models\Education;
 use App\Domains\Resumes\Models\Subject;
-use Spatie\LaravelData\DataCollection;
+use Illuminate\Support\Collection;
 
 class UpsertEducationAction
 {
     public function __construct(
         private UpsertEducationHighlightAction $upsertEducationHighlightAction,
         private DeleteEducationHighlightAction $deleteEducationHighlightAction,
-    ) {
-    }
+    ) {}
 
     public function execute(EducationData $data): EducationData
     {
@@ -39,10 +38,10 @@ class UpsertEducationAction
             $education->subject()->associate($subject);
         }
 
-        if ($data->highlights instanceof DataCollection) {
+        if ($data->highlights instanceof Collection) {
 
             $education->highlights->filter(
-                fn ($highlight) => ! $data->highlights->toCollection()->contains('id', $highlight->id)
+                fn ($highlight) => ! $data->highlights->contains('id', $highlight->id)
             )->each(function ($highlight) {
                 $this->deleteEducationHighlightAction->execute(
                     EducationHighlightData::from($highlight)

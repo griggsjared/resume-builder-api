@@ -10,8 +10,7 @@ class DeleteEducationAction
 {
     public function __construct(
         private DeleteEducationHighlightAction $deleteEducationHighlightAction
-    ) {
-    }
+    ) {}
 
     public function execute(EducationData $educationData): ?EducationData
     {

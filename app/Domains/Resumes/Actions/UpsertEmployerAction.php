@@ -7,15 +7,14 @@ use App\Domains\Resumes\Data\EmployerHighlightData;
 use App\Domains\Resumes\Data\SubjectData;
 use App\Domains\Resumes\Models\Employer;
 use App\Domains\Resumes\Models\Subject;
-use Spatie\LaravelData\DataCollection;
+use Illuminate\Support\Collection;
 
 class UpsertEmployerAction
 {
     public function __construct(
         private UpsertEmployerHighlightAction $upsertEmployerHighlightAction,
         private DeleteEmployerHighlightAction $deleteEmployerHighlightAction,
-    ) {
-    }
+    ) {}
 
     public function execute(EmployerData $data): EmployerData
     {
@@ -35,10 +34,10 @@ class UpsertEmployerAction
             $employer->subject()->associate($subject);
         }
 
-        if ($data->highlights instanceof DataCollection) {
+        if ($data->highlights instanceof Collection) {
 
             $employer->highlights->filter(
-                fn ($highlight) => ! $data->highlights->toCollection()->contains('id', $highlight->id)
+                fn ($highlight) => ! $data->highlights->contains('id', $highlight->id)
             )->each(function ($highlight) {
                 $this->deleteEmployerHighlightAction->execute(
                     EmployerHighlightData::from($highlight)

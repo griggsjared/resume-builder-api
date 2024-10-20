@@ -10,7 +10,7 @@ use App\Domains\Resumes\Data\SubjectHighlightData;
 use App\Domains\Resumes\Models\Subject;
 use App\Domains\Users\Data\UserData;
 use App\Domains\Users\Models\User;
-use Spatie\LaravelData\DataCollection;
+use Illuminate\Support\Collection;
 
 class UpsertSubjectAction
 {
@@ -23,8 +23,7 @@ class UpsertSubjectAction
         private DeleteEmployerAction $deleteEmployerAction,
         private UpsertEducationAction $upsertEducationAction,
         private DeleteEducationAction $deleteEducationAction,
-    ) {
-    }
+    ) {}
 
     public function execute(SubjectData $data): SubjectData
     {
@@ -46,10 +45,10 @@ class UpsertSubjectAction
             $subject->user()->associate($user);
         }
 
-        if ($data->highlights instanceof DataCollection) {
+        if ($data->highlights instanceof Collection) {
 
             $subject->highlights->filter(
-                fn ($highlight) => ! $data->highlights->toCollection()->contains('id', $highlight->id)
+                fn ($highlight) => ! $data->highlights->contains('id', $highlight->id)
             )->each(function ($highlight) {
                 $this->deleteSubjectHighlightAction->execute(
                     SubjectHighlightData::from($highlight)
@@ -66,10 +65,10 @@ class UpsertSubjectAction
             });
         }
 
-        if ($data->skills instanceof DataCollection) {
+        if ($data->skills instanceof Collection) {
 
             $subject->skills->filter(
-                fn ($skill) => ! $data->skills->toCollection()->contains('id', $skill->id)
+                fn ($skill) => ! $data->skills->contains('id', $skill->id)
             )->each(function ($skill) {
                 $this->deleteSkillAction->execute(
                     SkillData::from($skill)
@@ -86,10 +85,10 @@ class UpsertSubjectAction
             });
         }
 
-        if ($data->employers instanceof DataCollection) {
+        if ($data->employers instanceof Collection) {
 
             $subject->employers->filter(
-                fn ($employer) => ! $data->employers->toCollection()->contains('id', $employer->id)
+                fn ($employer) => ! $data->employers->contains('id', $employer->id)
             )->each(function ($employer) {
                 $this->deleteEmployerAction->execute(
                     EmployerData::from($employer)
@@ -106,10 +105,10 @@ class UpsertSubjectAction
             });
         }
 
-        if ($data->education instanceof DataCollection) {
+        if ($data->education instanceof Collection) {
 
             $subject->education->filter(
-                fn ($education) => ! $data->education->toCollection()->contains('id', $education->id)
+                fn ($education) => ! $data->education->contains('id', $education->id)
             )->each(function ($education) {
                 $this->deleteEducationAction->execute(
                     EducationData::from($education)

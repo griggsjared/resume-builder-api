@@ -18,8 +18,7 @@ class RegisterController extends Controller
     public function __construct(
         private UpsertUserAction $upsertUserAction,
         private GenerateAccessTokenAction $generateAccessTokenAction
-    ) {
-    }
+    ) {}
 
     public function __invoke(RegisterRequest $request): JsonResponse
     {

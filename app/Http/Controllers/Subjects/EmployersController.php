@@ -21,8 +21,7 @@ class EmployersController extends Controller
     public function __construct(
         private UpsertEmployerAction $upsertEmployerAction,
         private DeleteEmployerAction $deleteEmployerAction,
-    ) {
-    }
+    ) {}
 
     public function index(Request $request, Subject $subject): JsonResponse
     {

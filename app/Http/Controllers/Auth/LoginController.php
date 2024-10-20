@@ -15,8 +15,7 @@ class LoginController extends Controller
 {
     public function __construct(
         private GenerateAccessTokenAction $generateAccessTokenAction
-    ) {
-    }
+    ) {}
 
     public function __invoke(LoginRequest $request): JsonResponse
     {

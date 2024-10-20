@@ -12,6 +12,5 @@ class AccessTokenViewData extends Data
         public readonly string $access_token,
         public readonly ?int $expires_in,
         public readonly string $type,
-    ) {
-    }
+    ) {}
 }

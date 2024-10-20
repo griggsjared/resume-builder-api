@@ -11,8 +11,7 @@ class DeleteUserAction
 {
     public function __construct(
         private DeleteAccessTokenAction $deleteAccessTokenAction,
-    ) {
-    }
+    ) {}
 
     public function execute(UserData $user): ?UserData
     {

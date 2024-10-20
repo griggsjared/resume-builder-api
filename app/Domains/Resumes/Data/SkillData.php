@@ -14,6 +14,5 @@ class SkillData extends Data
         public readonly ?string $category,
         public readonly ?int $sort,
         public Optional|SubjectData $subject
-    ) {
-    }
+    ) {}
 }

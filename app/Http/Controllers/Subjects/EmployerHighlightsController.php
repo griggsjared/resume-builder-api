@@ -22,8 +22,7 @@ class EmployerHighlightsController extends Controller
     public function __construct(
         private UpsertEmployerHighlightAction $upsertEmployerHighlightAction,
         private DeleteEmployerHighlightAction $deleteEmployerHighlightAction,
-    ) {
-    }
+    ) {}
 
     public function index(Request $request, Subject $subject, Employer $employer): JsonResponse
     {

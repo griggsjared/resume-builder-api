@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Feature\Http\Controllers\Highlights;
+namespace Tests\Feature\Http\Controllers\Subjects;
 
 use App\Domains\Resumes\Models\Subject;
 use App\Domains\Resumes\Models\SubjectHighlight;

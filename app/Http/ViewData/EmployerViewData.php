@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace App\Http\ViewData;
 
-use App\Domains\Support\Data\Casts\AsCarbonCast;
-use Carbon\Carbon;
+use Illuminate\Support\Carbon;
 use Spatie\LaravelData\Attributes\WithCast;
+use Spatie\LaravelData\Casts\DateTimeInterfaceCast;
 use Spatie\LaravelData\Data;
 
 class EmployerViewData extends Data
@@ -16,11 +16,10 @@ class EmployerViewData extends Data
         public readonly string $name,
         public readonly string $city,
         public readonly string $state,
-        #[WithCast(AsCarbonCast::class)]
+        #[WithCast(DateTimeInterfaceCast::class)]
         public readonly ?Carbon $started_at,
-        #[WithCast(AsCarbonCast::class)]
+        #[WithCast(DateTimeInterfaceCast::class)]
         public readonly ?Carbon $ended_at,
         public readonly bool $is_current
-    ) {
-    }
+    ) {}
 }
