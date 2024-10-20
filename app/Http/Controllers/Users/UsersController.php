@@ -9,6 +9,7 @@ use App\Domains\Users\Actions\UpsertUserAction;
 use App\Domains\Users\Data\UserData;
 use App\Domains\Users\Enums\UserRole;
 use App\Domains\Users\Models\User;
+use App\Domains\Users\Services\UsersService;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Users\StoreUserRequest;
 use App\Http\Requests\Users\UpdateUserRequest;
@@ -20,8 +21,7 @@ use Illuminate\Http\Request;
 class UsersController extends Controller
 {
     public function __construct(
-        private UpsertUserAction $upsertUserAction,
-        private DeleteUserAction $deleteUserAction,
+        private  UsersService $usersService,
     ) {}
 
     public function index(Request $request): JsonResponse
@@ -62,7 +62,7 @@ class UsersController extends Controller
 
     public function store(StoreUserRequest $request): JsonResponse
     {
-        $data = $this->upsertUserAction->execute(
+        $data = $this->usersService->upsert(
             UserData::from([
                 ...$request->validated(),
                 'role' => $request->assignRole(),
@@ -85,7 +85,7 @@ class UsersController extends Controller
 
     public function update(UpdateUserRequest $request, User $user): JsonResponse
     {
-        $this->upsertUserAction->execute(
+        $this->usersService->upsert(
             UserData::from([
                 ...$user->toArray(),
                 ...$request->validated(),
@@ -102,8 +102,8 @@ class UsersController extends Controller
     {
         $this->authorize('delete', $user);
 
-        $this->deleteUserAction->execute(
-            UserData::from($user->toArray())
+        $this->usersService->delete(
+            UserData::from($user)
         );
 
         return response()->json([

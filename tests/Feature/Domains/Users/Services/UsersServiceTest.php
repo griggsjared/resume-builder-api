@@ -1,16 +1,19 @@
 <?php
 
-namespace Tests\Feature\Domains\Users\Actions;
+namespace Tests\Feature\Domains\Users\Services;
 
+use App\Domains\Users\Actions\DeleteUserAction;
 use App\Domains\Users\Actions\UpsertUserAction;
 use App\Domains\Users\Data\UserData;
 use App\Domains\Users\Enums\UserRole;
+use App\Domains\Users\Models\AccessToken;
 use App\Domains\Users\Models\User;
+use App\Domains\Users\Services\UsersService;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Hash;
 use Tests\TestCase;
 
-class UpsertUserActionTest extends TestCase
+class UsersServiceTest extends TestCase
 {
     use RefreshDatabase;
 
@@ -23,7 +26,7 @@ class UpsertUserActionTest extends TestCase
             'role' => UserRole::Admin,
         ]);
 
-        $updatedData = app(UpsertUserAction::class)->execute($data);
+        $updatedData = app(UsersService::class)->upsert($data);
 
         $user = User::where('id', $updatedData->id)->first();
 
@@ -46,7 +49,7 @@ class UpsertUserActionTest extends TestCase
             'role' => UserRole::Admin,
         ]);
 
-        app(UpsertUserAction::class)->execute($data);
+        app(UsersService::class)->upsert($data);
 
         $updatedUser = User::where('id', $data->id)->first();
 
@@ -54,5 +57,25 @@ class UpsertUserActionTest extends TestCase
         $this->assertEquals($data->email, $updatedUser->email);
         $this->assertTrue(Hash::check($data->password, $updatedUser->password));
         $this->assertEquals($data->role, $updatedUser->role);
+    }
+
+    /** @test */
+    public function it_can_delete_a_user(): void
+    {
+        $user = User::factory()
+            ->has(AccessToken::factory()->count(1), 'accessTokens')
+            ->create();
+
+        $accessToken = $user->accessTokens->first();
+
+        $data = app(UsersService::class)->delete(
+            UserData::from($user)
+        );
+
+        $user = User::find($data->id);
+        $accessToken = AccessToken::find($accessToken->id);
+
+        $this->assertNull($user);
+        $this->assertNull($accessToken);
     }
 }
