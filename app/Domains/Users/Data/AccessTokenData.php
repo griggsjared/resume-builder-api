@@ -15,6 +15,7 @@ class AccessTokenData extends Data
         #[Uuid]
         public readonly ?string $id,
         public readonly string $name,
+        #[\SensitiveParameter]
         public readonly Optional|string $access_token,
         #[WithCast(DateTimeInterfaceCast::class)]
         public readonly ?Carbon $expires_at,
