@@ -12,7 +12,7 @@ use App\Domains\Users\Services\AccessTokensService;
 use App\Domains\Users\Services\UsersService;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Auth\RegisterRequest;
-use App\Http\ViewData\AccessTokenViewData;
+use App\Http\ApiData\AccessTokenApiData;
 use Illuminate\Http\JsonResponse;
 
 class RegisterController extends Controller
@@ -32,7 +32,7 @@ class RegisterController extends Controller
         );
 
         return response()->json(
-            AccessTokenViewData::from([
+            AccessTokenApiData::from([
                 ...$this->accessTokensService->generate(
                     $userData,
                     'login-token',

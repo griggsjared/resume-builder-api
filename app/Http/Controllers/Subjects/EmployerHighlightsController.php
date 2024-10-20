@@ -13,8 +13,8 @@ use App\Domains\Resumes\Models\Subject;
 use App\Domains\Resumes\Services\EmployersService;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Subjects\UpsertEmployerHighlightRequest;
-use App\Http\ViewData\EmployerHighlightViewData;
-use App\Http\ViewData\PaginatedViewData;
+use App\Http\ApiData\EmployerHighlightApiData;
+use App\Http\ApiData\PaginatedApiData;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
@@ -42,16 +42,16 @@ class EmployerHighlightsController extends Controller
         };
 
         /**
-         * @var PaginatedViewData<EmployerHighlightViewData>
+         * @var PaginatedApiData<EmployerHighlightApiData>
          */
-        $viewData = PaginatedViewData::fromPaginator(
+        $ApiData = PaginatedApiData::fromPaginator(
             $highlights->paginate(
                 $request->input('per_page', 20)
             )->withQueryString(),
-            EmployerHighlightViewData::class
+            EmployerHighlightApiData::class
         );
 
-        return response()->json($viewData);
+        return response()->json($ApiData);
     }
 
     public function store(UpsertEmployerHighlightRequest $request, Subject $subject, Employer $employer): JsonResponse
@@ -63,7 +63,7 @@ class EmployerHighlightsController extends Controller
             ])
         );
 
-        return response()->json(EmployerHighlightViewData::from(
+        return response()->json(EmployerHighlightApiData::from(
             EmployerHighlight::find($data->id)
         ), 201);
     }
@@ -72,7 +72,7 @@ class EmployerHighlightsController extends Controller
     {
         $this->authorize('view', $subject);
 
-        return response()->json(EmployerHighlightViewData::from($highlight));
+        return response()->json(EmployerHighlightApiData::from($highlight));
     }
 
     public function update(UpsertEmployerHighlightRequest $request, Subject $subject, Employer $employer, EmployerHighlight $highlight): JsonResponse
@@ -84,7 +84,7 @@ class EmployerHighlightsController extends Controller
             ])
         );
 
-        return response()->json(EmployerHighlightViewData::from(
+        return response()->json(EmployerHighlightApiData::from(
             $highlight->refresh()
         ));
     }

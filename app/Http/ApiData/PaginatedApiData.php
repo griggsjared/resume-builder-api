@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Http\ViewData;
+namespace App\Http\ApiData;
 
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Collection;
@@ -12,7 +12,7 @@ use Spatie\LaravelData\DataCollection;
 /**
  * @template TData of Data
  */
-class PaginatedViewData extends Data
+class PaginatedApiData extends Data
 {
     /**
      * @param  DataCollection<int, TData>  $items

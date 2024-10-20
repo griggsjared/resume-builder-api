@@ -11,8 +11,8 @@ use App\Domains\Users\Services\UsersService;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Users\StoreUserRequest;
 use App\Http\Requests\Users\UpdateUserRequest;
-use App\Http\ViewData\PaginatedViewData;
-use App\Http\ViewData\UserViewData;
+use App\Http\ApiData\PaginatedApiData;
+use App\Http\ApiData\UserApiData;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
@@ -46,16 +46,16 @@ class UsersController extends Controller
         };
 
         /**
-         * @var PaginatedViewData<UserViewData>
+         * @var PaginatedApiData<UserApiData>
          */
-        $viewData = PaginatedViewData::fromPaginator(
+        $ApiData = PaginatedApiData::fromPaginator(
             $users->paginate(
                 $request->input('per_page', 20)
             )->withQueryString(),
-            UserViewData::class
+            UserApiData::class
         );
 
-        return response()->json($viewData);
+        return response()->json($ApiData);
     }
 
     public function store(StoreUserRequest $request): JsonResponse
@@ -67,7 +67,7 @@ class UsersController extends Controller
             ])
         );
 
-        return response()->json(UserViewData::from(
+        return response()->json(UserApiData::from(
             User::find($data->id)
         ), 201);
     }
@@ -77,7 +77,7 @@ class UsersController extends Controller
         $this->authorize('view', $user);
 
         return response()->json(
-            UserViewData::from($user)
+            UserApiData::from($user)
         );
     }
 
@@ -91,7 +91,7 @@ class UsersController extends Controller
             ])
         );
 
-        return response()->json(UserViewData::from(
+        return response()->json(UserApiData::from(
             $user->refresh()
         ));
     }

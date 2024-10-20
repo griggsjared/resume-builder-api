@@ -10,8 +10,8 @@ use App\Domains\Resumes\Services\SubjectsService;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Subjects\StoreSubjectRequest;
 use App\Http\Requests\Subjects\UpdateSubjectRequest;
-use App\Http\ViewData\PaginatedViewData;
-use App\Http\ViewData\SubjectViewData;
+use App\Http\ApiData\PaginatedApiData;
+use App\Http\ApiData\SubjectApiData;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
@@ -45,16 +45,16 @@ class SubjectsController extends Controller
         };
 
         /**
-         * @var PaginatedViewData<SubjectViewData>
+         * @var PaginatedApiData<SubjectApiData>
          */
-        $viewData = PaginatedViewData::fromPaginator(
+        $ApiData = PaginatedApiData::fromPaginator(
             $subjects->paginate(
                 $request->input('per_page', 20)
             )->withQueryString(),
-            SubjectViewData::class
+            SubjectApiData::class
         );
 
-        return response()->json($viewData);
+        return response()->json($ApiData);
     }
 
     public function store(StoreSubjectRequest $request): JsonResponse
@@ -66,7 +66,7 @@ class SubjectsController extends Controller
             ])
         );
 
-        return response()->json(SubjectViewData::from(
+        return response()->json(SubjectApiData::from(
             Subject::find($data->id)
         ), 201);
     }
@@ -75,7 +75,7 @@ class SubjectsController extends Controller
     {
         $this->authorize('view', $subject);
 
-        return response()->json(SubjectViewData::from($subject));
+        return response()->json(SubjectApiData::from($subject));
     }
 
     public function update(UpdateSubjectRequest $request, Subject $subject): JsonResponse
@@ -88,7 +88,7 @@ class SubjectsController extends Controller
             ])
         );
 
-        return response()->json(SubjectViewData::from(
+        return response()->json(SubjectApiData::from(
             $subject->refresh()
         ));
     }

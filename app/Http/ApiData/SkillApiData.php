@@ -2,15 +2,16 @@
 
 declare(strict_types=1);
 
-namespace App\Http\ViewData;
+namespace App\Http\ApiData;
 
 use Spatie\LaravelData\Data;
 
-class EmployerHighlightViewData extends Data
+class SkillApiData extends Data
 {
     public function __construct(
         public readonly string $id,
-        public readonly string $content,
+        public readonly string $name,
+        public readonly ?string $category,
         public readonly int $sort,
     ) {}
 }

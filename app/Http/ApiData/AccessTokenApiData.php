@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace App\Http\ViewData;
+namespace App\Http\ApiData;
 
 use Spatie\LaravelData\Data;
 
-class AccessTokenViewData extends Data
+class AccessTokenApiData extends Data
 {
     public function __construct(
         public readonly string $access_token,

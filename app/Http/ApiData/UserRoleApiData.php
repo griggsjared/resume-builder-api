@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-namespace App\Http\ViewData;
+namespace App\Http\ApiData;
 
 use App\Domains\Users\Enums\UserRole;
 use Spatie\LaravelData\Data;
 
-class UserRoleViewData extends Data
+class UserRoleApiData extends Data
 {
     public function __construct(
         public readonly string $value,

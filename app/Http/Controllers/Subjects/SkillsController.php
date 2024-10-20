@@ -10,8 +10,8 @@ use App\Domains\Resumes\Models\Subject;
 use App\Domains\Resumes\Services\SkillsService;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Subjects\UpsertSkillRequest;
-use App\Http\ViewData\PaginatedViewData;
-use App\Http\ViewData\SkillViewData;
+use App\Http\ApiData\PaginatedApiData;
+use App\Http\ApiData\SkillApiData;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
@@ -41,16 +41,16 @@ class SkillsController extends Controller
         };
 
         /**
-         * @var PaginatedViewData<SkillViewData>
+         * @var PaginatedApiData<SkillApiData>
          */
-        $viewData = PaginatedViewData::fromPaginator(
+        $ApiData = PaginatedApiData::fromPaginator(
             $skills->paginate(
                 $request->input('per_page', 20)
             )->withQueryString(),
-            SkillViewData::class
+            SkillApiData::class
         );
 
-        return response()->json($viewData);
+        return response()->json($ApiData);
     }
 
     public function store(UpsertSkillRequest $request, Subject $subject): JsonResponse
@@ -62,7 +62,7 @@ class SkillsController extends Controller
             ])
         );
 
-        return response()->json(SkillViewData::from(
+        return response()->json(SkillApiData::from(
             Skill::find($data->id)
         ), 201);
     }
@@ -71,7 +71,7 @@ class SkillsController extends Controller
     {
         $this->authorize('view', $subject);
 
-        return response()->json(SkillViewData::from($skill));
+        return response()->json(SkillApiData::from($skill));
     }
 
     public function update(UpsertSkillRequest $request, Subject $subject, Skill $skill): JsonResponse
@@ -83,7 +83,7 @@ class SkillsController extends Controller
             ])
         );
 
-        return response()->json(SkillViewData::from(
+        return response()->json(SkillApiData::from(
             $skill->refresh()
         ));
     }

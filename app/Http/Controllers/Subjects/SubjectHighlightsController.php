@@ -10,8 +10,8 @@ use App\Domains\Resumes\Models\SubjectHighlight;
 use App\Domains\Resumes\Services\SubjectsService;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Subjects\UpsertSubjectHighlightRequest;
-use App\Http\ViewData\PaginatedViewData;
-use App\Http\ViewData\SubjectHighlightViewData;
+use App\Http\ApiData\PaginatedApiData;
+use App\Http\ApiData\SubjectHighlightApiData;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
@@ -39,16 +39,16 @@ class SubjectHighlightsController extends Controller
         };
 
         /**
-         * @var PaginatedViewData<SubjectHighlightViewData>
+         * @var PaginatedApiData<SubjectHighlightApiData>
          */
-        $viewData = PaginatedViewData::fromPaginator(
+        $ApiData = PaginatedApiData::fromPaginator(
             $highlights->paginate(
                 $request->input('per_page', 20)
             )->withQueryString(),
-            SubjectHighlightViewData::class
+            SubjectHighlightApiData::class
         );
 
-        return response()->json($viewData);
+        return response()->json($ApiData);
     }
 
     public function store(UpsertSubjectHighlightRequest $request, Subject $subject): JsonResponse
@@ -60,7 +60,7 @@ class SubjectHighlightsController extends Controller
             ])
         );
 
-        return response()->json(SubjectHighlightViewData::from(
+        return response()->json(SubjectHighlightApiData::from(
             SubjectHighlight::find($data->id)
         ), 201);
     }
@@ -69,7 +69,7 @@ class SubjectHighlightsController extends Controller
     {
         $this->authorize('view', $subject);
 
-        return response()->json(SubjectHighlightViewData::from($highlight));
+        return response()->json(SubjectHighlightApiData::from($highlight));
     }
 
     public function update(UpsertSubjectHighlightRequest $request, Subject $subject, SubjectHighlight $highlight): JsonResponse
@@ -81,7 +81,7 @@ class SubjectHighlightsController extends Controller
             ])
         );
 
-        return response()->json(SubjectHighlightViewData::from(
+        return response()->json(SubjectHighlightApiData::from(
             $highlight->refresh()
         ));
     }

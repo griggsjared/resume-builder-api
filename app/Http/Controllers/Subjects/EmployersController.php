@@ -10,8 +10,8 @@ use App\Domains\Resumes\Models\Subject;
 use App\Domains\Resumes\Services\EmployersService;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Subjects\UpsertEmployerRequest;
-use App\Http\ViewData\EmployerViewData;
-use App\Http\ViewData\PaginatedViewData;
+use App\Http\ApiData\EmployerApiData;
+use App\Http\ApiData\PaginatedApiData;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
@@ -43,16 +43,16 @@ class EmployersController extends Controller
         };
 
         /**
-         * @var PaginatedViewData<EmployerViewData>
+         * @var PaginatedApiData<EmployerApiData>
          */
-        $viewData = PaginatedViewData::fromPaginator(
+        $ApiData = PaginatedApiData::fromPaginator(
             $employers->paginate(
                 $request->input('per_page', 20)
             )->withQueryString(),
-            EmployerViewData::class
+            EmployerApiData::class
         );
 
-        return response()->json($viewData);
+        return response()->json($ApiData);
     }
 
     public function store(UpsertEmployerRequest $request, Subject $subject): JsonResponse
@@ -64,7 +64,7 @@ class EmployersController extends Controller
             ])
         );
 
-        return response()->json(EmployerViewData::from(
+        return response()->json(EmployerApiData::from(
             Employer::find($data->id)
         ), 201);
     }
@@ -73,7 +73,7 @@ class EmployersController extends Controller
     {
         $this->authorize('view', $subject);
 
-        return response()->json(EmployerViewData::from($employer));
+        return response()->json(EmployerApiData::from($employer));
     }
 
     public function update(UpsertEmployerRequest $request, Subject $subject, Employer $employer): JsonResponse
@@ -85,7 +85,7 @@ class EmployersController extends Controller
             ])
         );
 
-        return response()->json(EmployerViewData::from(
+        return response()->json(EmployerApiData::from(
             $employer->refresh()
         ));
     }

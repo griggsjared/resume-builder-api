@@ -10,8 +10,8 @@ use App\Domains\Resumes\Models\Subject;
 use App\Domains\Resumes\Services\EducationsService;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Subjects\UpsertEducationRequest;
-use App\Http\ViewData\EducationViewData;
-use App\Http\ViewData\PaginatedViewData;
+use App\Http\ApiData\EducationApiData;
+use App\Http\ApiData\PaginatedApiData;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
@@ -45,16 +45,16 @@ class EducationsController extends Controller
         };
 
         /**
-         * @var PaginatedViewData<EducationViewData>
+         * @var PaginatedApiData<EducationApiData>
          */
-        $viewData = PaginatedViewData::fromPaginator(
+        $ApiData = PaginatedApiData::fromPaginator(
             $education->paginate(
                 $request->input('per_page', 20)
             )->withQueryString(),
-            EducationViewData::class
+            EducationApiData::class
         );
 
-        return response()->json($viewData);
+        return response()->json($ApiData);
     }
 
     public function store(UpsertEducationRequest $request, Subject $subject): JsonResponse
@@ -66,7 +66,7 @@ class EducationsController extends Controller
             ])
         );
 
-        return response()->json(EducationViewData::from(
+        return response()->json(EducationApiData::from(
             Education::find($data->id)
         ), 201);
     }
@@ -75,7 +75,7 @@ class EducationsController extends Controller
     {
         $this->authorize('view', $subject);
 
-        return response()->json(EducationViewData::from($education));
+        return response()->json(EducationApiData::from($education));
     }
 
     public function update(UpsertEducationRequest $request, Subject $subject, Education $education): JsonResponse
@@ -87,7 +87,7 @@ class EducationsController extends Controller
             ])
         );
 
-        return response()->json(EducationViewData::from(
+        return response()->json(EducationApiData::from(
             $education->refresh()
         ));
     }

@@ -8,7 +8,7 @@ use App\Domains\Users\Data\UserData;
 use App\Domains\Users\Services\AccessTokensService;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Auth\LoginRequest;
-use App\Http\ViewData\AccessTokenViewData;
+use App\Http\ApiData\AccessTokenApiData;
 use Illuminate\Http\JsonResponse;
 
 class LoginController extends Controller
@@ -22,7 +22,7 @@ class LoginController extends Controller
         $user = $request->authenticatedUser();
 
         return response()->json(
-            AccessTokenViewData::from([
+            AccessTokenApiData::from([
                 ...$this->accessTokensService->generate(
                     UserData::from($user),
                     'login-token',

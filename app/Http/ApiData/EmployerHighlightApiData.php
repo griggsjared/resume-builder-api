@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace App\Http\ViewData;
+namespace App\Http\ApiData;
 
 use Spatie\LaravelData\Data;
 
-class EducationHighlightViewData extends Data
+class EmployerHighlightApiData extends Data
 {
     public function __construct(
         public readonly string $id,

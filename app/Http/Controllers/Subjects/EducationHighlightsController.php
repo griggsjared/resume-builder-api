@@ -13,8 +13,8 @@ use App\Domains\Resumes\Models\Subject;
 use App\Domains\Resumes\Services\EducationsService;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Subjects\UpsertEducationHighlightRequest;
-use App\Http\ViewData\EducationHighlightViewData;
-use App\Http\ViewData\PaginatedViewData;
+use App\Http\ApiData\EducationHighlightApiData;
+use App\Http\ApiData\PaginatedApiData;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
@@ -42,16 +42,16 @@ class EducationHighlightsController extends Controller
         };
 
         /**
-         * @var PaginatedViewData<EducationHighlightViewData>
+         * @var PaginatedApiData<EducationHighlightApiData>
          */
-        $viewData = PaginatedViewData::fromPaginator(
+        $ApiData = PaginatedApiData::fromPaginator(
             $highlights->paginate(
                 $request->input('per_page', 20)
             )->withQueryString(),
-            EducationHighlightViewData::class
+            EducationHighlightApiData::class
         );
 
-        return response()->json($viewData);
+        return response()->json($ApiData);
     }
 
     public function store(UpsertEducationHighlightRequest $request, Subject $subject, Education $education): JsonResponse
@@ -63,7 +63,7 @@ class EducationHighlightsController extends Controller
             ])
         );
 
-        return response()->json(EducationHighlightViewData::from(
+        return response()->json(EducationHighlightApiData::from(
             EducationHighlight::find($data->id)
         ), 201);
     }
@@ -72,7 +72,7 @@ class EducationHighlightsController extends Controller
     {
         $this->authorize('view', $subject);
 
-        return response()->json(EducationHighlightViewData::from($highlight));
+        return response()->json(EducationHighlightApiData::from($highlight));
     }
 
     public function update(UpsertEducationHighlightRequest $request, Subject $subject, Education $education, EducationHighlight $highlight): JsonResponse
@@ -84,7 +84,7 @@ class EducationHighlightsController extends Controller
             ])
         );
 
-        return response()->json(EducationHighlightViewData::from(
+        return response()->json(EducationHighlightApiData::from(
             $highlight->refresh()
         ));
     }

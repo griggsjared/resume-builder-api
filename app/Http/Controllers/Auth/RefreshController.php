@@ -9,7 +9,7 @@ use App\Domains\Users\Data\AccessTokenData;
 use App\Domains\Users\Services\AccessTokensService;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Auth\RefreshRequest;
-use App\Http\ViewData\AccessTokenViewData;
+use App\Http\ApiData\AccessTokenApiData;
 use Illuminate\Http\JsonResponse;
 
 class RefreshController extends Controller
@@ -23,7 +23,7 @@ class RefreshController extends Controller
         $accessToken = $request->accessToken();
 
         return response()->json(
-            AccessTokenViewData::from([
+            AccessTokenApiData::from([
                 ...$this->accessTokensService->refresh(
                     AccessTokenData::from($accessToken),
                     now()->addSeconds(config('auth.token_expiration', 3600))
