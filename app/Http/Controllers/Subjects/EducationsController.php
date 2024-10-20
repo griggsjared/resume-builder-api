@@ -4,11 +4,10 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers\Subjects;
 
-use App\Domains\Resumes\Actions\DeleteEducationAction;
-use App\Domains\Resumes\Actions\UpsertEducationAction;
 use App\Domains\Resumes\Data\EducationData;
 use App\Domains\Resumes\Models\Education;
 use App\Domains\Resumes\Models\Subject;
+use App\Domains\Resumes\Services\EducationsService;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Subjects\UpsertEducationRequest;
 use App\Http\ViewData\EducationViewData;
@@ -16,11 +15,10 @@ use App\Http\ViewData\PaginatedViewData;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
-class EducationController extends Controller
+class EducationsController extends Controller
 {
     public function __construct(
-        private UpsertEducationAction $upsertEducationAction,
-        private DeleteEducationAction $deleteEducationAction,
+        private EducationsService $educationsService,
     ) {}
 
     public function index(Request $request, Subject $subject): JsonResponse
@@ -61,7 +59,7 @@ class EducationController extends Controller
 
     public function store(UpsertEducationRequest $request, Subject $subject): JsonResponse
     {
-        $data = $this->upsertEducationAction->execute(
+        $data = $this->educationsService->upsert(
             EducationData::from([
                 ...$request->validated(),
                 'subject' => $subject,
@@ -82,7 +80,7 @@ class EducationController extends Controller
 
     public function update(UpsertEducationRequest $request, Subject $subject, Education $education): JsonResponse
     {
-        $this->upsertEducationAction->execute(
+        $this->educationsService->upsert(
             EducationData::from([
                 ...$education->toArray(),
                 ...$request->validated(),
@@ -98,7 +96,7 @@ class EducationController extends Controller
     {
         $this->authorize('update', $subject);
 
-        $this->deleteEducationAction->execute(
+        $this->educationsService->delete(
             EducationData::from($education)
         );
 

@@ -4,10 +4,9 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers\Subjects;
 
-use App\Domains\Resumes\Actions\DeleteSubjectAction;
-use App\Domains\Resumes\Actions\UpsertSubjectAction;
 use App\Domains\Resumes\Data\SubjectData;
 use App\Domains\Resumes\Models\Subject;
+use App\Domains\Resumes\Services\SubjectsService;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Subjects\StoreSubjectRequest;
 use App\Http\Requests\Subjects\UpdateSubjectRequest;
@@ -19,8 +18,7 @@ use Illuminate\Http\Request;
 class SubjectsController extends Controller
 {
     public function __construct(
-        private UpsertSubjectAction $upsertSubjectAction,
-        private DeleteSubjectAction $deleteSubjectAction,
+        private SubjectsService $subjectsService,
     ) {}
 
     public function index(Request $request): JsonResponse
@@ -61,7 +59,7 @@ class SubjectsController extends Controller
 
     public function store(StoreSubjectRequest $request): JsonResponse
     {
-        $data = $this->upsertSubjectAction->execute(
+        $data = $this->subjectsService->upsert(
             SubjectData::from([
                 ...$request->validated(),
                 'user' => $request->assignUser(),
@@ -82,7 +80,7 @@ class SubjectsController extends Controller
 
     public function update(UpdateSubjectRequest $request, Subject $subject): JsonResponse
     {
-        $data = $this->upsertSubjectAction->execute(
+        $data = $this->subjectsService->upsert(
             SubjectData::from([
                 ...$subject->toArray(),
                 ...$request->validated(),
@@ -99,7 +97,7 @@ class SubjectsController extends Controller
     {
         $this->authorize('delete', $subject);
 
-        $this->deleteSubjectAction->execute(
+        $this->subjectsService->delete(
             SubjectData::from($subject->toArray())
         );
 

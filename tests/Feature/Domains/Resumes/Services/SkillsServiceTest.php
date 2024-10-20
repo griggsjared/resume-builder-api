@@ -1,15 +1,15 @@
 <?php
 
-namespace Tests\Feature\Domains\Resumes\Actions;
+namespace Tests\Feature\Domains\Resumes\Services;
 
-use App\Domains\Resumes\Actions\UpsertSkillAction;
 use App\Domains\Resumes\Data\SkillData;
 use App\Domains\Resumes\Models\Skill;
 use App\Domains\Resumes\Models\Subject;
+use App\Domains\Resumes\Services\SkillsService;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
-class UpsertSkillActionTest extends TestCase
+class SkillsServiceTest extends TestCase
 {
     use RefreshDatabase;
 
@@ -18,7 +18,7 @@ class UpsertSkillActionTest extends TestCase
     {
         $subject = Subject::factory()->create();
 
-        $data = app(UpsertSkillAction::class)->execute(
+        $data = app(SkillsService::class)->upsert(
             SkillData::from([
                 'name' => 'PHP',
                 'category' => 'Programming Language',
@@ -43,7 +43,7 @@ class UpsertSkillActionTest extends TestCase
             ->has(Subject::factory(), 'subject')
             ->create();
 
-        $data = app(UpsertSkillAction::class)->execute(
+        $data = app(SkillsService::class)->upsert(
             SkillData::from([
                 ...$skill->toArray(),
                 'name' => 'PHP',
@@ -68,7 +68,7 @@ class UpsertSkillActionTest extends TestCase
 
         $subject = Subject::factory()->create();
 
-        $data = app(UpsertSkillAction::class)->execute(
+        app(SkillsService::class)->upsert(
             SkillData::from([
                 ...$skill->toArray(),
                 'subject' => $subject,
@@ -79,5 +79,17 @@ class UpsertSkillActionTest extends TestCase
 
         $this->assertInstanceOf(Subject::class, $skill->subject);
         $this->assertEquals($subject->id, $skill->subject->id);
+    }
+
+    /** @test */
+    public function it_can_delete_a_skill(): void
+    {
+        $skill = Skill::factory()->create();
+
+        app(SkillsService::class)->delete(SkillData::from($skill));
+
+        $skill = Skill::find($skill->id);
+
+        $this->assertNull($skill);
     }
 }

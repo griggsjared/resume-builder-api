@@ -2,15 +2,16 @@
 
 namespace Tests\Feature\Domains\Resumes\Actions;
 
-use App\Domains\Resumes\Actions\UpsertEducationAction;
 use App\Domains\Resumes\Data\EducationData;
+use App\Domains\Resumes\Data\EducationHighlightData;
 use App\Domains\Resumes\Models\Education;
 use App\Domains\Resumes\Models\EducationHighlight;
 use App\Domains\Resumes\Models\Subject;
+use App\Domains\Resumes\Services\EducationsService;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
-class UpsertEducationActionTest extends TestCase
+class EducationsServiceTest extends TestCase
 {
     use RefreshDatabase;
 
@@ -19,7 +20,7 @@ class UpsertEducationActionTest extends TestCase
     {
         $subject = Subject::factory()->create();
 
-        $data = app(UpsertEducationAction::class)->execute(
+        $data = app(EducationsService::class)->upsert(
             EducationData::from([
                 'name' => 'Acme',
                 'city' => 'New York',
@@ -56,7 +57,7 @@ class UpsertEducationActionTest extends TestCase
             ->has(Subject::factory(), 'subject')
             ->create();
 
-        $data = app(UpsertEducationAction::class)->execute(
+        $data = app(EducationsService::class)->upsert(
             EducationData::from([
                 ...$education->toArray(),
                 'name' => 'Acme',
@@ -93,7 +94,7 @@ class UpsertEducationActionTest extends TestCase
 
         $subject = Subject::factory()->create();
 
-        app(UpsertEducationAction::class)->execute(
+        app(EducationsService::class)->upsert(
             EducationData::from([
                 ...$education->toArray(),
                 'subject' => $subject,
@@ -117,7 +118,7 @@ class UpsertEducationActionTest extends TestCase
         $keepHighlight = $education->highlights->first();
         $deleteHighlight = $education->highlights->last();
 
-        app(UpsertEducationAction::class)->execute(
+        app(EducationsService::class)->upsert(
             EducationData::from([
                 ...$education->toArray(),
                 'highlights' => [
@@ -141,5 +142,98 @@ class UpsertEducationActionTest extends TestCase
         $this->assertEquals($keepHighlight->id, $education->highlights->first()->id);
         $this->assertEquals('I did another thing', $education->highlights->last()->content);
         $this->assertNull($deleteHighlight);
+    }
+
+    /** @test */
+    public function it_can_delete_an_education(): void
+    {
+        $education = Education::factory()
+            ->has(EducationHighlight::factory(1), 'highlights')
+            ->create();
+
+        $educationHighlight = $education->highlights->first();
+
+        app(EducationsService::class)->delete(EducationData::from($education));
+
+        $education = Education::find($education->id);
+        $educationHighlight = EducationHighlight::find($educationHighlight->id);
+
+        $this->assertNull($education);
+        $this->assertNull($educationHighlight);
+    }
+
+    /** @test */
+    public function it_can_create_a_education_highlight(): void
+    {
+        $education = Education::factory()->create();
+
+        $data = app(EducationsService::class)->upsertHighlight(
+            EducationHighlightData::from([
+                'content' => 'I am a highlight',
+                'sort' => 1,
+                'education' => $education,
+            ])
+        );
+
+        $educationHighlight = EducationHighlight::find($data->id);
+
+        $this->assertInstanceOf(Education::class, $educationHighlight->education);
+        $this->assertEquals($education->id, $educationHighlight->education->id);
+        $this->assertEquals($data->content, $educationHighlight->content);
+        $this->assertEquals($data->sort, $educationHighlight->sort);
+    }
+
+    /** @test */
+    public function it_can_update_a_education_highlight()
+    {
+        $educationHighlight = EducationHighlight::factory()
+            ->has(Education::factory(), 'education')
+            ->create();
+
+        $data = app(EducationsService::class)->upsertHighlight(
+            EducationHighlightData::from([
+                ...$educationHighlight->toArray(),
+                'content' => 'I am a highlight',
+                'sort' => 1,
+            ])
+        );
+
+        $educationHighlight->refresh();
+
+        $this->assertEquals($data->content, $educationHighlight->content);
+    }
+
+    /** @test */
+    public function it_can_update_a_education_highlight_with_an_education()
+    {
+        $educationHighlight = EducationHighlight::factory()
+            ->has(Education::factory(), 'education')
+            ->create();
+
+        $education = Education::factory()->create();
+
+        app(EducationsService::class)->upsertHighlight(
+            EducationHighlightData::from([
+                ...$educationHighlight->toArray(),
+                'education' => $education,
+            ])
+        );
+
+        $educationHighlight->refresh();
+
+        $this->assertInstanceOf(Education::class, $educationHighlight->education);
+        $this->assertEquals($education->id, $educationHighlight->education->id);
+    }
+
+    /** @test */
+    public function it_can_delete_an_education_highlight(): void
+    {
+        $educationHighlight = EducationHighlight::factory()->create();
+
+        app(EducationsService::class)->deleteHighlight(EducationHighlightData::from($educationHighlight));
+
+        $educationHighlight = EducationHighlight::find($educationHighlight->id);
+
+        $this->assertNull($educationHighlight);
     }
 }

@@ -10,6 +10,7 @@ use App\Domains\Resumes\Data\EmployerHighlightData;
 use App\Domains\Resumes\Models\Employer;
 use App\Domains\Resumes\Models\EmployerHighlight;
 use App\Domains\Resumes\Models\Subject;
+use App\Domains\Resumes\Services\EmployersService;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Subjects\UpsertEmployerHighlightRequest;
 use App\Http\ViewData\EmployerHighlightViewData;
@@ -20,8 +21,7 @@ use Illuminate\Http\Request;
 class EmployerHighlightsController extends Controller
 {
     public function __construct(
-        private UpsertEmployerHighlightAction $upsertEmployerHighlightAction,
-        private DeleteEmployerHighlightAction $deleteEmployerHighlightAction,
+        private EmployersService $employersService,
     ) {}
 
     public function index(Request $request, Subject $subject, Employer $employer): JsonResponse
@@ -56,7 +56,7 @@ class EmployerHighlightsController extends Controller
 
     public function store(UpsertEmployerHighlightRequest $request, Subject $subject, Employer $employer): JsonResponse
     {
-        $data = $this->upsertEmployerHighlightAction->execute(
+        $data = $this->employersService->upsertHighlight(
             EmployerHighlightData::from([
                 ...$request->validated(),
                 'employer' => $employer,
@@ -77,7 +77,7 @@ class EmployerHighlightsController extends Controller
 
     public function update(UpsertEmployerHighlightRequest $request, Subject $subject, Employer $employer, EmployerHighlight $highlight): JsonResponse
     {
-        $data = $this->upsertEmployerHighlightAction->execute(
+        $data = $this->employersService->upsertHighlight(
             EmployerHighlightData::from([
                 ...$highlight->toArray(),
                 ...$request->validated(),
@@ -93,7 +93,7 @@ class EmployerHighlightsController extends Controller
     {
         $this->authorize('update', $subject);
 
-        $this->deleteEmployerHighlightAction->execute(
+        $this->employersService->deleteHighlight(
             EmployerHighlightData::from($highlight)
         );
 

@@ -40,7 +40,7 @@ class EducationControllerTest extends TestCase
         $basicUsersSubject = $basicUser->subjects->first();
 
         $this->withHeader('Authorization', 'Bearer '.$adminUser->createToken('test')->plainTextToken)
-            ->get(route('subjects.education.index', [
+            ->get(route('subjects.educations.index', [
                 'subject' => $viewingSubject->id,
                 'page' => 1,
                 'per_page' => 10,
@@ -73,7 +73,7 @@ class EducationControllerTest extends TestCase
         auth()->forgetGuards();
 
         $this->withHeader('Authorization', 'Bearer '.$basicUser->createToken('test')->plainTextToken)
-            ->get(route('subjects.education.index', [
+            ->get(route('subjects.educations.index', [
                 'subject' => $viewingSubject->id,
                 'page' => 1,
                 'per_page' => 10,
@@ -81,7 +81,7 @@ class EducationControllerTest extends TestCase
             ->assertForbidden();
 
         $this->withHeader('Authorization', 'Bearer '.$basicUser->createToken('test')->plainTextToken)
-            ->get(route('subjects.education.index', [
+            ->get(route('subjects.educations.index', [
                 'subject' => $basicUsersSubject->id,
                 'page' => 1,
                 'per_page' => 10,
@@ -126,7 +126,7 @@ class EducationControllerTest extends TestCase
         $basicUsersEducation = $basicUsersSubject->education->first();
 
         $this->withHeader('Authorization', 'Bearer '.$adminUser->createToken('test')->plainTextToken)
-            ->get(route('subjects.education.show', [
+            ->get(route('subjects.educations.show', [
                 'subject' => $viewingSubject->id,
                 'education' => $viewingEducation->id,
             ]))
@@ -144,14 +144,14 @@ class EducationControllerTest extends TestCase
         auth()->forgetGuards();
 
         $this->withHeader('Authorization', 'Bearer '.$basicUser->createToken('test')->plainTextToken)
-            ->get(route('subjects.education.show', [
+            ->get(route('subjects.educations.show', [
                 'subject' => $viewingSubject->id,
                 'education' => $viewingEducation->id,
             ]))
             ->assertForbidden();
 
         $this->withHeader('Authorization', 'Bearer '.$basicUser->createToken('test')->plainTextToken)
-            ->get(route('subjects.education.show', [
+            ->get(route('subjects.educations.show', [
                 'subject' => $basicUsersSubject->id,
                 'education' => $basicUsersEducation->id,
             ]))
@@ -171,7 +171,7 @@ class EducationControllerTest extends TestCase
         $basicUsersSubject = $basicUser->subjects->first();
 
         $this->withHeader('Authorization', 'Bearer '.$adminUser->createToken('test')->plainTextToken)
-            ->post(route('subjects.education.store', [
+            ->post(route('subjects.educations.store', [
                 'subject' => $viewingSubject->id,
             ]), [
                 'name' => 'Test',
@@ -204,7 +204,7 @@ class EducationControllerTest extends TestCase
         auth()->forgetGuards();
 
         $this->withHeader('Authorization', 'Bearer '.$basicUser->createToken('test')->plainTextToken)
-            ->post(route('subjects.education.store', [
+            ->post(route('subjects.educations.store', [
                 'subject' => $viewingSubject->id,
             ]), [
                 'name' => 'Test',
@@ -220,7 +220,7 @@ class EducationControllerTest extends TestCase
             ->assertForbidden();
 
         $this->withHeader('Authorization', 'Bearer '.$basicUser->createToken('test')->plainTextToken)
-            ->post(route('subjects.education.store', [
+            ->post(route('subjects.educations.store', [
                 'subject' => $basicUsersSubject->id,
             ]), [
                 'name' => 'Test',
@@ -267,7 +267,7 @@ class EducationControllerTest extends TestCase
         $basicUsersEducation = $basicUsersSubject->education->first();
 
         $this->withHeader('Authorization', 'Bearer '.$adminUser->createToken('test')->plainTextToken)
-            ->put(route('subjects.education.update', [
+            ->put(route('subjects.educations.update', [
                 'subject' => $viewingSubject->id,
                 'education' => $updatingEducation->id,
             ]), [
@@ -299,7 +299,7 @@ class EducationControllerTest extends TestCase
         auth()->forgetGuards();
 
         $this->withHeader('Authorization', 'Bearer '.$basicUser->createToken('test')->plainTextToken)
-            ->patch(route('subjects.education.update', [
+            ->patch(route('subjects.educations.update', [
                 'subject' => $viewingSubject->id,
                 'education' => $updatingEducation->id,
             ]), [
@@ -316,7 +316,7 @@ class EducationControllerTest extends TestCase
             ->assertForbidden();
 
         $this->withHeader('Authorization', 'Bearer '.$basicUser->createToken('test')->plainTextToken)
-            ->patch(route('subjects.education.update', [
+            ->patch(route('subjects.educations.update', [
                 'subject' => $basicUsersSubject->id,
                 'education' => $basicUsersEducation->id,
             ]), [
@@ -364,7 +364,7 @@ class EducationControllerTest extends TestCase
         $basicUsersEducation = $basicUsersSubject->education->first();
 
         $this->withHeader('Authorization', 'Bearer '.$adminUser->createToken('test')->plainTextToken)
-            ->delete(route('subjects.education.destroy', [
+            ->delete(route('subjects.educations.destroy', [
                 'subject' => $viewingSubject->id,
                 'education' => $deletingEducation->id,
             ]))
@@ -382,7 +382,7 @@ class EducationControllerTest extends TestCase
         $deletingEducation = $viewingSubject->education()->first();
 
         $this->withHeader('Authorization', 'Bearer '.$basicUser->createToken('test')->plainTextToken)
-            ->delete(route('subjects.education.destroy', [
+            ->delete(route('subjects.educations.destroy', [
                 'subject' => $viewingSubject->id,
                 'education' => $deletingEducation->id,
             ]))
@@ -393,7 +393,7 @@ class EducationControllerTest extends TestCase
         $this->assertNotNull($deletingEducation);
 
         $this->withHeader('Authorization', 'Bearer '.$basicUser->createToken('test')->plainTextToken)
-            ->delete(route('subjects.education.destroy', [
+            ->delete(route('subjects.educations.destroy', [
                 'subject' => $basicUsersSubject->id,
                 'education' => $basicUsersEducation->id,
             ]))

@@ -2,18 +2,24 @@
 
 namespace Tests\Feature\Domains\Resumes\Actions;
 
+use App\Domains\Resumes\Actions\DeleteSubjectAction;
+use App\Domains\Resumes\Actions\DeleteSubjectHighlightAction;
 use App\Domains\Resumes\Actions\UpsertSubjectAction;
 use App\Domains\Resumes\Data\SubjectData;
+use App\Domains\Resumes\Data\SubjectHighlightData;
 use App\Domains\Resumes\Models\Education;
+use App\Domains\Resumes\Models\EducationHighlight;
 use App\Domains\Resumes\Models\Employer;
+use App\Domains\Resumes\Models\EmployerHighlight;
 use App\Domains\Resumes\Models\Skill;
 use App\Domains\Resumes\Models\Subject;
 use App\Domains\Resumes\Models\SubjectHighlight;
+use App\Domains\Resumes\Services\SubjectsService;
 use App\Domains\Users\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
-class UpsertSubjectActionTest extends TestCase
+class SubjectsServiceTest extends TestCase
 {
     use RefreshDatabase;
 
@@ -22,7 +28,7 @@ class UpsertSubjectActionTest extends TestCase
     {
         $user = User::factory()->create();
 
-        $data = app(UpsertSubjectAction::class)->execute(
+        $data = app(SubjectsService::class)->upsert(
             SubjectData::from([
                 'first_name' => 'Jim',
                 'last_name' => 'Bob',
@@ -57,7 +63,7 @@ class UpsertSubjectActionTest extends TestCase
             ->has(User::factory(), 'user')
             ->create();
 
-        $data = app(UpsertSubjectAction::class)->execute(
+        $data = app(SubjectsService::class)->upsert(
             SubjectData::from([
                 ...$subject->toArray(),
                 'first_name' => 'Jim',
@@ -92,7 +98,7 @@ class UpsertSubjectActionTest extends TestCase
 
         $user = User::factory()->create();
 
-        app(UpsertSubjectAction::class)->execute(
+        app(SubjectsService::class)->upsert(
             SubjectData::from([
                 ...$subject->toArray(),
                 'user' => $user,
@@ -116,7 +122,7 @@ class UpsertSubjectActionTest extends TestCase
         $keepHighlight = $subject->highlights->first();
         $deleteHighlight = $subject->highlights->last();
 
-        app(UpsertSubjectAction::class)->execute(
+        app(SubjectsService::class)->upsert(
             SubjectData::from([
                 ...$subject->toArray(),
                 'highlights' => [
@@ -153,7 +159,7 @@ class UpsertSubjectActionTest extends TestCase
         $keepSkill = $subject->skills->first();
         $deleteSkill = $subject->skills->last();
 
-        app(UpsertSubjectAction::class)->execute(
+        app(SubjectsService::class)->upsert(
             SubjectData::from([
                 ...$subject->toArray(),
                 'skills' => [
@@ -196,7 +202,7 @@ class UpsertSubjectActionTest extends TestCase
         $keepEmployer = $subject->employers->first();
         $deleteEmployer = $subject->employers->last();
 
-        app(UpsertSubjectAction::class)->execute(
+        app(SubjectsService::class)->upsert(
             SubjectData::from([
                 ...$subject->toArray(),
                 'employers' => [
@@ -249,7 +255,7 @@ class UpsertSubjectActionTest extends TestCase
         $keepEducation = $subject->education->first();
         $deleteEducation = $subject->education->last();
 
-        app(UpsertSubjectAction::class)->execute(
+        app(SubjectsService::class)->upsert(
             SubjectData::from([
                 ...$subject->toArray(),
                 'education' => [
@@ -295,5 +301,123 @@ class UpsertSubjectActionTest extends TestCase
         $this->assertEquals(now()->format('Y-m-d'), $subject->education->last()->ended_at->format('Y-m-d'));
         $this->assertEquals('I did a thing', $subject->education->last()->highlights->first()->content);
         $this->assertNull($deleteEducation);
+    }
+
+    /** @test */
+    public function it_can_delete_a_subject(): void
+    {
+        $subject = Subject::factory()
+            ->has(SubjectHighlight::factory(1), 'highlights')
+            ->has(Skill::factory(1), 'skills')
+            ->has(
+                Employer::factory(1)->has(EmployerHighlight::factory(1), 'highlights'),
+                'employers'
+            )
+            ->has(
+                Education::factory(1)->has(EducationHighlight::factory(1), 'highlights'),
+                'education'
+            )
+            ->create();
+
+        $subjectHighlight = $subject->highlights->first();
+        $skill = $subject->skills->first();
+        $employer = $subject->employers->first();
+        $employerHighlight = $employer->highlights->first();
+        $education = $subject->education->first();
+        $educationHighlight = $education->highlights->first();
+
+        app(SubjectsService::class)->delete(SubjectData::from($subject));
+
+        $subject = Subject::find($subject->id);
+        $subjectHighlight = SubjectHighlight::find($subjectHighlight->id);
+        $skill = Skill::find($skill->id);
+        $employer = Employer::find($employer->id);
+        $employerHighlight = EmployerHighlight::find($employerHighlight->id);
+        $education = Education::find($education->id);
+        $educationHighlight = EducationHighlight::find($educationHighlight->id);
+
+        $this->assertNull($subject);
+        $this->assertNull($subjectHighlight);
+        $this->assertNull($skill);
+        $this->assertNull($employer);
+        $this->assertNull($employerHighlight);
+        $this->assertNull($education);
+        $this->assertNull($educationHighlight);
+    }
+
+    /** @test */
+    public function it_can_create_a_subject_highlight(): void
+    {
+        $subject = Subject::factory()->create();
+
+        $data = app(SubjectsService::class)->upsertHighlight(
+            SubjectHighlightData::from([
+                'content' => 'I am a highlight',
+                'sort' => 1,
+                'subject' => $subject,
+            ])
+        );
+
+        $subjectHighlight = SubjectHighlight::find($data->id);
+
+        $this->assertInstanceOf(Subject::class, $subjectHighlight->subject);
+        $this->assertEquals($subject->id, $subjectHighlight->subject->id);
+        $this->assertEquals($data->content, $subjectHighlight->content);
+        $this->assertEquals($data->sort, $subjectHighlight->sort);
+    }
+
+    /** @test */
+    public function it_can_update_a_subject_highlight()
+    {
+        $subjectHighlight = SubjectHighlight::factory()
+            ->has(Subject::factory(), 'subject')
+            ->create();
+
+        $data = app(SubjectsService::class)->upsertHighlight(
+            SubjectHighlightData::from([
+                ...$subjectHighlight->toArray(),
+                'content' => 'I am a highlight',
+                'sort' => 1,
+            ])
+        );
+
+        $subjectHighlight->refresh();
+
+        $this->assertEquals($data->content, $subjectHighlight->content);
+        $this->assertEquals($data->sort, $subjectHighlight->sort);
+    }
+
+    /** @test */
+    public function it_can_update_a_subject_highlight_with_a_subject()
+    {
+        $subjectHighlight = SubjectHighlight::factory()
+            ->has(Subject::factory(), 'subject')
+            ->create();
+
+        $subject = Subject::factory()->create();
+
+        app(SubjectsService::class)->upsertHighlight(
+            SubjectHighlightData::from([
+                ...$subjectHighlight->toArray(),
+                'subject' => $subject,
+            ])
+        );
+
+        $subjectHighlight->refresh();
+
+        $this->assertInstanceOf(Subject::class, $subjectHighlight->subject);
+        $this->assertEquals($subject->id, $subjectHighlight->subject->id);
+    }
+
+    /** @test */
+    public function it_can_delete_a_subject_highlight(): void
+    {
+        $subjectHighlight = SubjectHighlight::factory()->create();
+
+        app(SubjectsService::class)->deleteHighlight(SubjectHighlightData::from($subjectHighlight));
+
+        $subjectHighlight = SubjectHighlight::find($subjectHighlight->id);
+
+        $this->assertNull($subjectHighlight);
     }
 }

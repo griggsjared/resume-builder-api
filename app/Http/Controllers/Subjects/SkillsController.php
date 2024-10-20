@@ -4,11 +4,10 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers\Subjects;
 
-use App\Domains\Resumes\Actions\DeleteSkillAction;
-use App\Domains\Resumes\Actions\UpsertSkillAction;
 use App\Domains\Resumes\Data\SkillData;
 use App\Domains\Resumes\Models\Skill;
 use App\Domains\Resumes\Models\Subject;
+use App\Domains\Resumes\Services\SkillsService;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Subjects\UpsertSkillRequest;
 use App\Http\ViewData\PaginatedViewData;
@@ -19,8 +18,7 @@ use Illuminate\Http\Request;
 class SkillsController extends Controller
 {
     public function __construct(
-        private UpsertSkillAction $upsertSkillAction,
-        private DeleteSkillAction $deleteSkillAction,
+        private SkillsService  $skillsService,
     ) {}
 
     public function index(Request $request, Subject $subject): JsonResponse
@@ -57,7 +55,7 @@ class SkillsController extends Controller
 
     public function store(UpsertSkillRequest $request, Subject $subject): JsonResponse
     {
-        $data = $this->upsertSkillAction->execute(
+        $data = $this->skillsService->upsert(
             SkillData::from([
                 ...$request->validated(),
                 'subject' => $subject,
@@ -78,7 +76,7 @@ class SkillsController extends Controller
 
     public function update(UpsertSkillRequest $request, Subject $subject, Skill $skill): JsonResponse
     {
-        $this->upsertSkillAction->execute(
+        $this->skillsService->upsert(
             SkillData::from([
                 ...$skill->toArray(),
                 ...$request->validated(),
@@ -94,7 +92,7 @@ class SkillsController extends Controller
     {
         $this->authorize('update', $subject);
 
-        $this->deleteSkillAction->execute(
+        $this->skillsService->delete(
             SkillData::from($skill)
         );
 

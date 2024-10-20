@@ -1,15 +1,17 @@
 <?php
 
-namespace App\Domains\Resumes\Actions;
+declare(strict_types=1);
+
+namespace App\Domains\Resumes\Services;
 
 use App\Domains\Resumes\Data\SkillData;
 use App\Domains\Resumes\Data\SubjectData;
 use App\Domains\Resumes\Models\Skill;
 use App\Domains\Resumes\Models\Subject;
 
-class UpsertSkillAction
+class SkillsService
 {
-    public function execute(SkillData $data): SkillData
+    public function upsert(SkillData $data): SkillData
     {
         $skill = Skill::updateOrCreate(
             ['id' => $data->id],
@@ -25,6 +27,19 @@ class UpsertSkillAction
         }
 
         $skill->save();
+
+        return SkillData::from($skill);
+    }
+
+    public function delete(SkillData $skillData): ?SkillData
+    {
+        $skill = Skill::find($skillData->id);
+
+        if (! $skill) {
+            return null;
+        }
+
+        $skill->delete();
 
         return SkillData::from($skill);
     }

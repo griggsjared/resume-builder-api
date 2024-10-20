@@ -4,11 +4,10 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers\Subjects;
 
-use App\Domains\Resumes\Actions\DeleteEmployerAction;
-use App\Domains\Resumes\Actions\UpsertEmployerAction;
 use App\Domains\Resumes\Data\EmployerData;
 use App\Domains\Resumes\Models\Employer;
 use App\Domains\Resumes\Models\Subject;
+use App\Domains\Resumes\Services\EmployersService;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Subjects\UpsertEmployerRequest;
 use App\Http\ViewData\EmployerViewData;
@@ -19,8 +18,7 @@ use Illuminate\Http\Request;
 class EmployersController extends Controller
 {
     public function __construct(
-        private UpsertEmployerAction $upsertEmployerAction,
-        private DeleteEmployerAction $deleteEmployerAction,
+        private EmployersService $employersService,
     ) {}
 
     public function index(Request $request, Subject $subject): JsonResponse
@@ -59,7 +57,7 @@ class EmployersController extends Controller
 
     public function store(UpsertEmployerRequest $request, Subject $subject): JsonResponse
     {
-        $data = $this->upsertEmployerAction->execute(
+        $data = $this->employersService->upsert(
             EmployerData::from([
                 ...$request->validated(),
                 'subject' => $subject,
@@ -80,7 +78,7 @@ class EmployersController extends Controller
 
     public function update(UpsertEmployerRequest $request, Subject $subject, Employer $employer): JsonResponse
     {
-        $this->upsertEmployerAction->execute(
+        $this->employersService->upsert(
             EmployerData::from([
                 ...$employer->toArray(),
                 ...$request->validated(),
@@ -96,7 +94,7 @@ class EmployersController extends Controller
     {
         $this->authorize('update', $subject);
 
-        $this->deleteEmployerAction->execute(
+        $this->employersService->delete(
             EmployerData::from($employer)
         );
 

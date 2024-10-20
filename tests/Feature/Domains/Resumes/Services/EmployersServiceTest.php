@@ -2,15 +2,16 @@
 
 namespace Tests\Feature\Domains\Resumes\Actions;
 
-use App\Domains\Resumes\Actions\UpsertEmployerAction;
 use App\Domains\Resumes\Data\EmployerData;
+use App\Domains\Resumes\Data\EmployerHighlightData;
 use App\Domains\Resumes\Models\Employer;
 use App\Domains\Resumes\Models\EmployerHighlight;
 use App\Domains\Resumes\Models\Subject;
+use App\Domains\Resumes\Services\EmployersService;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
-class UpsertEmployerActionTest extends TestCase
+class EmployersServiceTest extends TestCase
 {
     use RefreshDatabase;
 
@@ -19,7 +20,7 @@ class UpsertEmployerActionTest extends TestCase
     {
         $subject = Subject::factory()->create();
 
-        $data = app(UpsertEmployerAction::class)->execute(
+        $data = app(EmployersService::class)->upsert(
             EmployerData::from([
                 'name' => 'Acme',
                 'city' => 'New York',
@@ -48,7 +49,7 @@ class UpsertEmployerActionTest extends TestCase
             ->has(Subject::factory(), 'subject')
             ->create();
 
-        $data = app(UpsertEmployerAction::class)->execute(
+        $data = app(EmployersService::class)->upsert(
             EmployerData::from([
                 ...$employer->toArray(),
                 'name' => 'Acme',
@@ -77,7 +78,7 @@ class UpsertEmployerActionTest extends TestCase
 
         $subject = Subject::factory()->create();
 
-        app(UpsertEmployerAction::class)->execute(
+        app(EmployersService::class)->upsert(
             EmployerData::from([
                 ...$employer->toArray(),
                 'subject' => $subject,
@@ -101,7 +102,7 @@ class UpsertEmployerActionTest extends TestCase
         $keepHighlight = $employer->highlights->first();
         $deleteHighlight = $employer->highlights->last();
 
-        app(UpsertEmployerAction::class)->execute(
+        app(EmployersService::class)->upsert(
             EmployerData::from([
                 ...$employer->toArray(),
                 'highlights' => [
@@ -125,5 +126,99 @@ class UpsertEmployerActionTest extends TestCase
         $this->assertEquals($keepHighlight->id, $employer->highlights->first()->id);
         $this->assertEquals('I did another thing', $employer->highlights->last()->content);
         $this->assertNull($deleteHighlight);
+    }
+
+    /** @test */
+    public function it_can_delete_a_employer(): void
+    {
+        $employer = Employer::factory()
+            ->has(EmployerHighlight::factory(1), 'highlights')
+            ->create();
+
+        $employerHighlight = $employer->highlights->first();
+
+        app(EmployersService::class)->delete(EmployerData::from($employer));
+
+        $employer = Employer::find($employer->id);
+        $employerHighlight = EmployerHighlight::find($employerHighlight->id);
+
+        $this->assertNull($employer);
+        $this->assertNull($employerHighlight);
+    }
+
+    /** @test */
+    public function it_can_create_a_employer_highlight(): void
+    {
+        $employer = Employer::factory()->create();
+
+        $data = app(EmployersService::class)->upsertHighlight(
+            EmployerHighlightData::from([
+                'content' => 'I am a highlight',
+                'sort' => 1,
+                'employer' => $employer,
+            ])
+        );
+
+        $employerHighlight = EmployerHighlight::find($data->id);
+
+        $this->assertInstanceOf(Employer::class, $employerHighlight->employer);
+        $this->assertEquals($employer->id, $employerHighlight->employer->id);
+        $this->assertEquals($data->content, $employerHighlight->content);
+        $this->assertEquals($data->sort, $employerHighlight->sort);
+    }
+
+    /** @test */
+    public function it_can_update_a_employer_highlight()
+    {
+        $employerHighlight = EmployerHighlight::factory()
+            ->has(Employer::factory(), 'employer')
+            ->create();
+
+        $data = app(EmployersService::class)->upsertHighlight(
+            EmployerHighlightData::from([
+                ...$employerHighlight->toArray(),
+                'content' => 'I am a highlight',
+                'sort' => 1,
+            ])
+        );
+
+        $employerHighlight->refresh();
+
+        $this->assertEquals($data->content, $employerHighlight->content);
+        $this->assertEquals($data->sort, $employerHighlight->sort);
+    }
+
+    /** @test */
+    public function it_can_update_a_employer_highlight_with_an_employer()
+    {
+        $employerHighlight = EmployerHighlight::factory()
+            ->has(Employer::factory(), 'employer')
+            ->create();
+
+        $employer = Employer::factory()->create();
+
+        app(EmployersService::class)->upsertHighlight(
+            EmployerHighlightData::from([
+                ...$employerHighlight->toArray(),
+                'employer' => $employer,
+            ])
+        );
+
+        $employerHighlight->refresh();
+
+        $this->assertInstanceOf(Employer::class, $employerHighlight->employer);
+        $this->assertEquals($employer->id, $employerHighlight->employer->id);
+    }
+
+    /** @test */
+    public function it_can_delete_a_employer_highlight(): void
+    {
+        $employerHighlight = EmployerHighlight::factory()->create();
+
+        app(EmployersService::class)->deleteHighlight(EmployerHighlightData::from($employerHighlight));
+
+        $employerHighlight = EmployerHighlight::find($employerHighlight->id);
+
+        $this->assertNull($employerHighlight);
     }
 }

@@ -4,8 +4,6 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers\Users;
 
-use App\Domains\Users\Actions\DeleteUserAction;
-use App\Domains\Users\Actions\UpsertUserAction;
 use App\Domains\Users\Data\UserData;
 use App\Domains\Users\Enums\UserRole;
 use App\Domains\Users\Models\User;

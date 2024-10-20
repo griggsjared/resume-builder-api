@@ -4,11 +4,10 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers\Subjects;
 
-use App\Domains\Resumes\Actions\DeleteSubjectHighlightAction;
-use App\Domains\Resumes\Actions\UpsertSubjectHighlightAction;
 use App\Domains\Resumes\Data\SubjectHighlightData;
 use App\Domains\Resumes\Models\Subject;
 use App\Domains\Resumes\Models\SubjectHighlight;
+use App\Domains\Resumes\Services\SubjectsService;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Subjects\UpsertSubjectHighlightRequest;
 use App\Http\ViewData\PaginatedViewData;
@@ -19,8 +18,7 @@ use Illuminate\Http\Request;
 class SubjectHighlightsController extends Controller
 {
     public function __construct(
-        private UpsertSubjectHighlightAction $upsertSubjectHighlightAction,
-        private DeleteSubjectHighlightAction $deleteSubjectHighlightAction,
+        private SubjectsService $subjectsService,
     ) {}
 
     public function index(Request $request, Subject $subject): JsonResponse
@@ -55,7 +53,7 @@ class SubjectHighlightsController extends Controller
 
     public function store(UpsertSubjectHighlightRequest $request, Subject $subject): JsonResponse
     {
-        $data = $this->upsertSubjectHighlightAction->execute(
+        $data = $this->subjectsService->upsertHighlight(
             SubjectHighlightData::from([
                 ...$request->validated(),
                 'subject' => $subject,
@@ -76,7 +74,7 @@ class SubjectHighlightsController extends Controller
 
     public function update(UpsertSubjectHighlightRequest $request, Subject $subject, SubjectHighlight $highlight): JsonResponse
     {
-        $data = $this->upsertSubjectHighlightAction->execute(
+        $data = $this->subjectsService->upsertHighlight(
             SubjectHighlightData::from([
                 ...$highlight->toArray(),
                 ...$request->validated(),
@@ -92,7 +90,7 @@ class SubjectHighlightsController extends Controller
     {
         $this->authorize('update', $subject);
 
-        $this->deleteSubjectHighlightAction->execute(
+        $this->subjectsService->deleteHighlight(
             SubjectHighlightData::from($highlight)
         );
 

@@ -1,6 +1,8 @@
 <?php
 
-namespace App\Domains\Resumes\Actions;
+declare(strict_types=1);
+
+namespace App\Domains\Resumes\Services;
 
 use App\Domains\Resumes\Data\EducationData;
 use App\Domains\Resumes\Data\EmployerData;
@@ -8,24 +10,20 @@ use App\Domains\Resumes\Data\SkillData;
 use App\Domains\Resumes\Data\SubjectData;
 use App\Domains\Resumes\Data\SubjectHighlightData;
 use App\Domains\Resumes\Models\Subject;
+use App\Domains\Resumes\Models\SubjectHighlight;
 use App\Domains\Users\Data\UserData;
 use App\Domains\Users\Models\User;
 use Illuminate\Support\Collection;
 
-class UpsertSubjectAction
+class SubjectsService
 {
     public function __construct(
-        private UpsertSubjectHighlightAction $upsertSubjectHighlightAction,
-        private DeleteSubjectHighlightAction $deleteSubjectHighlightAction,
-        private UpsertSkillAction $upsertSkillAction,
-        private DeleteSkillAction $deleteSkillAction,
-        private UpsertEmployerAction $upsertEmployerAction,
-        private DeleteEmployerAction $deleteEmployerAction,
-        private UpsertEducationAction $upsertEducationAction,
-        private DeleteEducationAction $deleteEducationAction,
+        private SkillsService $skillsService,
+        private EducationsService $educationsService,
+        private EmployersService $employersService,
     ) {}
 
-    public function execute(SubjectData $data): SubjectData
+    public function upsert(SubjectData $data): SubjectData
     {
         $subject = Subject::updateOrCreate(
             ['id' => $data->id],
@@ -50,13 +48,13 @@ class UpsertSubjectAction
             $subject->highlights->filter(
                 fn ($highlight) => ! $data->highlights->contains('id', $highlight->id)
             )->each(function ($highlight) {
-                $this->deleteSubjectHighlightAction->execute(
+                $this->deleteHighlight(
                     SubjectHighlightData::from($highlight)
                 );
             });
 
             $data->highlights->each(function ($highlight) use ($subject) {
-                $this->upsertSubjectHighlightAction->execute(
+                $this->upsertHighlight(
                     SubjectHighlightData::from([
                         ...$highlight->toArray(),
                         'subject' => $subject,
@@ -70,13 +68,13 @@ class UpsertSubjectAction
             $subject->skills->filter(
                 fn ($skill) => ! $data->skills->contains('id', $skill->id)
             )->each(function ($skill) {
-                $this->deleteSkillAction->execute(
+                $this->skillsService->delete(
                     SkillData::from($skill)
                 );
             });
 
             $data->skills->each(function ($skill) use ($subject) {
-                $this->upsertSkillAction->execute(
+                $this->skillsService->upsert(
                     SkillData::from([
                         ...$skill->toArray(),
                         'subject' => $subject,
@@ -90,13 +88,13 @@ class UpsertSubjectAction
             $subject->employers->filter(
                 fn ($employer) => ! $data->employers->contains('id', $employer->id)
             )->each(function ($employer) {
-                $this->deleteEmployerAction->execute(
+                $this->employersService->delete(
                     EmployerData::from($employer)
                 );
             });
 
             $data->employers->each(function ($employer) use ($subject) {
-                $this->upsertEmployerAction->execute(
+                $this->employersService->upsert(
                     EmployerData::from([
                         ...$employer->toArray(),
                         'subject' => $subject,
@@ -110,13 +108,13 @@ class UpsertSubjectAction
             $subject->education->filter(
                 fn ($education) => ! $data->education->contains('id', $education->id)
             )->each(function ($education) {
-                $this->deleteEducationAction->execute(
+                $this->educationsService->delete(
                     EducationData::from($education)
                 );
             });
 
             $data->education->each(function ($education) use ($subject) {
-                $this->upsertEducationAction->execute(
+                $this->educationsService->upsert(
                     EducationData::from([
                         ...$education->toArray(),
                         'subject' => $subject,
@@ -128,5 +126,74 @@ class UpsertSubjectAction
         $subject->save();
 
         return SubjectData::from($subject);
+    }
+
+    public function delete(SubjectData $subject): ?SubjectData
+    {
+        $subject = Subject::find($subject->id);
+
+        if (! $subject) {
+            return null;
+        }
+
+        $subject->highlights->each(function ($highlight) {
+            $this->deleteHighlight(
+                SubjectHighlightData::from($highlight)
+            );
+        });
+
+        $subject->skills->each(function ($skill) {
+            $this->skillsService->delete(
+                SkillData::from($skill)
+            );
+        });
+
+        $subject->employers->each(function ($employer) {
+            $this->employersService->delete(
+                EmployerData::from($employer)
+            );
+        });
+
+        $subject->education->each(function ($education) {
+            $this->educationsService->delete(
+                EducationData::from($education)
+            );
+        });
+
+        $subject->delete();
+
+        return SubjectData::from($subject);
+    }
+
+    public function upsertHighlight(SubjectHighlightData $data): SubjectHighlightData
+    {
+        $subjectHighlight = SubjectHighlight::updateOrCreate(
+            ['id' => $data->id],
+            [
+                'content' => $data->content,
+                'sort' => $data->sort ?? 9999,
+            ]
+        );
+
+        if ($data->subject instanceof SubjectData && $subject = Subject::find($data->subject?->id)) {
+            $subjectHighlight->subject()->associate($subject);
+        }
+
+        $subjectHighlight->save();
+
+        return SubjectHighlightData::from($subjectHighlight);
+    }
+
+    public function deleteHighlight(SubjectHighlightData $subjectHighlightData): ?SubjectHighlightData
+    {
+        $subjectHighlight = SubjectHighlight::find($subjectHighlightData->id);
+
+        if (! $subjectHighlight) {
+            return null;
+        }
+
+        $subjectHighlight->delete();
+
+        return SubjectHighlightData::from($subjectHighlight);
     }
 }

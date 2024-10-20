@@ -7,7 +7,6 @@ use App\Http\Controllers\Users;
 use Illuminate\Support\Facades\Route;
 
 Route::as('auth.')->group(function () {
-
     Route::post('auth/login', Auth\LoginController::class)->name('login');
     Route::post('auth/register', Auth\RegisterController::class)->name('register');
 
@@ -27,8 +26,8 @@ Route::middleware('auth:api')->scopeBindings()->group(function () {
     Route::resource('subjects.skills', Subjects\SkillsController::class)->except(['edit', 'create']);
     Route::resource('subjects.employers', Subjects\EmployersController::class)->except(['edit', 'create']);
     Route::resource('subjects.employers.highlights', Subjects\EmployerHighlightsController::class)->except(['edit', 'create']);
-    Route::resource('subjects.education', Subjects\EducationController::class)->except(['edit', 'create']);
-    Route::resource('subjects.education.highlights', Subjects\EducationHighlightsController::class)->except(['edit', 'create']);
+    Route::resource('subjects.educations', Subjects\EducationsController::class)->except(['edit', 'create']);
+    Route::resource('subjects.educations.highlights', Subjects\EducationHighlightsController::class)->except(['edit', 'create']);
 });
 
 Route::fallback(FallbackController::class);

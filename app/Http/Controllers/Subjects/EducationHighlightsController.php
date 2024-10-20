@@ -10,6 +10,7 @@ use App\Domains\Resumes\Data\EducationHighlightData;
 use App\Domains\Resumes\Models\Education;
 use App\Domains\Resumes\Models\EducationHighlight;
 use App\Domains\Resumes\Models\Subject;
+use App\Domains\Resumes\Services\EducationsService;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Subjects\UpsertEducationHighlightRequest;
 use App\Http\ViewData\EducationHighlightViewData;
@@ -20,8 +21,7 @@ use Illuminate\Http\Request;
 class EducationHighlightsController extends Controller
 {
     public function __construct(
-        private UpsertEducationHighlightAction $upsertEducationHighlightAction,
-        private DeleteEducationHighlightAction $deleteEducationHighlightAction,
+        private EducationsService $educationsService,
     ) {}
 
     public function index(Request $request, Subject $subject, Education $education): JsonResponse
@@ -56,7 +56,7 @@ class EducationHighlightsController extends Controller
 
     public function store(UpsertEducationHighlightRequest $request, Subject $subject, Education $education): JsonResponse
     {
-        $data = $this->upsertEducationHighlightAction->execute(
+        $data = $this->educationsService->upsertHighlight(
             EducationHighlightData::from([
                 ...$request->validated(),
                 'education' => $education,
@@ -77,7 +77,7 @@ class EducationHighlightsController extends Controller
 
     public function update(UpsertEducationHighlightRequest $request, Subject $subject, Education $education, EducationHighlight $highlight): JsonResponse
     {
-        $data = $this->upsertEducationHighlightAction->execute(
+        $data = $this->educationsService->upsertHighlight(
             EducationHighlightData::from([
                 ...$highlight->toArray(),
                 ...$request->validated(),
@@ -93,7 +93,7 @@ class EducationHighlightsController extends Controller
     {
         $this->authorize('update', $subject);
 
-        $this->deleteEducationHighlightAction->execute(
+        $this->educationsService->deleteHighlight(
             EducationHighlightData::from($highlight)
         );
 
