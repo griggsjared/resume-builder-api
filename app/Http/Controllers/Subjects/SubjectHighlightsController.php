@@ -8,10 +8,10 @@ use App\Domains\Resumes\Data\SubjectHighlightData;
 use App\Domains\Resumes\Models\Subject;
 use App\Domains\Resumes\Models\SubjectHighlight;
 use App\Domains\Resumes\Services\SubjectsService;
-use App\Http\Controllers\Controller;
-use App\Http\Requests\Subjects\UpsertSubjectHighlightRequest;
 use App\Http\ApiData\PaginatedApiData;
 use App\Http\ApiData\SubjectHighlightApiData;
+use App\Http\Controllers\Controller;
+use App\Http\Requests\Subjects\UpsertSubjectHighlightRequest;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 

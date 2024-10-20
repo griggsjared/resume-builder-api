@@ -8,10 +8,10 @@ use App\Domains\Resumes\Data\EducationData;
 use App\Domains\Resumes\Models\Education;
 use App\Domains\Resumes\Models\Subject;
 use App\Domains\Resumes\Services\EducationsService;
-use App\Http\Controllers\Controller;
-use App\Http\Requests\Subjects\UpsertEducationRequest;
 use App\Http\ApiData\EducationApiData;
 use App\Http\ApiData\PaginatedApiData;
+use App\Http\Controllers\Controller;
+use App\Http\Requests\Subjects\UpsertEducationRequest;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 

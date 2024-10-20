@@ -4,15 +4,13 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers\Auth;
 
-use App\Domains\Users\Actions\GenerateAccessTokenAction;
-use App\Domains\Users\Actions\UpsertUserAction;
 use App\Domains\Users\Data\UserData;
 use App\Domains\Users\Enums\UserRole;
 use App\Domains\Users\Services\AccessTokensService;
 use App\Domains\Users\Services\UsersService;
+use App\Http\ApiData\AccessTokenApiData;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Auth\RegisterRequest;
-use App\Http\ApiData\AccessTokenApiData;
 use Illuminate\Http\JsonResponse;
 
 class RegisterController extends Controller

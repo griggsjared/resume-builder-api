@@ -4,17 +4,15 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers\Subjects;
 
-use App\Domains\Resumes\Actions\DeleteEducationHighlightAction;
-use App\Domains\Resumes\Actions\UpsertEducationHighlightAction;
 use App\Domains\Resumes\Data\EducationHighlightData;
 use App\Domains\Resumes\Models\Education;
 use App\Domains\Resumes\Models\EducationHighlight;
 use App\Domains\Resumes\Models\Subject;
 use App\Domains\Resumes\Services\EducationsService;
-use App\Http\Controllers\Controller;
-use App\Http\Requests\Subjects\UpsertEducationHighlightRequest;
 use App\Http\ApiData\EducationHighlightApiData;
 use App\Http\ApiData\PaginatedApiData;
+use App\Http\Controllers\Controller;
+use App\Http\Requests\Subjects\UpsertEducationHighlightRequest;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 

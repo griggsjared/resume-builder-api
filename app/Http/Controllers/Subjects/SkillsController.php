@@ -8,17 +8,17 @@ use App\Domains\Resumes\Data\SkillData;
 use App\Domains\Resumes\Models\Skill;
 use App\Domains\Resumes\Models\Subject;
 use App\Domains\Resumes\Services\SkillsService;
-use App\Http\Controllers\Controller;
-use App\Http\Requests\Subjects\UpsertSkillRequest;
 use App\Http\ApiData\PaginatedApiData;
 use App\Http\ApiData\SkillApiData;
+use App\Http\Controllers\Controller;
+use App\Http\Requests\Subjects\UpsertSkillRequest;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
 class SkillsController extends Controller
 {
     public function __construct(
-        private SkillsService  $skillsService,
+        private SkillsService $skillsService,
     ) {}
 
     public function index(Request $request, Subject $subject): JsonResponse

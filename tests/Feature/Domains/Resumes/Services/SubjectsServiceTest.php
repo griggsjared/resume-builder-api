@@ -2,9 +2,6 @@
 
 namespace Tests\Feature\Domains\Resumes\Actions;
 
-use App\Domains\Resumes\Actions\DeleteSubjectAction;
-use App\Domains\Resumes\Actions\DeleteSubjectHighlightAction;
-use App\Domains\Resumes\Actions\UpsertSubjectAction;
 use App\Domains\Resumes\Data\SubjectData;
 use App\Domains\Resumes\Data\SubjectHighlightData;
 use App\Domains\Resumes\Models\Education;

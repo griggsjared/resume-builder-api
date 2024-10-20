@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers\Auth;
 
-use App\Domains\Users\Actions\DeleteAccessTokenAction;
 use App\Domains\Users\Data\AccessTokenData;
 use App\Domains\Users\Services\AccessTokensService;
 use App\Http\Controllers\Controller;

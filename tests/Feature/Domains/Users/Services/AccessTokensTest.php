@@ -2,7 +2,6 @@
 
 namespace Tests\Feature\Domains\Users\Actions;
 
-use App\Domains\Users\Actions\RefreshAccessTokenAction;
 use App\Domains\Users\Data\AccessTokenData;
 use App\Domains\Users\Data\UserData;
 use App\Domains\Users\Models\AccessToken;

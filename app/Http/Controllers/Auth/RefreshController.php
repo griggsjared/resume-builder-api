@@ -4,12 +4,11 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers\Auth;
 
-use App\Domains\Users\Actions\RefreshAccessTokenAction;
 use App\Domains\Users\Data\AccessTokenData;
 use App\Domains\Users\Services\AccessTokensService;
+use App\Http\ApiData\AccessTokenApiData;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Auth\RefreshRequest;
-use App\Http\ApiData\AccessTokenApiData;
 use Illuminate\Http\JsonResponse;
 
 class RefreshController extends Controller

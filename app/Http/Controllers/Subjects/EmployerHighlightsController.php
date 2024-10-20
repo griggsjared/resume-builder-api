@@ -4,17 +4,15 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers\Subjects;
 
-use App\Domains\Resumes\Actions\DeleteEmployerHighlightAction;
-use App\Domains\Resumes\Actions\UpsertEmployerHighlightAction;
 use App\Domains\Resumes\Data\EmployerHighlightData;
 use App\Domains\Resumes\Models\Employer;
 use App\Domains\Resumes\Models\EmployerHighlight;
 use App\Domains\Resumes\Models\Subject;
 use App\Domains\Resumes\Services\EmployersService;
-use App\Http\Controllers\Controller;
-use App\Http\Requests\Subjects\UpsertEmployerHighlightRequest;
 use App\Http\ApiData\EmployerHighlightApiData;
 use App\Http\ApiData\PaginatedApiData;
+use App\Http\Controllers\Controller;
+use App\Http\Requests\Subjects\UpsertEmployerHighlightRequest;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 

@@ -7,11 +7,11 @@ namespace App\Http\Controllers\Subjects;
 use App\Domains\Resumes\Data\SubjectData;
 use App\Domains\Resumes\Models\Subject;
 use App\Domains\Resumes\Services\SubjectsService;
+use App\Http\ApiData\PaginatedApiData;
+use App\Http\ApiData\SubjectApiData;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Subjects\StoreSubjectRequest;
 use App\Http\Requests\Subjects\UpdateSubjectRequest;
-use App\Http\ApiData\PaginatedApiData;
-use App\Http\ApiData\SubjectApiData;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 

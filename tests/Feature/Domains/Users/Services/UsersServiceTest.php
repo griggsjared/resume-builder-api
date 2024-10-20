@@ -2,8 +2,6 @@
 
 namespace Tests\Feature\Domains\Users\Services;
 
-use App\Domains\Users\Actions\DeleteUserAction;
-use App\Domains\Users\Actions\UpsertUserAction;
 use App\Domains\Users\Data\UserData;
 use App\Domains\Users\Enums\UserRole;
 use App\Domains\Users\Models\AccessToken;

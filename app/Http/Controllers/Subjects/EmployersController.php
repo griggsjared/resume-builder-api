@@ -8,10 +8,10 @@ use App\Domains\Resumes\Data\EmployerData;
 use App\Domains\Resumes\Models\Employer;
 use App\Domains\Resumes\Models\Subject;
 use App\Domains\Resumes\Services\EmployersService;
-use App\Http\Controllers\Controller;
-use App\Http\Requests\Subjects\UpsertEmployerRequest;
 use App\Http\ApiData\EmployerApiData;
 use App\Http\ApiData\PaginatedApiData;
+use App\Http\Controllers\Controller;
+use App\Http\Requests\Subjects\UpsertEmployerRequest;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 

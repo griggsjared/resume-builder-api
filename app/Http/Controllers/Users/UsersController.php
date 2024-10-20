@@ -8,18 +8,18 @@ use App\Domains\Users\Data\UserData;
 use App\Domains\Users\Enums\UserRole;
 use App\Domains\Users\Models\User;
 use App\Domains\Users\Services\UsersService;
+use App\Http\ApiData\PaginatedApiData;
+use App\Http\ApiData\UserApiData;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Users\StoreUserRequest;
 use App\Http\Requests\Users\UpdateUserRequest;
-use App\Http\ApiData\PaginatedApiData;
-use App\Http\ApiData\UserApiData;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
 class UsersController extends Controller
 {
     public function __construct(
-        private  UsersService $usersService,
+        private UsersService $usersService,
     ) {}
 
     public function index(Request $request): JsonResponse
