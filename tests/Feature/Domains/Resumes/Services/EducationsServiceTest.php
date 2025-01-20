@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Feature\Domains\Resumes\Actions;
+namespace Tests\Feature\Domains\Resumes\Services;
 
 use App\Domains\Resumes\Data\EducationData;
 use App\Domains\Resumes\Data\EducationHighlightData;

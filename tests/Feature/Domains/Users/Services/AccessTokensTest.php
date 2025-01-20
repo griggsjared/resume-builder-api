@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Feature\Domains\Users\Actions;
+namespace Tests\Feature\Domains\Users\Services;
 
 use App\Domains\Users\Data\AccessTokenData;
 use App\Domains\Users\Data\UserData;
