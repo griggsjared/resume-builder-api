@@ -18,10 +18,8 @@ class LogoutController extends Controller
 
     public function __invoke(LogoutRequest $request): JsonResponse
     {
-        $accessToken = $request->accessToken();
-
         $this->accessTokensService->delete(
-            AccessTokenData::from($accessToken)
+            $request->accessTokenData()
         );
 
         return response()->json([

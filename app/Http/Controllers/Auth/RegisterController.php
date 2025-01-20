@@ -22,17 +22,15 @@ class RegisterController extends Controller
 
     public function __invoke(RegisterRequest $request): JsonResponse
     {
-        $userData = $this->usersService->upsert(
-            UserData::from([
-                ...$request->validated(),
-                'role' => UserRole::Basic,
-            ]),
-        );
-
         return response()->json(
             AccessTokenApiData::from([
                 ...$this->accessTokensService->generate(
-                    $userData,
+                    $this->usersService->upsert(
+                        UserData::from([
+                            ...$request->validated(),
+                            'role' => UserRole::Basic,
+                        ]),
+                    ),
                     'login-token',
                     now()->addSeconds(config('auth.token_expiration', 3600))
                 )->toArray(),

@@ -19,12 +19,10 @@ class RefreshController extends Controller
 
     public function __invoke(RefreshRequest $request): JsonResponse
     {
-        $accessToken = $request->accessToken();
-
         return response()->json(
             AccessTokenApiData::from([
                 ...$this->accessTokensService->refresh(
-                    AccessTokenData::from($accessToken),
+                    $request->accessTokenData(),
                     now()->addSeconds(config('auth.token_expiration', 3600))
                 )->toArray(),
                 'type' => 'bearer',

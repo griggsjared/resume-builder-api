@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Http\Requests\Auth;
 
+use App\Domains\Users\Data\UserData;
 use App\Domains\Users\Models\User;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\Auth;
@@ -34,5 +35,10 @@ class LoginRequest extends FormRequest
     public function authenticatedUser(): ?User
     {
         return Auth::getUser();
+    }
+
+    public function authenticatedUserData(): UserData
+    {
+        return UserData::from($this->authenticatedUser());
     }
 }

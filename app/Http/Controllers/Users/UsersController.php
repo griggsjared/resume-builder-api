@@ -61,10 +61,7 @@ class UsersController extends Controller
     public function store(StoreUserRequest $request): JsonResponse
     {
         $data = $this->usersService->upsert(
-            UserData::from([
-                ...$request->validated(),
-                'role' => $request->assignRole(),
-            ])
+            $request->userData()
         );
 
         return response()->json(UserApiData::from(
@@ -84,11 +81,7 @@ class UsersController extends Controller
     public function update(UpdateUserRequest $request, User $user): JsonResponse
     {
         $this->usersService->upsert(
-            UserData::from([
-                ...$user->toArray(),
-                ...$request->validated(),
-                'role' => $request->assignRole(),
-            ])
+            $request->userData()
         );
 
         return response()->json(UserApiData::from(

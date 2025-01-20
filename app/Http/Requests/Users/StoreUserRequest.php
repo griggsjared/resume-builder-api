@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Http\Requests\Users;
 
+use App\Domains\Users\Data\UserData;
 use App\Domains\Users\Enums\UserRole;
 use App\Domains\Users\Models\User;
 use Illuminate\Foundation\Http\FormRequest;
@@ -40,5 +41,13 @@ class StoreUserRequest extends FormRequest
         }
 
         return UserRole::from($this->input('role'));
+    }
+
+    public function userData(): UserData
+    {
+        return UserData::from([
+            ...$this->validated(),
+            'role' => $this->assignRole(),
+        ]);
     }
 }

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Http\Requests\Auth;
 
+use App\Domains\Users\Data\AccessTokenData;
 use App\Domains\Users\Models\AccessToken;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Validator;
@@ -22,5 +23,12 @@ class LogoutRequest extends FormRequest
     public function accessToken(): AccessToken
     {
         return $this->user()->currentAccessToken();
+    }
+
+    public function accessTokenData(): AccessTokenData
+    {
+        return AccessTokenData::from(
+            $this->accessToken()
+        );
     }
 }

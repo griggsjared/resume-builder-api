@@ -19,12 +19,10 @@ class LoginController extends Controller
 
     public function __invoke(LoginRequest $request): JsonResponse
     {
-        $user = $request->authenticatedUser();
-
         return response()->json(
             AccessTokenApiData::from([
                 ...$this->accessTokensService->generate(
-                    UserData::from($user),
+                    $request->authenticatedUserData(),
                     'login-token',
                     now()->addSeconds(config('auth.token_expiration', 3600))
                 )->toArray(),
