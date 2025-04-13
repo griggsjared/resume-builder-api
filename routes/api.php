@@ -30,4 +30,6 @@ Route::middleware('auth:api')->scopeBindings()->group(function () {
     Route::resource('subjects.educations.highlights', Subjects\EducationHighlightsController::class)->except(['edit', 'create']);
 });
 
+Route::get('healthz', fn() => response()->json(['status' => 'ok']))->name('healthz');
+
 Route::fallback(FallbackController::class);
