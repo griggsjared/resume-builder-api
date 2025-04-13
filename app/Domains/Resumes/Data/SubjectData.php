@@ -22,21 +22,13 @@ class SubjectData extends Data
         public readonly ?string $email,
         public readonly ?string $overview,
         public readonly Optional|UserData $user,
-        /**
-         * @var Optional|Collection<int, SubjectHighlightData>
-         */
+        /** @var Optional|Collection<int, SubjectHighlightData> */
         public readonly Optional|Collection $highlights,
-        /**
-         * @var Optional|Collection<int, SkillData>
-         */
+        /** @var Optional|Collection<int, SkillData> */
         public readonly Optional|Collection $skills,
-        /**
-         * @var Optional|Collection<int, EmployerData>
-         */
+        /** @var Optional|Collection<int, EmployerData> */
         public readonly Optional|Collection $employers,
-        /**
-         * @var Optional|Collection<int, EducationData>
-         */
+        /** @var Optional|Collection<int, EducationData> */
         public readonly Optional|Collection $education,
     ) {}
 }

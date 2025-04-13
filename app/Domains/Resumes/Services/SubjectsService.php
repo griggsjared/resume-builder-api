@@ -9,6 +9,9 @@ use App\Domains\Resumes\Data\EmployerData;
 use App\Domains\Resumes\Data\SkillData;
 use App\Domains\Resumes\Data\SubjectData;
 use App\Domains\Resumes\Data\SubjectHighlightData;
+use App\Domains\Resumes\Models\Education;
+use App\Domains\Resumes\Models\Employer;
+use App\Domains\Resumes\Models\Skill;
 use App\Domains\Resumes\Models\Subject;
 use App\Domains\Resumes\Models\SubjectHighlight;
 use App\Domains\Users\Data\UserData;
@@ -39,14 +42,17 @@ class SubjectsService
             ]
         );
 
-        if ($data->user instanceof UserData && $user = User::find($data->user?->id)) {
+        if ($data->user instanceof UserData && $user = User::find($data->user->id)) {
             $subject->user()->associate($user);
         }
 
         if ($data->highlights instanceof Collection) {
 
-            $subject->highlights->filter(
-                fn ($highlight) => ! $data->highlights->contains('id', $highlight->id)
+            /** @var Collection<int, SubjectHighlight> */
+            $currentHighlights = $subject->highlights;
+
+            $currentHighlights->filter(
+                fn($highlight) => ! $data->highlights->contains('id', $highlight->id)
             )->each(function ($highlight) {
                 $this->deleteHighlight(
                     SubjectHighlightData::from($highlight)
@@ -65,8 +71,11 @@ class SubjectsService
 
         if ($data->skills instanceof Collection) {
 
-            $subject->skills->filter(
-                fn ($skill) => ! $data->skills->contains('id', $skill->id)
+            /** @var Collection<int, Skill> */
+            $currentSkills = $subject->skills;
+
+            $currentSkills->filter(
+                fn($skill) => ! $data->skills->contains('id', $skill->id)
             )->each(function ($skill) {
                 $this->skillsService->delete(
                     SkillData::from($skill)
@@ -85,8 +94,11 @@ class SubjectsService
 
         if ($data->employers instanceof Collection) {
 
-            $subject->employers->filter(
-                fn ($employer) => ! $data->employers->contains('id', $employer->id)
+            /** @var Collection<int, Employer> */
+            $currentEmployers = $subject->employers;
+
+            $currentEmployers->filter(
+                fn($employer) => ! $data->employers->contains('id', $employer->id)
             )->each(function ($employer) {
                 $this->employersService->delete(
                     EmployerData::from($employer)
@@ -105,8 +117,11 @@ class SubjectsService
 
         if ($data->education instanceof Collection) {
 
-            $subject->education->filter(
-                fn ($education) => ! $data->education->contains('id', $education->id)
+            /** @var Collection<int, Education> */
+            $currentEducation = $subject->education;
+
+            $currentEducation->filter(
+                fn($education) => ! $data->education->contains('id', $education->id)
             )->each(function ($education) {
                 $this->educationsService->delete(
                     EducationData::from($education)
@@ -175,7 +190,7 @@ class SubjectsService
             ]
         );
 
-        if ($data->subject instanceof SubjectData && $subject = Subject::find($data->subject?->id)) {
+        if ($data->subject instanceof SubjectData && $subject = Subject::find($data->subject->id)) {
             $subjectHighlight->subject()->associate($subject);
         }
 

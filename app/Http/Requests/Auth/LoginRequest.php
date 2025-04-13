@@ -12,9 +12,6 @@ use Illuminate\Validation\Validator;
 
 class LoginRequest extends FormRequest
 {
-    /**
-     * @return array<string, array<string>>
-     */
     public function rules(): array
     {
         return [
@@ -34,7 +31,10 @@ class LoginRequest extends FormRequest
 
     public function authenticatedUser(): ?User
     {
-        return Auth::getUser();
+        /** @var ?User $user */
+        $user = Auth::getUser();
+
+        return $user;
     }
 
     public function authenticatedUserData(): UserData

@@ -14,26 +14,20 @@ class Employer extends Model
 {
     use HasFactory, HasUuids;
 
-    /**
-     * @var array<int, string>
-     */
+    /** @var list<string> */
     protected $fillable = [
         'name',
         'city',
         'state',
     ];
 
-    /**
-     * @var array<int, string>
-     */
+    /** @var array<string, string|class-string> */
     protected $casts = [
         'started_at' => 'date',
         'ended_at' => 'date',
     ];
 
-    /**
-     * @var array<int, string>
-     */
+    /** @var list<string> */
     protected $appends = [
         'is_current',
     ];

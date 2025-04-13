@@ -28,7 +28,7 @@ class SubjectsController extends Controller
         $subjects = Subject::authorized($request->user());
 
         if ($request->has('search')) {
-            $subject->search($request->input('search'));
+            $subjects->search($request->input('search'));
         }
 
         $order = $request->input('order', 'asc') === 'desc' ? 'desc' : 'asc';
@@ -80,7 +80,7 @@ class SubjectsController extends Controller
 
     public function update(UpdateSubjectRequest $request, Subject $subject): JsonResponse
     {
-        $data = $this->subjectsService->upsert(
+        $this->subjectsService->upsert(
             SubjectData::from([
                 ...$subject->toArray(),
                 ...$request->validated(),

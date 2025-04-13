@@ -29,18 +29,19 @@ class EducationsService
 
         $education->started_at = $data->started_at;
         $education->ended_at = $data->ended_at;
-        $education->earned_major_degree = $data->earned_major_degree ?? false;
-        $education->earned_minor_degree = $data->earned_minor_degree ?? false;
 
-        if ($data->subject instanceof SubjectData && $subject = Subject::find($data->subject?->id)) {
+        if ($data->subject instanceof SubjectData && $subject = Subject::find($data->subject->id ?? 0)) {
             $education->subject()->associate($subject);
         }
 
         if ($data->highlights instanceof Collection) {
 
-            $education->highlights->filter(
-                fn ($highlight) => ! $data->highlights->contains('id', $highlight->id)
-            )->each(function ($highlight) {
+            /** @var Collection<int, EducationHighlight> $currentHighlights */
+            $currentHighlights = $education->highlights;
+
+            $currentHighlights->filter(
+                fn (EducationHighlight $highlight) => ! $data->highlights->contains('id', $highlight->id)
+            )->each(function (EducationHighlight $highlight) {
                 $this->deleteHighlight(
                     EducationHighlightData::from($highlight)
                 );
@@ -69,7 +70,10 @@ class EducationsService
             return null;
         }
 
-        $education->highlights->each(function ($highlight) {
+        /** @var Collection<int, EducationHighlight> $currentHighlights */
+        $currentHighlights = $education->highlights;
+
+        $currentHighlights->each(function (EducationHighlight $highlight) {
             $this->deleteHighlight(
                 EducationHighlightData::from($highlight)
             );
@@ -90,7 +94,7 @@ class EducationsService
             ]
         );
 
-        if ($data->education instanceof EducationData && $education = Education::find($data->education?->id)) {
+        if ($data->education instanceof EducationData && $education = Education::find($data->education->id)) {
             $educationHighlight->education()->associate($education);
         }
 

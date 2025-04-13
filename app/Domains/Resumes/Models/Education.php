@@ -14,9 +14,7 @@ class Education extends Model
 {
     use HasFactory, HasUuids;
 
-    /**
-     * @var array<int, string>
-     */
+    /** @var list<string> */
     protected $fillable = [
         'name',
         'city',
@@ -25,9 +23,7 @@ class Education extends Model
         'minor_degree',
     ];
 
-    /**
-     * @var array<int, string>
-     */
+    /** @var array<string, string|class-string> */
     protected $casts = [
         'started_at' => 'date',
         'ended_at' => 'date',
@@ -35,9 +31,7 @@ class Education extends Model
         'earned_minor_degree' => 'boolean',
     ];
 
-    /**
-     * @var array<int, string>
-     */
+    /** @var list<string> */
     protected $appends = [
         'is_current',
     ];
@@ -55,21 +49,21 @@ class Education extends Model
     protected function isCurrent(): Attribute
     {
         return Attribute::make(
-            get: fn ($value, $attributes) => is_null($attributes['ended_at'])
+            get: fn($value, $attributes) => is_null($attributes['ended_at'])
         );
     }
 
     protected function earnedMajorDegree(): Attribute
     {
         return Attribute::make(
-            get: fn ($value, $attributes) => ! is_null($attributes['major_degree']) && $attributes['earned_major_degree']
+            get: fn($value, $attributes) => ! is_null($attributes['major_degree'])
         );
     }
 
     protected function earnedMinorDegree(): Attribute
     {
         return Attribute::make(
-            get: fn ($value, $attributes) => ! is_null($attributes['minor_degree']) && $attributes['earned_minor_degree']
+            get: fn($value, $attributes) => ! is_null($attributes['minor_degree'])
         );
     }
 

@@ -14,16 +14,13 @@ class UpdateUserRequest extends FormRequest
 {
     public function authorize(): bool
     {
-        return $this->user()->can('update', $this->route('user'));
+        return $this->user()->can('update', $this->updatingUser());
     }
 
-    /**
-     * @return array<string, array<string>>
-     */
     public function rules(): array
     {
         $rules = [
-            'email' => ['required', 'email', 'max:255', 'unique:users,email,'.$this->route('user')->id],
+            'email' => ['required', 'email', 'max:255', 'unique:users,email,'.$this->updatingUser()->id],
             'password' => ['nullable', 'string', 'max:255'],
         ];
 
@@ -41,7 +38,7 @@ class UpdateUserRequest extends FormRequest
         }
 
         if ($this->has('role') === false) {
-            return $this->route('user')->role;
+            return $this->updatingUser()->role;
         }
 
         return UserRole::from($this->input('role'));
@@ -50,9 +47,17 @@ class UpdateUserRequest extends FormRequest
     public function userData(): UserData
     {
         return UserData::from([
-            ...$this->route('user')->toArray(),
+            ...$this->updatingUser()->toArray(),
             ...$this->validated(),
             'role' => $this->assignRole(),
         ]);
+    }
+
+    public function updatingUser(): User
+    {
+        /** @var User $user */
+        $user = $this->route('user');
+
+        return $user;
     }
 }

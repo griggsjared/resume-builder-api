@@ -15,26 +15,21 @@ use Laravel\Sanctum\HasApiTokens;
 
 class User extends Authenticatable
 {
+    /** @use HasApiTokens<AccessToken> */
     use HasApiTokens, HasFactory, HasUuids, Notifiable;
 
-    /**
-     * @var array<int, string>
-     */
+    /** @var list<string> */
     protected $fillable = [
         'email',
         'password',
     ];
 
-    /**
-     * @var array<int, string>
-     */
+    /** @var list<string> */
     protected $hidden = [
         'password',
     ];
 
-    /**
-     * @var array<string, class-string | string>
-     */
+    /** @var array<string, class-string | string> */
     protected $casts = [
         'role' => UserRole::class,
     ];

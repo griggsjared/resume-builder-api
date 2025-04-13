@@ -4,6 +4,7 @@ namespace App\Domains\Resumes\Data;
 
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Collection;
+use Spatie\LaravelData\Attributes\Validation\Uuid;
 use Spatie\LaravelData\Attributes\WithCast;
 use Spatie\LaravelData\Casts\DateTimeInterfaceCast;
 use Spatie\LaravelData\Data;
@@ -26,9 +27,7 @@ class EducationData extends Data
         #[WithCast(DateTimeInterfaceCast::class)]
         public readonly ?Carbon $ended_at,
         public readonly Optional|SubjectData $subject,
-        /**
-         * @var Optional|Collection<int, EducationHighlightData>
-         */
+        /** @var Optional|Collection<int, EducationHighlightData> */
         public readonly Optional|Collection $highlights,
     ) {}
 }

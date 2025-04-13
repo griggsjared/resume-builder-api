@@ -12,9 +12,7 @@ class EmployerHighlight extends Model
 {
     use HasFactory, HasUuids;
 
-    /**
-     * @var array<int, string>
-     */
+    /** @var list<string> */
     protected $fillable = [
         'content',
         'sort',

@@ -17,9 +17,6 @@ class StoreUserRequest extends FormRequest
         return $this->user()->can('create', User::class);
     }
 
-    /**
-     * @return array<string, array<string>>
-     */
     public function rules(): array
     {
         $rules = [

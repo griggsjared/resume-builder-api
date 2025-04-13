@@ -42,14 +42,14 @@ class EducationHighlightsController extends Controller
         /**
          * @var PaginatedApiData<EducationHighlightApiData>
          */
-        $ApiData = PaginatedApiData::fromPaginator(
+        $apiData = PaginatedApiData::fromPaginator(
             $highlights->paginate(
                 $request->input('per_page', 20)
             )->withQueryString(),
             EducationHighlightApiData::class
         );
 
-        return response()->json($ApiData);
+        return response()->json($apiData);
     }
 
     public function store(UpsertEducationHighlightRequest $request, Subject $subject, Education $education): JsonResponse
@@ -75,7 +75,7 @@ class EducationHighlightsController extends Controller
 
     public function update(UpsertEducationHighlightRequest $request, Subject $subject, Education $education, EducationHighlight $highlight): JsonResponse
     {
-        $data = $this->educationsService->upsertHighlight(
+        $this->educationsService->upsertHighlight(
             EducationHighlightData::from([
                 ...$highlight->toArray(),
                 ...$request->validated(),

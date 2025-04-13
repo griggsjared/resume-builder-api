@@ -8,6 +8,7 @@ use App\Domains\Users\Data\AccessTokenData;
 use App\Domains\Users\Data\UserData;
 use App\Domains\Users\Models\AccessToken;
 use App\Domains\Users\Models\User;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Hash;
 use Spatie\LaravelData\Optional;
 
@@ -45,7 +46,10 @@ class UsersService
             return null;
         }
 
-        $user->accessTokens->each(function (AccessToken $token) {
+        /** @var Collection<int, AccessToken> */
+        $currentTokens = $user->accessTokens;
+
+        $currentTokens->each(function (AccessToken $token) {
             $this->accessTokensService->delete(
                 AccessTokenData::from($token)
             );

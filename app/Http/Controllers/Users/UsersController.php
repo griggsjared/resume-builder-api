@@ -33,7 +33,7 @@ class UsersController extends Controller
         }
 
         if ($request->has('role') && UserRole::isValid($request->input('role'))) {
-            $users->role($request->input('role'));
+            $users->where('role', $request->input('role'));
         }
 
         $order = $request->input('order', 'asc') === 'desc' ? 'desc' : 'asc';

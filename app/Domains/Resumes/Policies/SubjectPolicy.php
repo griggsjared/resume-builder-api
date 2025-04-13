@@ -22,7 +22,7 @@ class SubjectPolicy
             return true;
         }
 
-        return $user->id === $model->user_id;
+        return $user->id == $model->user_id;
     }
 
     public function create(User $user): bool
@@ -36,7 +36,7 @@ class SubjectPolicy
             return true;
         }
 
-        return $user->id === $model->user_id;
+        return $user->id == $model->user_id;
     }
 
     public function delete(User $user, Subject $model): bool
@@ -45,7 +45,7 @@ class SubjectPolicy
             return true;
         }
 
-        return $user->id === $model->user_id;
+        return $user->id == $model->user_id;
     }
 
     public function assignUser(User $user): bool

@@ -22,7 +22,7 @@ class SkillsService
             ]
         );
 
-        if ($data->subject instanceof SubjectData && $subject = Subject::find($data->subject?->id)) {
+        if ($data->subject instanceof SubjectData && $subject = Subject::find($data->subject->id)) {
             $skill->subject()->associate($subject);
         }
 

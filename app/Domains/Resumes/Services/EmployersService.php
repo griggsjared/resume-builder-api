@@ -28,13 +28,16 @@ class EmployersService
         $employer->started_at = $data->started_at;
         $employer->ended_at = $data->ended_at;
 
-        if ($data->subject instanceof SubjectData && $subject = Subject::find($data->subject?->id)) {
+        if ($data->subject instanceof SubjectData && $subject = Subject::find($data->subject->id)) {
             $employer->subject()->associate($subject);
         }
 
         if ($data->highlights instanceof Collection) {
 
-            $employer->highlights->filter(
+            /** @var Collection<int, EmployerHighlight> $currentHighlights */
+            $currentHighlights = $employer->highlights;
+
+            $currentHighlights->filter(
                 fn ($highlight) => ! $data->highlights->contains('id', $highlight->id)
             )->each(function ($highlight) {
                 $this->deleteHighlight(
@@ -86,7 +89,7 @@ class EmployersService
             ]
         );
 
-        if ($data->employer instanceof EmployerData && $employer = Employer::find($data->employer?->id)) {
+        if ($data->employer instanceof EmployerData && $employer = Employer::find($data->employer->id)) {
             $employerHighlight->employer()->associate($employer);
         }
 
