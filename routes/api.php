@@ -20,14 +20,14 @@ Route::as('auth.')->group(function () {
 });
 
 Route::middleware('auth:api')->scopeBindings()->group(function () {
-    Route::resource('users', Users\UsersController::class)->except(['edit', 'create']);
-    Route::resource('subjects', Subjects\SubjectsController::class)->except(['edit', 'create']);
-    Route::resource('subjects.highlights', Subjects\SubjectHighlightsController::class)->except(['edit', 'create']);
-    Route::resource('subjects.skills', Subjects\SkillsController::class)->except(['edit', 'create']);
-    Route::resource('subjects.employers', Subjects\EmployersController::class)->except(['edit', 'create']);
-    Route::resource('subjects.employers.highlights', Subjects\EmployerHighlightsController::class)->except(['edit', 'create']);
-    Route::resource('subjects.educations', Subjects\EducationsController::class)->except(['edit', 'create']);
-    Route::resource('subjects.educations.highlights', Subjects\EducationHighlightsController::class)->except(['edit', 'create']);
+    Route::apiResource('users', Users\UsersController::class);
+    Route::apiResource('subjects', Subjects\SubjectsController::class);
+    Route::apiResource('subjects.highlights', Subjects\SubjectHighlightsController::class);
+    Route::apiResource('subjects.skills', Subjects\SkillsController::class);
+    Route::apiResource('subjects.employers', Subjects\EmployersController::class);
+    Route::apiResource('subjects.employers.highlights', Subjects\EmployerHighlightsController::class);
+    Route::apiResource('subjects.educations', Subjects\EducationsController::class);
+    Route::apiResource('subjects.educations.highlights', Subjects\EducationHighlightsController::class);
 });
 
 Route::get('healthz', fn() => response()->json(['status' => 'ok']))->name('healthz');
